@@ -11,7 +11,7 @@ model Form {
   id         BigInt      @id @default(autoincrement())
   name       String
   createdAt  DateTime    @default(now())
-  updatedAt  DateTime?
+  updatedAt  DateTime?   @updatedAt
   schoolClasses SchoolClass[]
 }
 
@@ -22,7 +22,7 @@ model SchoolClass {
   isArchived Boolean      @default(false)
   formId     BigInt
   createdAt  DateTime     @default(now())
-  updatedAt  DateTime?
+  updatedAt  DateTime?    @updatedAt
   form       Form         @relation(fields: [formId], references: [id])
   tests      Test[]
   students   SchoolClassHasStudent[]
@@ -33,7 +33,7 @@ model Student {
   lastName   String
   firstName  String
   createdAt  DateTime     @default(now())
-  updatedAt  DateTime?
+  updatedAt  DateTime?    @updatedAt
   studentTests StudentTest[]
   schoolClasses SchoolClassHasStudent[]
 }
@@ -44,7 +44,7 @@ model StudentTest {
   testId     BigInt
   mark       Decimal
   createdAt  DateTime     @default(now())
-  updatedAt  DateTime?
+  updatedAt  DateTime?    @updatedAt
   student    Student      @relation(fields: [studentId], references: [id])
   test       Test         @relation(fields: [testId], references: [id])
   skills     StudentTestHasSkill[]
@@ -59,7 +59,7 @@ model Test {
   scale         Int
   coefficient   Int
   createdAt     DateTime     @default(now())
-  updatedAt     DateTime?
+  updatedAt     DateTime?    @updatedAt
   schoolClass   SchoolClass  @relation(fields: [schoolClassId], references: [id])
   studentTests  StudentTest[]
   skills        TestHasSkill[]
