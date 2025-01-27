@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL") 
+}
+
+model Form {
+  id         BigInt      @id @default(autoincrement())
+  name       String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime?
+  schoolClasses SchoolClass[]
+}
+
+model SchoolClass {
+  id         BigInt       @id @default(autoincrement())
+  name       String
+  color      String
+  isArchived Boolean      @default(false)
+  formId     BigInt
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime?
+  form       Form         @relation(fields: [formId], references: [id])
+  tests      Test[]
+  students   SchoolClassHasStudent[]
+}
+
+model Student {
+  id         BigInt       @id @default(autoincrement())
+  lastName   String
+  firstName  String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime?
+  studentTests StudentTest[]
+  schoolClasses SchoolClassHasStudent[]
+}
+
+model StudentTest {
+  id         BigInt       @id @default(autoincrement())
+  studentId  BigInt
+  testId     BigInt
+  mark       Decimal
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime?
+  student    Student      @relation(fields: [studentId], references: [id])
+  test       Test         @relation(fields: [testId], references: [id])
+  skills     StudentTestHasSkill[]
+}
+
+model Test {
+  id            BigInt       @id @default(autoincrement())
+  schoolClassId BigInt
+  date          DateTime
+  trimester     Int
+  description   String
+  scale         Int
+  coefficient   Int
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime?
+  schoolClass   SchoolClass  @relation(fields: [schoolClassId], references: [id])
+  studentTests  StudentTest[]
+  skills        TestHasSkill[]
+}
+
+model Skill {
+  id    BigInt        @id @default(autoincrement())
+  name  String
+  testSkills TestHasSkill[]
+  studentTestSkills StudentTestHasSkill[]
+}
+
+model TestHasSkill {
+  id      BigInt  @id @default(autoincrement())
+  testId  BigInt
+  skillId BigInt
+  test    Test    @relation(fields: [testId], references: [id])
+  skill   Skill   @relation(fields: [skillId], references: [id])
+}
+
+model StudentTestHasSkill {
+  id             BigInt      @id @default(autoincrement())
+  studentTestId  BigInt
+  skillId        BigInt
+  isMarked       Boolean     @default(true)
+  level          Int
+  studentTest    StudentTest @relation(fields: [studentTestId], references: [id])
+  skill          Skill       @relation(fields: [skillId], references: [id])
+}
+
+model SchoolClassHasStudent {
+  id            BigInt       @id @default(autoincrement())
+  studentId     BigInt
+  schoolClassId BigInt
+  student       Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  schoolClass   SchoolClass   @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
+}
