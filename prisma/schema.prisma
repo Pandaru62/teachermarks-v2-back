@@ -8,108 +8,130 @@ datasource db {
 }
 
 model form {
-  id          Int        @id @default(autoincrement())
-  name        String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime?
-  schoolclass schoolclass[]
+  id            Int                             @id @default(autoincrement())
+  name          String
+  createdAt     DateTime                        @default(now())
+  updatedAt     DateTime?                       @updatedAt()
+  schoolclass   schoolclass[]
 }
 
 model schoolclass {
-  id                    Int                  @id @default(autoincrement())
+  id                    Int                     @id @default(autoincrement())
   name                  String
   color                 String
   isArchived            Boolean                 @default(false)
   formId                Int
   createdAt             DateTime                @default(now())
-  updatedAt             DateTime?
-  form                  form                    @relation(fields: [formId], references: [id], map: "SchoolClass_formId_fkey")
-  schoolclasshasstudent schoolclasshasstudent[]
+  updatedAt             DateTime?               @updatedAt()
+  form                  form                    @relation(fields: [formId], references: [id], onDelete: Cascade)
+  students              student[]
   test                  test[]
+  teachers              user[]
 
-  @@index([formId], map: "SchoolClass_formId_fkey")
-}
-
-model schoolclasshasstudent {
-  id            Int      @id @default(autoincrement())
-  studentId     Int
-  schoolClassId Int
-  schoolclass   schoolclass @relation(fields: [schoolClassId], references: [id], onDelete: Cascade, map: "SchoolClassHasStudent_schoolClassId_fkey")
-  student       student     @relation(fields: [studentId], references: [id], onDelete: Cascade, map: "SchoolClassHasStudent_studentId_fkey")
-
-  @@index([schoolClassId], map: "SchoolClassHasStudent_schoolClassId_fkey")
-  @@index([studentId], map: "SchoolClassHasStudent_studentId_fkey")
+  @@index([formId])
 }
 
 model skill {
-  id                  Int                @id @default(autoincrement())
+  id                  Int                      @id @default(autoincrement())
   name                String
   studenttesthasskill studenttesthasskill[]
-  testhasskill        testhasskill[]
+  tests               test[]
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime?                @updatedAt()
+  userId              Int?
+  createdBy           user?                    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
 }
 
 model student {
-  id                    Int                  @id @default(autoincrement())
+  id                    Int                     @id @default(autoincrement())
   lastName              String
   firstName             String
   createdAt             DateTime                @default(now())
-  updatedAt             DateTime?
-  schoolclasshasstudent schoolclasshasstudent[]
+  updatedAt             DateTime?               @updatedAt()
+  schoolClasses         schoolclass[]
   studenttest           studenttest[]
 }
 
 model studenttest {
-  id                  Int                @id @default(autoincrement())
+  id                  Int                       @id @default(autoincrement())
   studentId           Int
   testId              Int
   mark                Decimal
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime?
-  student             student               @relation(fields: [studentId], references: [id], map: "StudentTest_studentId_fkey")
-  test                test                  @relation(fields: [testId], references: [id], map: "StudentTest_testId_fkey")
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime?                 @updatedAt()
+  student             student                   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  test                test                      @relation(fields: [testId], references: [id], onDelete: Cascade)
   studenttesthasskill studenttesthasskill[]
 
-  @@index([studentId], map: "StudentTest_studentId_fkey")
-  @@index([testId], map: "StudentTest_testId_fkey")
+  @@index([studentId])
+  @@index([testId])
 }
 
 model studenttesthasskill {
-  id            Int      @id @default(autoincrement())
+  id            Int                             @id @default(autoincrement())
   studentTestId Int
   skillId       Int
-  isMarked      Boolean     @default(true)
+  isMarked      Boolean                         @default(true)
   level         Int
-  skill         skill       @relation(fields: [skillId], references: [id], map: "StudentTestHasSkill_skillId_fkey")
-  studenttest   studenttest @relation(fields: [studentTestId], references: [id], map: "StudentTestHasSkill_studentTestId_fkey")
+  skill         skill                           @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  studenttest   studenttest                     @relation(fields: [studentTestId], references: [id], onDelete: Cascade)
 
-  @@index([skillId], map: "StudentTestHasSkill_skillId_fkey")
-  @@index([studentTestId], map: "StudentTestHasSkill_studentTestId_fkey")
+  @@index([skillId])
+  @@index([studentTestId])
 }
 
 model test {
-  id            Int         @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   schoolClassId Int
   date          DateTime
-  trimester     Int
+  trimester     TrimesterEnum
   description   String
   scale         Int
   coefficient   Int
   createdAt     DateTime       @default(now())
-  updatedAt     DateTime?
+  updatedAt     DateTime?      @updatedAt()
   studenttest   studenttest[]
-  schoolclass   schoolclass    @relation(fields: [schoolClassId], references: [id], map: "Test_schoolClassId_fkey")
-  testhasskill  testhasskill[]
+  schoolclass   schoolclass    @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
+  skills        skill[]
 
-  @@index([schoolClassId], map: "Test_schoolClassId_fkey")
+  @@index([schoolClassId])
 }
 
-model testhasskill {
-  id      Int @id @default(autoincrement())
-  testId  Int
-  skillId Int
-  skill   skill  @relation(fields: [skillId], references: [id], map: "TestHasSkill_skillId_fkey")
-  test    test   @relation(fields: [testId], references: [id], map: "TestHasSkill_testId_fkey")
+model user {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  role          UserRoleEnum
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?      @updatedAt()
+  profile       profile?
+  schoolClasses schoolclass[]
+  createdSkills skill[]
 
-  @@index([skillId], map: "TestHasSkill_skillId_fkey")
-  @@index([testId], map: "TestHasSkill_testId_fkey")
+  @@index([id])
+}
+
+model profile {
+  userId        Int            @unique
+  firstname     String
+  lastname      String
+  school        String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?      @updatedAt()
+  user          user           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+enum UserRoleEnum {
+  ADMIN
+  TEACHER
+}
+
+enum TrimesterEnum {
+  TR1
+  TR2
+  TR3
 }

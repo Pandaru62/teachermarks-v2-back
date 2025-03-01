@@ -1,34 +1,43 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, BadRequestException, Put } from '@nestjs/common';
+import { test } from '@prisma/client';
 import { TestService } from './test.service';
 import { CreateTestDto } from './dto/create-test.dto';
 import { UpdateTestDto } from './dto/update-test.dto';
 
-@Controller('test')
+@Controller('tests')
 export class TestController {
   constructor(private readonly testService: TestService) {}
 
+  private async validatetest(id: number): Promise<test> {
+    const data = await this.testService.getById(id);
+    if(!data) throw new BadRequestException(`Test with ${id} not found`);
+    return data;
+  }
+
   @Post()
-  create(@Body() createTestDto: CreateTestDto) {
-    return this.testService.create(createTestDto);
+  async create(@Body() body: CreateTestDto): Promise<test> {
+    return this.testService.create(body);
   }
 
   @Get()
-  findAll() {
-    return this.testService.findAll();
+  async findAll(): Promise<test[]> {
+    return this.testService.getAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.testService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number) : Promise<test> {
+    return this.validatetest(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTestDto: UpdateTestDto) {
-    return this.testService.update(+id, updateTestDto);
+  @Put(':id')
+  async update(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateTestDto): Promise<test> {
+    await this.validatetest(id);
+    return this.testService.update(id, body);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.testService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<test> {
+    await this.validatetest(id);
+    return this.testService.remove(id);
   }
 }

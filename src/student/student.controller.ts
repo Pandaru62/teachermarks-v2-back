@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, BadRequestException, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, BadRequestException, Put } from '@nestjs/common';
 import { student } from '@prisma/client';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
