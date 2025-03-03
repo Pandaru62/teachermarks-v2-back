@@ -7,6 +7,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model user {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String
+  role          UserRoleEnum
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?      @updatedAt()
+  profile       profile?
+  schoolClasses schoolclass[]
+  createdSkills skill[]
+
+  @@index([id])
+}
+
+model profile {
+  userId        Int            @unique
+  firstname     String
+  lastname      String
+  school        String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?      @updatedAt()
+  user          user           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
 model form {
   id            Int                             @id @default(autoincrement())
   name          String
@@ -55,9 +81,9 @@ model student {
 }
 
 model studenttest {
-  id                  Int                       @id @default(autoincrement())
+  id                  Int                        @id @default(autoincrement())
   studentId           Int
-  testId              Int
+  testId              Int                 
   mark                Decimal
   createdAt           DateTime                  @default(now())
   updatedAt           DateTime?                 @updatedAt()
@@ -65,19 +91,20 @@ model studenttest {
   test                test                      @relation(fields: [testId], references: [id], onDelete: Cascade)
   studenttesthasskill studenttesthasskill[]
 
+  @@unique(name: "studentTestId", [studentId, testId])
   @@index([studentId])
   @@index([testId])
 }
 
 model studenttesthasskill {
-  id            Int                             @id @default(autoincrement())
+  // id            Int                             @id @default(autoincrement())
   studentTestId Int
   skillId       Int
-  isMarked      Boolean                         @default(true)
-  level         Int
+  level         LevelEnum
   skill         skill                           @relation(fields: [skillId], references: [id], onDelete: Cascade)
   studenttest   studenttest                     @relation(fields: [studentTestId], references: [id], onDelete: Cascade)
 
+  @@id(name: "studentTestSkillId", [studentTestId, skillId])
   @@index([skillId])
   @@index([studentTestId])
 }
@@ -99,31 +126,6 @@ model test {
   @@index([schoolClassId])
 }
 
-model user {
-  id            Int            @id @default(autoincrement())
-  email         String         @unique
-  password      String
-  role          UserRoleEnum
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime?      @updatedAt()
-  profile       profile?
-  schoolClasses schoolclass[]
-  createdSkills skill[]
-
-  @@index([id])
-}
-
-model profile {
-  userId        Int            @unique
-  firstname     String
-  lastname      String
-  school        String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime?      @updatedAt()
-  user          user           @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-}
 
 enum UserRoleEnum {
   ADMIN
@@ -134,4 +136,14 @@ enum TrimesterEnum {
   TR1
   TR2
   TR3
+}
+
+enum LevelEnum {
+  LVL0
+  LVL1
+  LVL2
+  LVL3
+  LVL4
+  ABS
+  NN
 }
