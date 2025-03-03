@@ -1,18 +1,18 @@
-import { Body, ConflictException, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, ConflictException, Controller, Get, HttpCode, HttpStatus, Post, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signin.dto';
 import { UserService } from 'src/user/user.service';
-import argon2 from 'argon2';
+import * as argon2 from 'argon2';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { IPayloadType } from './types';
+import { IPayloadType, IRequestWithRefreshToken } from './types';
 import { TypeTokenEnum } from '@prisma/client';
+import { ResfreshGuard } from './refresh.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly userService: UserService,
-    // private readonly jwtService: JwtService
+    private readonly userService: UserService
   ) {}
 
 
@@ -61,12 +61,13 @@ export class AuthController {
   async signup(
   @Body() body: CreateUserDto
   ) {
+    console.log("🚀 ~ AuthController ~ body:", body)
     // check user email doesn't exist
     const user =  await this.userService.findByEmail(body.email);
     if (user) throw new ConflictException("Bad Credentials");
-
+    
     // hash password
-    body.password = await argon2.hash(body.password);
+    body.password = await argon2.hash(body.password);    
 
     // create user
     const newUser = await this.userService.create(body);
@@ -74,6 +75,47 @@ export class AuthController {
     // send email
 
     return {user: newUser}
+
+  }
+
+
+  @UseGuards(ResfreshGuard)
+  @Get("refresh-token")
+  async refreshToken(@Req() req: IRequestWithRefreshToken) {
+    // Récupération du token de rafraîchissement dans la base de données
+    const { token } = await this.authService.getByUnique(req.user.sub, TypeTokenEnum.REFRESH_TOKEN);
+    // Vérification si le token de rafraîchissement est valide
+    if (!(await argon2.verify(token, req.refreshToken))) {
+      throw new UnauthorizedException("Invalid refresh token");
+    }
+    // Création du payload
+    const payload: IPayloadType = {
+      sub: req.user.sub,
+      role: req.user.role,
+    };
+    // Création du token d'accès
+    const access_token = await this.authService.createJwt(
+      payload,
+      process.env.JWT_SECRET,
+      process.env.JWT_EXPIRES_IN
+    );
+    // Création du token de rafraîchissement
+    const refresh_token = await this.authService.createJwt(
+      payload,
+      process.env.JWT_REFRESH_SECRET,
+      process.env.JWT_REFRESH_EXPIRES_IN
+    );
+    // Création/mise à jour du token de rafraîchissement dans la base de données
+    await this.authService.upsertToken(
+      req.user.sub,
+      await argon2.hash(refresh_token),
+      TypeTokenEnum.REFRESH_TOKEN
+    );
+    // Retour success
+    return {
+      access_token,
+      refresh_token,
+    };
   }
 
 }
