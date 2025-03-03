@@ -8,9 +8,11 @@ import { StudentModule } from './student/student.module';
 import { TestModule } from './test/test.module';
 import { StudentTestModule } from './student-test/student-test.module';
 import { SkillModule } from './skill/skill.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [PrismaModule, FormModule, SchoolclassModule, StudentModule, TestModule, SkillModule, StudentTestModule],
+  imports: [PrismaModule, FormModule, SchoolclassModule, StudentModule, TestModule, SkillModule, StudentTestModule, AuthModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })

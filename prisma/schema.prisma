@@ -11,12 +11,14 @@ model user {
   id            Int            @id @default(autoincrement())
   email         String         @unique
   password      String
+  is_validated  Boolean        @default(false)
   role          UserRoleEnum
   createdAt     DateTime       @default(now())
   updatedAt     DateTime?      @updatedAt()
   profile       profile?
   schoolClasses schoolclass[]
   createdSkills skill[]
+  tokens        token[]
 
   @@index([id])
 }
@@ -126,6 +128,24 @@ model test {
   @@index([schoolClassId])
 }
 
+model token {
+  token      String        @db.VarChar(255)
+  type       TypeTokenEnum
+  expires_at DateTime?
+  user_id    Int
+  user       user          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  created_at DateTime      @default(now())
+  updated_at DateTime      @updatedAt
+
+  @@id([user_id, type])
+}
+
+
+enum TypeTokenEnum {
+  REFRESH_TOKEN
+  FORGOT_PASSWORD
+  VERIFICATION_EMAIL
+}
 
 enum UserRoleEnum {
   ADMIN

@@ -1,3 +1,4 @@
+import { TrimesterEnum } from "@prisma/client";
 import { IsDate, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateTestDto {
@@ -12,7 +13,7 @@ export class CreateTestDto {
 
     @IsNotEmpty()
     @IsNumber()
-    trimester: number;
+    trimester: TrimesterEnum;
 
     @IsNotEmpty()
     @IsString()
