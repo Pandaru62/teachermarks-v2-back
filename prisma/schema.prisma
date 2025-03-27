@@ -16,7 +16,7 @@ model user {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime?      @updatedAt()
   profile       profile?
-  schoolClasses schoolclass[]
+  schoolClasses UserHasSchoolClass[]
   createdSkills skill[]
   tokens        token[]
 
@@ -54,7 +54,7 @@ model schoolclass {
   form                  form                    @relation(fields: [formId], references: [id], onDelete: Cascade)
   students              student[]
   test                  test[]
-  teachers              user[]
+  teachers              UserHasSchoolClass[]
 
   @@index([formId])
 }
@@ -126,6 +126,16 @@ model test {
   skills        skill[]
 
   @@index([schoolClassId])
+}
+
+model UserHasSchoolClass {
+  userId       Int
+  schoolClassId Int
+
+  user        user         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  schoolClass schoolclass  @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
+
+  @@id([userId, schoolClassId]) // Composite primary key
 }
 
 model token {

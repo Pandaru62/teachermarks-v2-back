@@ -7,7 +7,9 @@ import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { IPayloadType, IRequestWithRefreshToken } from './types';
 import { TypeTokenEnum } from '@prisma/client';
 import { ResfreshGuard } from './refresh.guard';
+import { Public } from 'src/decorators/public.decorator';
 
+@Public()
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -23,22 +25,22 @@ export class AuthController {
   @Body() body: SignInDto
   ) {
     // check user email
-    const user =  await this.userService.findByEmail(body.email);
-    if (!user) throw new ConflictException("Bad Credentials");
+    const userFound =  await this.userService.findByEmail(body.email);
+    if (!userFound) throw new ConflictException("Bad Credentials");
 
     // check user is validated
-    if (!user.is_validated) {
+    if (!userFound.is_validated) {
       throw new ConflictException("Please verify your email before signing in",);
     }
 
     // check password
-    const compare = await argon2.verify(user.password, body.password);
+    const compare = await argon2.verify(userFound.password, body.password);
     if (!compare) throw new ConflictException("Bad Credentials");
 
     // create payload
     const payload: IPayloadType = {
-      sub: user.id,
-      role: user.role
+      sub: userFound.id,
+      role: userFound.role
     }
 
     // generate access token
@@ -49,10 +51,18 @@ export class AuthController {
     const refresh_token = await this.authService.createJwt(payload, process.env.JWT_REFRESH_SECRET, process.env.JWT_REFRESH_EXPIRES_IN);
 
     // create or update refresh token
-    await this.authService.upsertToken(user.id, await argon2.hash(refresh_token), TypeTokenEnum.REFRESH_TOKEN)
+    await this.authService.upsertToken(userFound.id, await argon2.hash(refresh_token), TypeTokenEnum.REFRESH_TOKEN)
 
     return {
-      access_token, refresh_token
+      access_token,
+      refresh_token,
+      user: {
+        email: userFound.email,
+        firstname: userFound.profile.firstname,
+        lastname: userFound.profile.lastname,
+        school: userFound.profile.school,
+        id: userFound.id
+      }
     }
   }
 

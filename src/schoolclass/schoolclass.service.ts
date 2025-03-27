@@ -9,27 +9,37 @@ export class SchoolclassService {
 
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(data: CreateSchoolclassDto): Promise<schoolclass> {
-    return this.prismaService.schoolclass.create({
-      data: {...data},
-    })
+  async create(data: CreateSchoolclassDto, userId: number): Promise<schoolclass> {
+    const newClass = await this.prismaService.schoolclass.create({data: {...data}})
+      if (newClass) this.prismaService.userHasSchoolClass.create({
+        data: {schoolClassId: newClass.id, userId }
+      })
+      return newClass;
   }
 
-  async findAll(): Promise<schoolclass[]> {
-    return this.prismaService.schoolclass.findMany()
+  async findAll(userId : number): Promise<schoolclass[]> {
+    return this.prismaService.schoolclass.findMany({where: {teachers: {some: {userId}}}})
   }
 
-  async findOne(id: number): Promise<schoolclass> {
-    return this.prismaService.schoolclass.findUnique({where: {id}});
+  async findOne(id: number, userId: number): Promise<schoolclass> {
+    return this.prismaService.schoolclass.findUnique({where: {id, teachers: {some: {userId}}}});
   }
 
-  async update(id: number, data: UpdateSchoolclassDto): Promise<schoolclass> {
+  async update(id: number, data: UpdateSchoolclassDto, userId : number): Promise<schoolclass> {
     return this.prismaService.schoolclass.update(
-      { where: {id}, data }
+      { 
+        where: 
+          {
+            id,
+            teachers: {some: {userId}}
+          }, 
+        data 
+      }
     );
   }
 
-  async remove(id: number): Promise<schoolclass> {
-    return this.prismaService.schoolclass.delete({where: {id}});
+  /* TRANSACTION TO DELETE THE LINK TOO??? */
+  async remove(id: number, userId: number): Promise<schoolclass> {
+    return this.prismaService.schoolclass.delete({where: {id, teachers: {some: {userId}}}});
   }
 }

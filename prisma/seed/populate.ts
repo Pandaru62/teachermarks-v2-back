@@ -1,17 +1,18 @@
 import { form, LevelEnum, PrismaClient, schoolclass, skill, student, studenttest, studenttesthasskill, test, TrimesterEnum, user, UserRoleEnum } from '@prisma/client'
 import { fakerFR as faker } from '@faker-js/faker';
+
 const prisma = new PrismaClient()
 async function main() {
-    await createUsersAndProfiles(2);
+    const users = await createUsersAndProfiles(2);
     const forms = await createForms();
     const skills = await createSkills();
     const schoolClasses = await createSchoolClasses(8, forms);
+    await createUserHasSchoolClasses(users, schoolClasses);
     const students = await createStudents(50);
     const tests = await createTests(10, schoolClasses);
     const studentTests = await createStudentTests(80, students, tests)
     await createStudentTestHasSkill(skills, studentTests)
 }
-
 
 const createUsersAndProfiles = async (number: number): Promise<user[]> => {
     const users = []
@@ -81,6 +82,18 @@ const createSchoolClasses = async (number: number, forms: form[]): Promise<schoo
     }
     return schoolClasses;
 }
+
+const createUserHasSchoolClasses = async (users: user[], schoolClasses: schoolclass[]) => {
+    const data = users.flatMap(user =>
+        schoolClasses.map(schoolClass => ({
+            userId: user.id,
+            schoolClassId: schoolClass.id
+        }))
+    );
+
+    await prisma.userHasSchoolClass.createMany({ data });
+};
+
 
 
 const createStudents = async (number: number): Promise<student[]> => {

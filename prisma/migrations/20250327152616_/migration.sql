@@ -1,4 +1,32 @@
 -- CreateTable
+CREATE TABLE `user` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NOT NULL,
+    `is_validated` BOOLEAN NOT NULL DEFAULT false,
+    `role` ENUM('ADMIN', 'TEACHER') NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NULL,
+
+    UNIQUE INDEX `user_email_key`(`email`),
+    INDEX `user_id_idx`(`id`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `profile` (
+    `userId` INTEGER NOT NULL,
+    `firstname` VARCHAR(191) NOT NULL,
+    `lastname` VARCHAR(191) NOT NULL,
+    `school` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NULL,
+
+    UNIQUE INDEX `profile_userId_key`(`userId`),
+    INDEX `profile_userId_idx`(`userId`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `form` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
@@ -56,20 +84,19 @@ CREATE TABLE `studenttest` (
 
     INDEX `studenttest_studentId_idx`(`studentId`),
     INDEX `studenttest_testId_idx`(`testId`),
+    UNIQUE INDEX `studenttest_studentId_testId_key`(`studentId`, `testId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `studenttesthasskill` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `studentTestId` INTEGER NOT NULL,
     `skillId` INTEGER NOT NULL,
-    `isMarked` BOOLEAN NOT NULL DEFAULT true,
-    `level` INTEGER NOT NULL,
+    `level` ENUM('LVL0', 'LVL1', 'LVL2', 'LVL3', 'LVL4', 'ABS', 'NN') NOT NULL,
 
     INDEX `studenttesthasskill_skillId_idx`(`skillId`),
     INDEX `studenttesthasskill_studentTestId_idx`(`studentTestId`),
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`studentTestId`, `skillId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -89,30 +116,23 @@ CREATE TABLE `test` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `user` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `email` VARCHAR(191) NOT NULL,
-    `password` VARCHAR(191) NOT NULL,
-    `role` ENUM('ADMIN', 'TEACHER') NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NULL,
+CREATE TABLE `UserHasSchoolClass` (
+    `userId` INTEGER NOT NULL,
+    `schoolClassId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `user_email_key`(`email`),
-    INDEX `user_id_idx`(`id`),
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`userId`, `schoolClassId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `profile` (
-    `userId` INTEGER NOT NULL,
-    `firstname` VARCHAR(191) NOT NULL,
-    `lastname` VARCHAR(191) NOT NULL,
-    `school` VARCHAR(191) NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NULL,
+CREATE TABLE `token` (
+    `token` VARCHAR(255) NOT NULL,
+    `type` ENUM('REFRESH_TOKEN', 'FORGOT_PASSWORD', 'VERIFICATION_EMAIL') NOT NULL,
+    `expires_at` DATETIME(3) NULL,
+    `user_id` INTEGER NOT NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `profile_userId_key`(`userId`),
-    INDEX `profile_userId_idx`(`userId`)
+    PRIMARY KEY (`user_id`, `type`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -125,15 +145,6 @@ CREATE TABLE `_schoolclassTostudent` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `_schoolclassTouser` (
-    `A` INTEGER NOT NULL,
-    `B` INTEGER NOT NULL,
-
-    UNIQUE INDEX `_schoolclassTouser_AB_unique`(`A`, `B`),
-    INDEX `_schoolclassTouser_B_index`(`B`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `_skillTotest` (
     `A` INTEGER NOT NULL,
     `B` INTEGER NOT NULL,
@@ -141,6 +152,9 @@ CREATE TABLE `_skillTotest` (
     UNIQUE INDEX `_skillTotest_AB_unique`(`A`, `B`),
     INDEX `_skillTotest_B_index`(`B`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `profile` ADD CONSTRAINT `profile_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `schoolclass` ADD CONSTRAINT `schoolclass_formId_fkey` FOREIGN KEY (`formId`) REFERENCES `form`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -164,19 +178,19 @@ ALTER TABLE `studenttesthasskill` ADD CONSTRAINT `studenttesthasskill_studentTes
 ALTER TABLE `test` ADD CONSTRAINT `test_schoolClassId_fkey` FOREIGN KEY (`schoolClassId`) REFERENCES `schoolclass`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `profile` ADD CONSTRAINT `profile_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `UserHasSchoolClass` ADD CONSTRAINT `UserHasSchoolClass_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `UserHasSchoolClass` ADD CONSTRAINT `UserHasSchoolClass_schoolClassId_fkey` FOREIGN KEY (`schoolClassId`) REFERENCES `schoolclass`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `token` ADD CONSTRAINT `token_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `_schoolclassTostudent` ADD CONSTRAINT `_schoolclassTostudent_A_fkey` FOREIGN KEY (`A`) REFERENCES `schoolclass`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `_schoolclassTostudent` ADD CONSTRAINT `_schoolclassTostudent_B_fkey` FOREIGN KEY (`B`) REFERENCES `student`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_schoolclassTouser` ADD CONSTRAINT `_schoolclassTouser_A_fkey` FOREIGN KEY (`A`) REFERENCES `schoolclass`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `_schoolclassTouser` ADD CONSTRAINT `_schoolclassTouser_B_fkey` FOREIGN KEY (`B`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `_skillTotest` ADD CONSTRAINT `_skillTotest_A_fkey` FOREIGN KEY (`A`) REFERENCES `skill`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

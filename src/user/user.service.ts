@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { user } from '@prisma/client';
+import { UserWithProfile } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
 
   constructor(private readonly prismaService : PrismaService){}
 
-  async findByEmail(email: string): Promise<Partial<user>> {
+  async findByEmail(email: string): Promise<Partial<UserWithProfile>> {
     return this.prismaService.user.findUnique({
       where: {email},
       select: {
@@ -16,7 +17,14 @@ export class UserService {
         email: true,
         password: true,
         role: true,
-        is_validated: true
+        is_validated: true,
+        profile: {
+          select: {
+            firstname: true,
+            lastname: true,
+            school: true
+          }
+        }
       }
     })
   }
