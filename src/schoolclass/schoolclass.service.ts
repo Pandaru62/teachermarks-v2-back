@@ -10,11 +10,21 @@ export class SchoolclassService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(data: CreateSchoolclassDto, userId: number): Promise<schoolclass> {
-    const newClass = await this.prismaService.schoolclass.create({data: {...data}})
-      if (newClass) this.prismaService.userHasSchoolClass.create({
-        data: {schoolClassId: newClass.id, userId }
-      })
-      return newClass;
+
+    // create the class
+    const newClass = await this.prismaService.schoolclass.create(
+      {data: {
+        color: data.color,
+        name: data.name,
+        form: {connect: {id: data.formId}}
+      }
+    })
+
+    // connect the class to the teacher
+    if (newClass) await this.prismaService.userHasSchoolClass.create({
+      data: {schoolClassId: newClass.id, userId }
+    })
+    return newClass;
   }
 
   async findAll(userId : number): Promise<schoolclass[]> {
@@ -38,7 +48,11 @@ export class SchoolclassService {
     );
   }
 
-  /* TRANSACTION TO DELETE THE LINK TOO??? */
+  /* Is the class assigned to other teachers? */
+  async countTeachersByClass(schoolClassId: number): Promise<number> {
+    return this.prismaService.userHasSchoolClass.count({where: {schoolClassId}})
+  }
+
   async remove(id: number, userId: number): Promise<schoolclass> {
     return this.prismaService.schoolclass.delete({where: {id, teachers: {some: {userId}}}});
   }

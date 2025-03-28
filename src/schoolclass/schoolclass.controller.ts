@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Req, Put, UnauthorizedException } from '@nestjs/common';
 import { SchoolclassService } from './schoolclass.service';
 import { CreateSchoolclassDto } from './dto/create-schoolclass.dto';
 import { UpdateSchoolclassDto } from './dto/update-schoolclass.dto';
@@ -38,7 +38,7 @@ export class SchoolclassController {
   }
 
   /* UPDATE A CLASS BY THEIR ID */
-  @Patch(':id')
+  @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateSchoolclassDto: UpdateSchoolclassDto,
@@ -53,6 +53,8 @@ export class SchoolclassController {
     @Param('id',ParseIntPipe) id: number,
     @Req() req : IRequestWithUser
   ): Promise<schoolclass> {
+    const countTeachers = await this.schoolclassService.countTeachersByClass(id);
+    if (countTeachers > 1) throw new UnauthorizedException('Suppression impossible : La classe est affectée à plusieurs professeurs.')
     return this.schoolclassService.remove(id, req.user.sub);
   }
 

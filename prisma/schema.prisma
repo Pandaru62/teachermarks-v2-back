@@ -52,7 +52,7 @@ model schoolclass {
   createdAt             DateTime                @default(now())
   updatedAt             DateTime?               @updatedAt()
   form                  form                    @relation(fields: [formId], references: [id], onDelete: Cascade)
-  students              student[]
+  students              StudentHasSchoolClass[]
   test                  test[]
   teachers              UserHasSchoolClass[]
 
@@ -78,7 +78,7 @@ model student {
   firstName             String
   createdAt             DateTime                @default(now())
   updatedAt             DateTime?               @updatedAt()
-  schoolClasses         schoolclass[]
+  schoolClasses         StudentHasSchoolClass[]
   studenttest           studenttest[]
 }
 
@@ -135,7 +135,17 @@ model UserHasSchoolClass {
   user        user         @relation(fields: [userId], references: [id], onDelete: Cascade)
   schoolClass schoolclass  @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
 
-  @@id([userId, schoolClassId]) // Composite primary key
+  @@id([userId, schoolClassId])
+}
+
+model StudentHasSchoolClass {
+  studentId       Int
+  schoolClassId   Int
+
+  student        student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  schoolClass schoolclass         @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
+
+  @@id([studentId, schoolClassId])
 }
 
 model token {

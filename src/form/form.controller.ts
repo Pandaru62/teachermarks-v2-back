@@ -1,7 +1,8 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { FormService } from './form.service';
 import { CreateFormDto, UpdateFormDto } from './form.dto';
-import { form } from '@prisma/client';
+import { form, UserRoleEnum } from '@prisma/client';
+import { Roles } from 'src/decorators/roles.decorator';
 
 @Controller('forms')
 export class FormController {
@@ -24,11 +25,13 @@ export class FormController {
         return this.validateForm(id);
     }
 
+    @Roles(UserRoleEnum.ADMIN)
     @Post()
     async create(@Body() body : CreateFormDto): Promise<form> {
         return this.formService.create(body);
     }
 
+    @Roles(UserRoleEnum.ADMIN)
     @Put('/:id')
     async update(
         @Body() body : UpdateFormDto,
@@ -37,9 +40,10 @@ export class FormController {
         return this.formService.update(id, body);
     }
 
-     @Delete(':id')
-      async remove(@Param('id', ParseIntPipe) id: number) {
-        await this.validateForm(id);
-        return this.formService.remove(id);
-      }
+    @Roles(UserRoleEnum.ADMIN)
+    @Delete(':id')
+    async remove(@Param('id', ParseIntPipe) id: number) {
+    await this.validateForm(id);
+    return this.formService.remove(id);
+    }
 }

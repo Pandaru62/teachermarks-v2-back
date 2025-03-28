@@ -9,8 +9,21 @@ export class SkillService {
 
     constructor(private readonly prismaService: PrismaService) {}
 
+    async create(data: CreateSkillDto, userId: number):Promise<skill> {
+        return this.prismaService.skill.create({ data: 
+            { 
+                name: data.name,
+                userId
+            }
+        })
+    }
+
     async getAll(): Promise<skill[]> {
         return this.prismaService.skill.findMany({})
+    }
+
+    async getAllByUser(userId: number): Promise<skill[]> {
+        return this.prismaService.skill.findMany({where: {userId}})
     }
 
     async getById(id: number): Promise<skill> {
@@ -19,22 +32,16 @@ export class SkillService {
         })
     }
 
-    async create(data: CreateSkillDto):Promise<skill> {
-        return this.prismaService.skill.create(
-          {data}
-        )
-    }
-
-    async update(id: number, data: UpdateSkillDto):Promise<skill> {
+    async update(id: number, data: UpdateSkillDto, userId: number):Promise<skill> {
         return this.prismaService.skill.update({
-            where: {id},
+            where: {id, userId},
             data
         })
     }
 
-    async remove(id: number): Promise<skill> {
+    async remove(id: number, userId: number): Promise<skill> {
             return this.prismaService.skill.delete({
-            where: {id}
+            where: {id, userId}
             })
         }
   

@@ -1,43 +1,62 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Req } from '@nestjs/common';
 import { SkillService } from './skill.service';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
-import { skill } from '@prisma/client';
+import { skill, UserRoleEnum } from '@prisma/client';
+import { Roles } from 'src/decorators/roles.decorator';
+import { IRequestWithUser } from 'src/auth/types';
 
+@Roles(UserRoleEnum.TEACHER)
 @Controller('skills')
 export class SkillController {
   constructor(private readonly skillService: SkillService) {}
 
-  private async validateSkill(id: number): Promise<skill> {
-          const data = await this.skillService.getById(id);
-          if(!data) throw new BadRequestException(`Skill with ${id} not found`)
-          return data;
-        }
-
+  /* CREATE A NEW SKILL */
   @Post()
-  async create(@Body() body: CreateSkillDto): Promise<skill> {
-    return this.skillService.create(body);
+  async create(
+    @Body() body: CreateSkillDto,
+    @Req() req: IRequestWithUser
+  ): Promise<skill> {
+    return this.skillService.create(body, req.user.sub);
   }
 
-  @Get()
-  async findAll(): Promise<skill[]> {
+  /* GET ALL SKILLS */
+  @Get('all')
+  async findAll(
+  ): Promise<skill[]> {
     return this.skillService.getAll();
   }
 
+  /* GET SKILLS CREATED BY LOGGED USER */
+  @Get()
+  async findAllByUser(
+    @Req() req: IRequestWithUser
+  ): Promise<skill[]> {
+    return this.skillService.getAllByUser(req.user.sub);
+  }
+
+  /* GET SKILL BY ID */
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<skill> {
-    return this.validateSkill(id);
+    return this.skillService.getById(id);
   }
 
+  /* UPDATE SKILL NAME FROM ID */
   @Patch(':id')
-  async update(@Param('id', ParseIntPipe) id: number, @Body() updateSkillDto: UpdateSkillDto): Promise<skill> {
-    await this.validateSkill(id);
-    return this.skillService.update(id, updateSkillDto);
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: UpdateSkillDto,
+    @Req() req: IRequestWithUser
+  ): Promise<skill> {
+    return this.skillService.update(id, body, req.user.sub);
   }
 
+  /* DELETE A SKILL */
   @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: number): Promise<skill> {
-    await this.validateSkill(id);
-    return this.skillService.remove(id);
+  async remove(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: IRequestWithUser
+  ): Promise<skill> {
+    return this.skillService.remove(id, req.user.sub);
   }
 }

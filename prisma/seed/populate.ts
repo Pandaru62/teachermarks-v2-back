@@ -1,5 +1,6 @@
 import { form, LevelEnum, PrismaClient, schoolclass, skill, student, studenttest, studenttesthasskill, test, TrimesterEnum, user, UserRoleEnum } from '@prisma/client'
 import { fakerFR as faker } from '@faker-js/faker';
+import { connect } from 'http2';
 
 const prisma = new PrismaClient()
 async function main() {
@@ -84,15 +85,16 @@ const createSchoolClasses = async (number: number, forms: form[]): Promise<schoo
 }
 
 const createUserHasSchoolClasses = async (users: user[], schoolClasses: schoolclass[]) => {
-    const data = users.flatMap(user =>
-        schoolClasses.map(schoolClass => ({
-            userId: user.id,
-            schoolClassId: schoolClass.id
-        }))
-    );
+    if (schoolClasses.length === 0) return;
+
+    const data = users.map(user => ({
+        userId: user.id,
+        schoolClassId: schoolClasses[Math.floor(Math.random() * schoolClasses.length)].id
+    }));
 
     await prisma.userHasSchoolClass.createMany({ data });
 };
+
 
 
 
@@ -103,17 +105,23 @@ const createStudents = async (number: number): Promise<student[]> => {
             data: {
                 firstName: faker.person.firstName(),
                 lastName: faker.person.lastName(),
-                schoolClasses: {
-                    connect: {
-                        id: getRandomId(8)
-                    }
-                }
             }
         }));
         number--
     }
     return students;
 }
+
+const createStudentsHaveClasses = async (students: student[], schoolClasses: schoolclass[]) => {
+    const data = students.flatMap(user =>
+        schoolClasses.map(schoolClass => ({
+            studentId: user.id,
+            schoolClassId: schoolClass.id
+        }))
+    );
+
+    await prisma.studentHasSchoolClass.createMany({ data });
+};
 
 const createTests = async (number: number, schoolClasses: schoolclass[]): Promise<test[]> => {
     const tests = []
