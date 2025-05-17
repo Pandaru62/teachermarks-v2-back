@@ -26,7 +26,7 @@ export class AuthController {
   ) {
     // check user email
     const userFound =  await this.userService.findByEmail(body.email);
-    if (!userFound) throw new ConflictException("Bad Credentials");
+    if (!userFound) throw new UnauthorizedException("Bad Credentials");
 
     // check user is validated
     if (!userFound.is_validated) {
@@ -35,7 +35,7 @@ export class AuthController {
 
     // check password
     const compare = await argon2.verify(userFound.password, body.password);
-    if (!compare) throw new ConflictException("Bad Credentials");
+    if (!compare) throw new UnauthorizedException("Bad Credentials");
 
     // create payload
     const payload: IPayloadType = {
@@ -84,7 +84,10 @@ export class AuthController {
 
     // send email
 
-    return {user: newUser}
+    return {
+      message: "Utilisateur créé avec succès",
+      email: newUser.email
+    }
 
   }
 

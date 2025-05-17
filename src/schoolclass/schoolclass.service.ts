@@ -28,7 +28,23 @@ export class SchoolclassService {
   }
 
   async findAll(userId : number): Promise<schoolclass[]> {
-    return this.prismaService.schoolclass.findMany({where: {teachers: {some: {userId}}}})
+    return this.prismaService.schoolclass.findMany(
+      {
+        where:
+          {teachers:
+            {some:
+              {userId}
+            }
+          },
+        // include: {
+        //   _count: {
+        //     select: {
+        //       students: true
+        //     }
+        //   }
+        // }
+      }
+    )
   }
 
   async findOne(id: number, userId: number): Promise<schoolclass> {

@@ -37,9 +37,9 @@ export class UserService {
         role: 'TEACHER',
         profile: {
           create: {
-            firstname: data.firstname,
-            lastname: data.lastname,
-            school: data.school
+            firstname: "",
+            lastname: "",
+            school: ""
           }
         }
       },
