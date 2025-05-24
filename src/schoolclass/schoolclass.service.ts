@@ -51,6 +51,45 @@ export class SchoolclassService {
     return this.prismaService.schoolclass.findUnique({where: {id, teachers: {some: {userId}}}});
   }
 
+  // Promise<Pick<schoolclass, "id" | "color" | "name">
+  async findOneWithPupils(id: number, userId: number): Promise<any> {
+    const schoolClass = await this.prismaService.schoolclass.findUnique(
+      {
+        where: {
+          id, 
+          teachers: {
+            some: {userId}
+          },
+        },
+        select: {
+          id: true,
+          color: true,
+          name: true
+        }
+      }
+    );
+
+    const pupils = await this.prismaService.student.findMany({
+      where: {
+        schoolClasses: {
+          some: {
+            schoolClassId: schoolClass.id
+          }
+        }
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true
+      }
+    })
+
+    return {
+      ...schoolClass,
+      pupils
+    };
+  }
+
   async update(id: number, data: UpdateSchoolclassDto, userId : number): Promise<schoolclass> {
     return this.prismaService.schoolclass.update(
       { 
@@ -71,5 +110,16 @@ export class SchoolclassService {
 
   async remove(id: number, userId: number): Promise<schoolclass> {
     return this.prismaService.schoolclass.delete({where: {id, teachers: {some: {userId}}}});
+  }
+
+   async archive(id: number, userId: number): Promise<schoolclass> {
+    return this.prismaService.schoolclass.update(
+      {
+        where: {id, teachers: {some: {userId}}},
+        data: {
+          isArchived: true
+        }
+      }
+    );
   }
 }

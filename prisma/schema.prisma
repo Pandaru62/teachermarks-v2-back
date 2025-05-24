@@ -62,6 +62,8 @@ model schoolclass {
 model skill {
   id                  Int                      @id @default(autoincrement())
   name                String
+  description         String?
+  abbreviation        String?
   studenttesthasskill studenttesthasskill[]
   tests               test[]
   createdAt           DateTime                 @default(now())

@@ -13,6 +13,8 @@ export class SkillService {
         return this.prismaService.skill.create({ data: 
             { 
                 name: data.name,
+                description: data.description,
+                abbreviation: data.abbreviation,
                 userId
             }
         })

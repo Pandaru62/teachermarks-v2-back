@@ -1,6 +1,11 @@
 import { form, LevelEnum, PrismaClient, schoolclass, skill, student, studenttest, studenttesthasskill, test, TrimesterEnum, user, UserRoleEnum } from '@prisma/client'
 import { fakerFR as faker } from '@faker-js/faker';
-import { connect } from 'http2';
+
+/*
+    -- TO DO --
+    Deal with the password that needs to be hashed
+    studenthasschoolclass table isn't populated
+*/
 
 const prisma = new PrismaClient()
 async function main() {
@@ -21,7 +26,7 @@ const createUsersAndProfiles = async (number: number): Promise<user[]> => {
         users.push(await prisma.user.create({
             data: {
                 email: faker.internet.email(),
-                password: faker.internet.password(),
+                password: 'Abcdef,123',
                 role: UserRoleEnum.TEACHER,
                 profile: {
                     create: {
