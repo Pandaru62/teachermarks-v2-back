@@ -67,13 +67,22 @@ export class SchoolclassController {
     return this.schoolclassService.remove(id, req.user.sub);
   }
 
-    /* UPDATE A CLASS BY THEIR ID */
+  /* ARCHIVE A CLASS BY THEIR ID */
   @Patch(':id/archive')
   async archive(
     @Param('id', ParseIntPipe) id: number,
     @Req() req : IRequestWithUser
   ): Promise<schoolclass> {
     return this.schoolclassService.archive(id, req.user.sub);
+  }
+
+  /* UNARCHIVE A CLASS BY THEIR ID */
+  @Patch(':id/archive')
+  async unArchive(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req : IRequestWithUser
+  ): Promise<schoolclass> {
+    return this.schoolclassService.unArchive(id, req.user.sub);
   }
 
 }

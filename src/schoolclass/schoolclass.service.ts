@@ -31,18 +31,12 @@ export class SchoolclassService {
     return this.prismaService.schoolclass.findMany(
       {
         where:
-          {teachers:
-            {some:
-              {userId}
-            }
-          },
-        // include: {
-        //   _count: {
-        //     select: {
-        //       students: true
-        //     }
-        //   }
-        // }
+          {
+            teachers:
+              {some:
+                {userId}
+              },
+          }
       }
     )
   }
@@ -81,6 +75,9 @@ export class SchoolclassService {
         id: true,
         firstName: true,
         lastName: true
+      },
+      orderBy: {
+        lastName: 'asc'
       }
     })
 
@@ -112,12 +109,23 @@ export class SchoolclassService {
     return this.prismaService.schoolclass.delete({where: {id, teachers: {some: {userId}}}});
   }
 
-   async archive(id: number, userId: number): Promise<schoolclass> {
+  async archive(id: number, userId: number): Promise<schoolclass> {
     return this.prismaService.schoolclass.update(
       {
         where: {id, teachers: {some: {userId}}},
         data: {
           isArchived: true
+        }
+      }
+    );
+  }
+
+  async unArchive(id: number, userId: number): Promise<schoolclass> {
+    return this.prismaService.schoolclass.update(
+      {
+        where: {id, teachers: {some: {userId}}},
+        data: {
+          isArchived: false
         }
       }
     );

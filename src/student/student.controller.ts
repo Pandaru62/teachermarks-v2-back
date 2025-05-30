@@ -1,18 +1,13 @@
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Req } from '@nestjs/common';
 import { student } from '@prisma/client';
 import { StudentService } from './student.service';
-import { CreateManyStudentsDto, CreateStudentDto } from './dto/create-student.dto';
+import { CreateManyStudentsDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { IRequestWithUser } from 'src/auth/types';
 
 @Controller('students')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
-
-  @Post()
-  async create(@Body() body: CreateStudentDto): Promise<student> {
-    return this.studentService.create(body);
-  }
 
   @Post()
   async createMany(@Body() body: CreateManyStudentsDto[]): Promise<student[]> {
@@ -33,8 +28,9 @@ export class StudentController {
     return this.studentService.getStudentsByClass(classId);
   }
 
+  // TYPE
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number) : Promise<student> {
+  async findOne(@Param('id', ParseIntPipe) id: number) {
     return this.studentService.getById(id);
   }
 

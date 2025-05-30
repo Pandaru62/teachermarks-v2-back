@@ -1,23 +1,26 @@
 import { TrimesterEnum } from "@prisma/client";
-import { IsDate, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateTestDto {
 
+    
     @IsNotEmpty()
-    @IsNumber()
-    schoolClassid: number;
+    @IsString()
+    name: string;
+    
+    @IsString()
+    description: string;
 
     @IsNotEmpty()
-    @IsDate()
+    @IsNumber()
+    schoolClassId: number;
+
+    @IsNotEmpty()
     date: Date;
 
     @IsNotEmpty()
-    @IsNumber()
+    @IsEnum(TrimesterEnum)
     trimester: TrimesterEnum;
-
-    @IsNotEmpty()
-    @IsString()
-    description: string;
 
     @IsNotEmpty()
     @IsNumber()
@@ -26,5 +29,7 @@ export class CreateTestDto {
     @IsNotEmpty()
     @IsNumber()
     coefficient: number;
+
+    skills: number[];
 
 }

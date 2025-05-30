@@ -23,6 +23,9 @@ export class StudentService {
                         }
                     }
                 }
+            },
+            orderBy: {
+                lastName: 'asc'
             }
         })
     }
@@ -35,14 +38,50 @@ export class StudentService {
                         schoolClassId
                     }
                 }
+            },
+            orderBy: {
+                lastName: 'asc'
             }
+            // select: {
+            //     schoolClasses: {
+            //         select: {
+            //             schoolClass: {
+            //                 select: {
+            //                     name: true
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
         })
     }
 
-    async getById(id: number): Promise<student> {
-        return this.prismaService.student.findUnique({
-        where: {id}
+    async getById(id: number): Promise<{id: number, firstName: string, lastName: string, classes: string[][]}> {
+        const studentWithClass = await this.prismaService.student.findUnique({
+            where: {id},
+            include: {
+                schoolClasses: {
+                    select: {
+                        schoolClass: {
+                            select: {
+                                name: true
+                            }
+                        }
+                    }
+                }
+            }
         })
+
+        return (
+            {
+                id: studentWithClass.id,
+                firstName: studentWithClass.firstName,
+                lastName: studentWithClass.lastName,
+                classes: [
+                    studentWithClass.schoolClasses.map((classes) => classes.schoolClass.name)
+                ]
+            }
+        )
     }
 
     async create(data: CreateStudentDto): Promise<student> {

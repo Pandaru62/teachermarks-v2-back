@@ -64,8 +64,9 @@ model skill {
   name                String
   description         String?
   abbreviation        String?
+  isArchived          Boolean                  @default(false)
   studenttesthasskill studenttesthasskill[]
-  tests               test[]
+  tests               testhasskill[]
   createdAt           DateTime                 @default(now())
   updatedAt           DateTime?                @updatedAt()
   userId              Int?
@@ -115,19 +116,30 @@ model studenttesthasskill {
 
 model test {
   id            Int             @id @default(autoincrement())
+  name          String
+  description   String?
   schoolClassId Int
   date          DateTime
   trimester     TrimesterEnum
-  description   String
   scale         Int
   coefficient   Int
   createdAt     DateTime       @default(now())
   updatedAt     DateTime?      @updatedAt()
   studenttest   studenttest[]
   schoolclass   schoolclass    @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
-  skills        skill[]
+  skills        testhasskill[]
 
   @@index([schoolClassId])
+}
+
+model testhasskill {
+  testId       Int
+  skillId      Int
+
+  test         test     @relation(fields: [testId], references: [id], onDelete: Cascade)
+  skill        skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([testId, skillId])
 }
 
 model UserHasSchoolClass {

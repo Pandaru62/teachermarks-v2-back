@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Req, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Req, Put, Patch } from '@nestjs/common';
 import { SkillService } from './skill.service';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
@@ -49,6 +49,25 @@ export class SkillController {
     @Req() req: IRequestWithUser
   ): Promise<skill> {
     return this.skillService.update(id, body, req.user.sub);
+  }
+
+  
+  /* ARCHIVE SKILL FROM ID */
+  @Patch(':id/archive')
+  async archive(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: IRequestWithUser
+  ): Promise<skill> {
+    return this.skillService.archive(id, req.user.sub);
+  }
+
+  /* UNARCHIVE SKILL FROM ID */
+  @Patch(':id/unarchive')
+  async unArchive(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: IRequestWithUser
+  ): Promise<skill> {
+    return this.skillService.unArchive(id, req.user.sub);
   }
 
   /* DELETE A SKILL */

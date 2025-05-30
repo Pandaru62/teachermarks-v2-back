@@ -41,6 +41,24 @@ export class SkillService {
         })
     }
 
+    async archive(id: number, userId: number):Promise<skill> {
+        return this.prismaService.skill.update({
+            where: {id, userId},
+            data: {
+                isArchived: true
+            }
+        })
+    }
+
+    async unArchive(id: number, userId: number):Promise<skill> {
+        return this.prismaService.skill.update({
+            where: {id, userId},
+            data: {
+                isArchived: false
+            }
+        })
+    }
+
     async remove(id: number, userId: number): Promise<skill> {
             return this.prismaService.skill.delete({
             where: {id, userId}
