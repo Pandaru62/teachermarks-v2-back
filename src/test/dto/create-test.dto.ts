@@ -30,6 +30,6 @@ export class CreateTestDto {
     @IsNumber()
     coefficient: number;
 
-    skills: number[];
+    skills: {id: number, name: string}[];
 
 }

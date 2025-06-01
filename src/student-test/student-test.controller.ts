@@ -1,20 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, ParseIntPipe } from '@nestjs/common';
 import { StudentTestService } from './student-test.service';
 import { CreateStudentTestDto } from './dto/create-student-test.dto';
 import { UpdateStudentTestDto } from './dto/update-student-test.dto';
+import { IRequestWithUser } from 'src/auth/types';
 
 @Controller('student-test')
 export class StudentTestController {
-  constructor(private readonly studentTestService: StudentTestService) {}
+  constructor(
+    private readonly studentTestService: StudentTestService,
+  ) {}
 
   @Post()
   create(@Body() createStudentTestDto: CreateStudentTestDto) {
     return this.studentTestService.create(createStudentTestDto);
   }
 
-  @Get()
-  findAll() {
-    return this.studentTestService.findAll();
+  @Get('test/:id')
+  async findAllByTestId(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: IRequestWithUser
+  ) {
+    // !!! Check rights
+    const studentsTests = await this.studentTestService.findAllByTestId(id);
+
+    return (studentsTests)
   }
 
   @Get(':id')
