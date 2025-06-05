@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Req, ParseIntPipe, Put } from '@nestjs/common';
 import { StudentTestService } from './student-test.service';
 import { CreateStudentTestDto } from './dto/create-student-test.dto';
-import { UpdateStudentTestDto } from './dto/update-student-test.dto';
 import { IRequestWithUser } from 'src/auth/types';
 
 @Controller('student-test')
@@ -10,9 +9,22 @@ export class StudentTestController {
     private readonly studentTestService: StudentTestService,
   ) {}
 
-  @Post()
-  create(@Body() createStudentTestDto: CreateStudentTestDto) {
-    return this.studentTestService.create(createStudentTestDto);
+  @Post('/:studentId/student/:testId/test')
+  create(
+    @Body() createStudentTestDto: CreateStudentTestDto,
+    @Param('studentId', ParseIntPipe) studentId: number,
+    @Param('testId', ParseIntPipe) testId: number
+  ) {
+    return this.studentTestService.create(createStudentTestDto, studentId, testId);
+  }
+
+    @Get('student/:id')
+  async findAllByStudentId(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: IRequestWithUser
+  ) {
+    const studentTests = await this.studentTestService.findAllByStudentId(id, req.user.sub);
+    return (studentTests)
   }
 
   @Get('test/:id')
@@ -20,8 +32,7 @@ export class StudentTestController {
     @Param('id', ParseIntPipe) id: number,
     @Req() req: IRequestWithUser
   ) {
-    // !!! Check rights
-    const studentsTests = await this.studentTestService.findAllByTestId(id);
+    const studentsTests = await this.studentTestService.findAllByTestId(id, req.user.sub);
 
     return (studentsTests)
   }
@@ -31,13 +42,30 @@ export class StudentTestController {
     return this.studentTestService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudentTestDto: UpdateStudentTestDto) {
-    return this.studentTestService.update(+id, updateStudentTestDto);
+  @Put('/:studentId/student/:testId/test')
+  async createOrUpdate(
+    @Body() data: CreateStudentTestDto,
+    @Param('studentId', ParseIntPipe) studentId: number,
+    @Param('testId', ParseIntPipe) testId: number,
+    @Req() req: IRequestWithUser
+  ) {
+
+    // 1. Check if there's already a studentTest with given studentId and testId
+    const existingStudentTest = await this.studentTestService.checkIfExists(studentId, testId, req.user.sub)
+    // 2. If it exists, update it
+    if(existingStudentTest) {
+      return this.studentTestService.update(existingStudentTest.id, data)
+    }
+
+    // 3. If it does not exist, create it
+    if(!existingStudentTest) {
+      return this.studentTestService.create(data, studentId, testId);
+    }
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.studentTestService.remove(+id);
   }
+
 }
