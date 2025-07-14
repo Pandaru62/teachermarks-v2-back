@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "prisma/prisma.service";
 import { token, TypeTokenEnum } from "@prisma/client";
@@ -76,5 +76,13 @@ export class AuthService {
     await this.prismaService.token.delete({
       where: { user_id_type },
     });
+  }
+
+  async verifyJwt<T extends object = any>(token: string, secret: string): Promise<T> {
+    try {
+      return await this.jwtService.verifyAsync<T>(token, { secret });
+    } catch (err) {
+      throw new UnauthorizedException("Invalid or expired token");
+    }
   }
 }

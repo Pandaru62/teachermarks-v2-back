@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UserService } from './user.service';
+import { Controller, Post, Body, Param, Put, Req, ParseIntPipe, UnauthorizedException, Patch } from '@nestjs/common';
+import { UserService, UserWithoutPassword } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { IRequestWithUser } from 'src/auth/types';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Controller('user')
 export class UserController {
@@ -12,23 +13,22 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
+  @Put(':id')
+  async updateProfile(
+    @Body() updateProfileDto: UpdateProfileDto,
+    @Req() req : IRequestWithUser,
+    @Param('id', ParseIntPipe) id: number
+  ) : Promise<UserWithoutPassword> {
+      if(req.user.sub !== id) {
+        throw new UnauthorizedException("You're not allowed to edit this profile.")
+      }
+      return this.userService.updateProfile(updateProfileDto, id)
+    }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.userService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.userService.update(+id, updateUserDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.userService.remove(+id);
-  // }
+  @Patch('first-visit')
+  async disableFirstVisit(
+    @Req() req: IRequestWithUser
+  ) {
+    return this.userService.disableIsFirstVisit(req.user.sub);
+  }
 }

@@ -20,7 +20,6 @@ export class AuthGuard implements CanActivate {
     ]);
     // Si les informations sont publiques, on autorise l'accès à la ressource
     if (isPublic) {
-      // 💡 See this condition
       return true;
     }
 
@@ -37,7 +36,7 @@ export class AuthGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
       });
-      // 💡 On assigne le payload à l'objet request ici
+      // On assigne le payload à l'objet request ici
       // afin que nous puissions y accéder dans nos gestionnaires de routes
       request["user"] = payload;
     } catch (error) {

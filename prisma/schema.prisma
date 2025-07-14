@@ -12,6 +12,7 @@ model user {
   email         String         @unique
   password      String
   is_validated  Boolean        @default(false)
+  is_first_visit  Boolean      @default(true)
   role          UserRoleEnum
   createdAt     DateTime       @default(now())
   updatedAt     DateTime?      @updatedAt()
