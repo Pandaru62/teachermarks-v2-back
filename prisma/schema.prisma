@@ -14,6 +14,7 @@ model user {
   is_validated  Boolean        @default(false)
   is_first_visit  Boolean      @default(true)
   role          UserRoleEnum
+  current_trimester TrimesterEnum @default(TR1)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime?      @updatedAt()
   profile       profile?
@@ -84,6 +85,17 @@ model student {
   updatedAt             DateTime?               @updatedAt()
   schoolClasses         StudentHasSchoolClass[]
   studenttest           studenttest[]
+  reports               report[]
+}
+
+model report {
+  id                    Int                     @id @default(autoincrement())
+  studentId             Int
+  trimester             TrimesterEnum
+  description           String
+  student               student                 @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, trimester])
 }
 
 model studenttest {

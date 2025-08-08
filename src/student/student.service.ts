@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { student } from '@prisma/client';
+import { student, TrimesterEnum } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateManyStudentsDto, CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
@@ -30,7 +30,7 @@ export class StudentService {
         })
     }
 
-    async getStudentsByClass(schoolClassId: number): Promise<student[]> {
+    async getStudentsByClass(schoolClassId: number): Promise<any> {
         return this.prismaService.student.findMany({
             where: {
                 schoolClasses: {
@@ -39,50 +39,59 @@ export class StudentService {
                     }
                 }
             },
-            orderBy: {
-                lastName: 'asc'
-            }
-            // select: {
-            //     schoolClasses: {
-            //         select: {
-            //             schoolClass: {
-            //                 select: {
-            //                     name: true
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-        })
-    }
-
-    async getById(id: number): Promise<{id: number, firstName: string, lastName: string, classes: string[][]}> {
-        const studentWithClass = await this.prismaService.student.findUnique({
-            where: {id},
-            include: {
+            select: {
+                firstName: true,
+                id: true,
+                lastName: true,
                 schoolClasses: {
                     select: {
                         schoolClass: {
                             select: {
-                                name: true
+                                name: true,
+                                id: true
                             }
                         }
                     }
                 }
+            },
+            orderBy: {
+                lastName: 'asc'
             }
         })
-
-        return (
-            {
-                id: studentWithClass.id,
-                firstName: studentWithClass.firstName,
-                lastName: studentWithClass.lastName,
-                classes: [
-                    studentWithClass.schoolClasses.map((classes) => classes.schoolClass.name)
-                ]
-            }
-        )
     }
+
+    async getById(id: number): Promise<{id: number, firstName: string, lastName: string, classes: {name: string, id: number}[]}> {
+    const studentWithClass = await this.prismaService.student.findUnique({
+        where: { id },
+        include: {
+        schoolClasses: {
+            select: {
+            schoolClass: {
+                select: {
+                name: true,
+                id: true
+                }
+            }
+            }
+        }
+        }
+    });
+
+    if (!studentWithClass) {
+        throw new Error(`Student with id ${id} not found`);
+    }
+
+    return {
+        id: studentWithClass.id,
+        firstName: studentWithClass.firstName,
+        lastName: studentWithClass.lastName,
+        classes: studentWithClass.schoolClasses.map(entry => ({
+        name: entry.schoolClass.name,
+        id: entry.schoolClass.id
+        }))
+    };
+    }
+
 
     async create(data: CreateStudentDto): Promise<student> {
         const newStudent = await this.prismaService.student.create({
@@ -134,6 +143,23 @@ export class StudentService {
                         studentId: student.id
                     }
                 })
+            )
+        );
+
+        // Create their reports for each trimester
+        const trimesters = [TrimesterEnum.TR1, TrimesterEnum.TR2, TrimesterEnum.TR3];
+
+        await Promise.all(
+            newStudents.flatMap(student =>
+                trimesters.map(trimester =>
+                this.prismaService.report.create({
+                    data: {
+                    description: "",
+                    trimester,
+                    studentId: student.id,
+                    },
+                })
+                )
             )
         );
     
