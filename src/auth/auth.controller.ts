@@ -70,7 +70,8 @@ export class AuthController {
         lastname: userFound.profile.lastname,
         school: userFound.profile.school,
         id: userFound.id,
-        is_first_visit: userFound.is_first_visit
+        is_first_visit: userFound.is_first_visit,
+        current_trimester: userFound.current_trimester
       }
     }
   }

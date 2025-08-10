@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'prisma/prisma.service';
-import { profile, user } from '@prisma/client';
+import { profile, TrimesterEnum, user } from '@prisma/client';
 import { UserWithProfile } from './entities/user.entity';
+import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 
 export interface UserWithoutPassword {
     email: string;
@@ -11,6 +12,7 @@ export interface UserWithoutPassword {
     lastname: string;
     school: string;
     is_first_visit: boolean;
+    current_trimester: TrimesterEnum;
 }
 
 @Injectable()
@@ -30,6 +32,7 @@ export class UserService {
         role: true,
         is_validated: true,
         is_first_visit: true,
+        current_trimester: true,
         profile: {
           select: {
             firstname: true,
@@ -48,6 +51,7 @@ export class UserService {
         password: data.password,
         role: 'TEACHER',
         is_validated: true,
+        current_trimester: TrimesterEnum.TR1,
         profile: {
           create: {
             firstname: "",
@@ -73,7 +77,8 @@ export class UserService {
         user: {
           select: {
             is_first_visit: true,
-            email: true
+            email: true,
+            current_trimester: true
           }
         }
       }
@@ -86,9 +91,23 @@ export class UserService {
         firstname: profile.firstname,
         lastname: profile.lastname,
         school: profile.school,
-        is_first_visit: updatedProfile.user.is_first_visit
+        is_first_visit: updatedProfile.user.is_first_visit,
+        current_trimester: updatedProfile.user.current_trimester
       }
     }
+  }
+
+  async updatePreferences(body: UpdatePreferencesDto, userId: number) : Promise<TrimesterEnum> {
+    const updatedTrimester = await this.prismaService.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        current_trimester: body.current_trimester
+      }
+    })
+
+    return updatedTrimester.current_trimester
   }
 
   async disableIsFirstVisit(userId: number) : Promise<user> {
