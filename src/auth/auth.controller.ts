@@ -81,7 +81,6 @@ export class AuthController {
   async signup(
   @Body() body: CreateUserDto
   ) {
-    console.log("🚀 ~ AuthController ~ body:", body)
     // check user email doesn't exist
     const user =  await this.userService.findByEmail(body.email);
     if (user) throw new ConflictException("Bad Credentials");

@@ -31,9 +31,7 @@ export class StudentController {
   // TYPE
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    const student = await this.studentService.getById(id);
-    console.log("🚀 ~ StudentController ~ findOne ~ student:", student)
-    return student
+    return this.studentService.getById(id);
   }
 
   @Put(':id')
