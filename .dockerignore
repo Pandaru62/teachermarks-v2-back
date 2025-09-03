@@ -1,0 +1,19 @@
+# Node
+/node_modules/*
+npm-debug.log
+
+# Build
+dist
+build
+test
+
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.*
+
+# Documentation
+*.md
