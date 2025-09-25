@@ -167,11 +167,16 @@ export class StudentService {
     }
     
 
-    async update(id: number, data: UpdateStudentDto):Promise<student> {
-        return this.prismaService.student.update({
+    async update(id: number, data: UpdateStudentDto): Promise<{id: number, firstName: string, lastName: string, classes: {name: string, id: number}[]}> {
+        const updatedStudent = await this.prismaService.student.update({
             where: {id},
             data
         })
+
+        if(updatedStudent) {
+            return this.getById(id);
+        }
+
     }
 
     async remove(id: number): Promise<student> {

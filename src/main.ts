@@ -2,9 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { CustomHttpExceptionFilter } from './auth/custom-exceptions/custom.filter-exception';
 import { ValidationPipe } from '@nestjs/common';
+import { ExpressAdapter } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const adapter = new ExpressAdapter();
+  adapter.set('trust proxy', 1)
+  const app = await NestFactory.create(AppModule, adapter);
 
   app.useGlobalFilters(new CustomHttpExceptionFilter());
   app.useGlobalPipes(new ValidationPipe());

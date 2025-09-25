@@ -35,7 +35,7 @@ export class StudentController {
   }
 
   @Put(':id')
-  async update(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateStudentDto): Promise<student> {
+  async update(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateStudentDto) {
     return this.studentService.update(id, body);
   }
 
