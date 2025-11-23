@@ -207,6 +207,16 @@ async create(data: CreateTestDto): Promise<test & { skills: { id: number; name: 
       }
     });
 
+    // Delete associated testskills
+    await this.prismaService.studenttesthasskill.deleteMany({
+      where: {
+        studenttest: {
+          testId: id
+        },
+        skillId: { in: skillsToDelete }
+      }
+    });
+
     // Add new skills
     for(const skillId of skillsToAdd) {
       await this.prismaService.testhasskill.create({
