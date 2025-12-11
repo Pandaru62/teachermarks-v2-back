@@ -1,10 +1,10 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "./generated"
 }
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
 model user {
@@ -21,8 +21,31 @@ model user {
   schoolClasses UserHasSchoolClass[]
   createdSkills skill[]
   tokens        token[]
+  notifications userHasNotifications[]
 
   @@index([id])
+}
+
+model notifications {
+  id            Int            @id @default(autoincrement())
+  title         String
+  message       String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?      @updatedAt()
+  users         userHasNotifications[]
+
+  @@index([id])
+}
+
+model userHasNotifications {
+  userId         Int
+  notificationId Int
+  isRead         Boolean        @default(false)
+  user           user           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notification   notifications  @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@id([userId, notificationId])
+  @@index([notificationId])
 }
 
 model profile {
@@ -107,6 +130,7 @@ model studenttest {
   isUnmarked          Boolean                   @default(false)
   createdAt           DateTime                  @default(now())
   updatedAt           DateTime?                 @updatedAt()
+  commment            String?                   @default("")
   student             student                   @relation(fields: [studentId], references: [id], onDelete: Cascade)
   test                test                      @relation(fields: [testId], references: [id], onDelete: Cascade)
   studenttesthasskill studenttesthasskill[]
@@ -136,14 +160,27 @@ model test {
   date          DateTime
   trimester     TrimesterEnum
   scale         Int
-  coefficient   Int
+  coefficient Decimal           @db.Decimal(5, 2)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime?      @updatedAt()
   studenttest   studenttest[]
   schoolclass   schoolclass    @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
   skills        testhasskill[]
+  testTagId      Int?
+  testTag        testTag?          @relation(fields: [testTagId], references: [id], onDelete: SetNull)
 
   @@index([schoolClassId])
+}
+
+model testTag {
+  id          Int             @id @default(autoincrement())
+  name        String
+  color       String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime?       @updatedAt()
+  tests       test[]
+
+  @@index([id])
 }
 
 model testhasskill {

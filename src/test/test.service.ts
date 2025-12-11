@@ -16,6 +16,7 @@ export type TestWithClassAndSkills = {
   schoolclass: {
     name: string;
     count: number;
+    color: string;
   };
   skills: {
     id: number;
@@ -71,6 +72,7 @@ export class TestService {
           schoolclass: {
             select: {
               name: true,
+              color: true,
               _count: {
                 select: {
                   students: true
@@ -103,6 +105,7 @@ export class TestService {
           trimester: test.trimester,
           schoolclass: {
             name: test.schoolclass.name,
+            color: test.schoolclass.color,
             count: test.schoolclass._count.students
           },
           skills: test.skills.map((sk) => ({
