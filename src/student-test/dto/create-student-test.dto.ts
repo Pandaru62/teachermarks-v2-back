@@ -1,4 +1,4 @@
-import { LevelEnum } from "@prisma/client";
+import { LevelEnum } from 'prisma/generated/browser';
 import { IsBoolean, IsNumber } from "class-validator";
 
 export class CreateStudentTestDto {

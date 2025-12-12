@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import 'dotenv/config';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
@@ -8,7 +9,13 @@ import { RolesGuard } from './guards/roles.guard';
 import { AuthGuard } from './guards/auth.guard';
 
 @Module({
-  imports: [JwtModule, UserModule],
+  imports: [
+    JwtModule.register({
+      secret: process.env.JWT_SECRET ?? 'secret',
+      signOptions: { expiresIn: Number(process.env.JWT_EXPIRES_IN) || 7200 },
+    }),
+    UserModule,
+  ],
   controllers: [AuthController],
   providers: [
     AuthService,

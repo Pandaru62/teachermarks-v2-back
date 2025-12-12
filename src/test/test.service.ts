@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { test, TrimesterEnum } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateTestDto } from './dto/create-test.dto';
 import { UpdateTestDto } from './dto/update-test.dto';
+import { Decimal } from 'prisma/generated/internal/prismaNamespace';
+import { TrimesterEnum } from 'prisma/generated/enums';
+import { test } from 'prisma/generated/browser';
 
 export type TestWithClassAndSkills = {
   id: number;
   name: string;
   description: string;
-  coefficient: number;
+  coefficient: Decimal;
   date: Date;
   scale: number;
   schoolClassId: number;

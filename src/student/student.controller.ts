@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Req } from '@nestjs/common';
-import { student } from '@prisma/client';
+import { student } from 'prisma/generated/browser';
 import { StudentService } from './student.service';
 import { CreateManyStudentsDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';

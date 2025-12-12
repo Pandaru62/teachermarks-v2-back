@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "prisma/prisma.service";
-import { token, TypeTokenEnum } from "@prisma/client";
+import { token, TypeTokenEnum } from 'prisma/generated/browser';
 import { IPayloadType } from "./types";
 
 @Injectable()

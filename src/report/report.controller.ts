@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Put } from '@nestjs/common';
-import { report } from '@prisma/client';
+import { report } from 'prisma/generated/browser';
 import { ReportService } from './report.service';
 import { UpdateReportDto } from './dto/update-report.dto';
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
-import { skill } from '@prisma/client';
+import { skill } from 'prisma/generated/browser';
 import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()

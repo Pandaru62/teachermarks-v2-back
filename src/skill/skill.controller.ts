@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Req, Put, Pat
 import { SkillService } from './skill.service';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
-import { skill, UserRoleEnum } from '@prisma/client';
+import { skill, UserRoleEnum } from 'prisma/generated/browser';
 import { Roles } from 'src/decorators/roles.decorator';
 import { IRequestWithUser } from 'src/auth/types';
 

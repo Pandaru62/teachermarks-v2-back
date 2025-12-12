@@ -1,4 +1,4 @@
-import { TrimesterEnum } from '@prisma/client';
+import { TrimesterEnum } from 'prisma/generated/browser';
 import { IsEnum, IsString } from 'class-validator';
 
 export class UpdateReportDto {

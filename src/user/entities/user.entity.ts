@@ -1,4 +1,4 @@
-import { profile, user } from "@prisma/client";
+import { profile, user } from 'prisma/generated/browser';
 
 export class User {}
 

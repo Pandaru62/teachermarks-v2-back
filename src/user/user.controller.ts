@@ -4,7 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { IRequestWithUser } from 'src/auth/types';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { UpdatePreferencesDto } from './dto/update-preferences.dto';
-import { TrimesterEnum } from '@prisma/client';
+import { TrimesterEnum } from 'prisma/generated/browser';
 
 @Controller('user')
 export class UserController {

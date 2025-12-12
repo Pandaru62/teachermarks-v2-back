@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { student, TrimesterEnum } from '@prisma/client';
+import { student, TrimesterEnum } from 'prisma/generated/browser';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateManyStudentsDto, CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';

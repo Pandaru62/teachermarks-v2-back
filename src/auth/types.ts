@@ -1,4 +1,4 @@
-import { UserRoleEnum } from "@prisma/client";
+import { UserRoleEnum } from 'prisma/generated/browser';
 import { Request } from "express";
 
 export interface IPayloadType {

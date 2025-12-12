@@ -5,7 +5,7 @@ import { UserService } from 'src/user/user.service';
 import * as argon2 from 'argon2';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { IPayloadType, IRequestWithRefreshToken } from './types';
-import { TypeTokenEnum } from '@prisma/client';
+import { TypeTokenEnum } from 'prisma/generated/browser';
 import { Public } from 'src/decorators/public.decorator';
 import { Request, Response } from 'express';
 

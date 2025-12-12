@@ -1,4 +1,4 @@
-import { TrimesterEnum } from "@prisma/client";
+import { TrimesterEnum } from 'prisma/generated/browser';
 
 export class UpdatePreferencesDto {
 

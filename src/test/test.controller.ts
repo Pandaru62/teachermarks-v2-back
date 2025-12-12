@@ -10,11 +10,11 @@ import {
   Put,
   Req,
 } from '@nestjs/common';
-import { test } from '@prisma/client';
 import { TestService, TestWithClassAndSkills } from './test.service';
 import { CreateTestDto } from './dto/create-test.dto';
 import { UpdateTestDto } from './dto/update-test.dto';
 import { IRequestWithUser } from 'src/auth/types';
+import { test } from 'prisma/generated/browser';
 
 @Controller('tests')
 export class TestController {

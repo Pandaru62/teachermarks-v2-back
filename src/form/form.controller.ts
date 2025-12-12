@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { FormService } from './form.service';
 import { CreateFormDto, UpdateFormDto } from './form.dto';
-import { form, UserRoleEnum } from '@prisma/client';
+import { form, UserRoleEnum } from 'prisma/generated/browser';
 import { Roles } from 'src/decorators/roles.decorator';
 
 @Controller('forms')

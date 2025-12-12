@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext, HttpStatus } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { UserRoleEnum } from "@prisma/client";
+import { UserRoleEnum } from 'prisma/generated/browser';
 import { ROLES_KEY } from "src/decorators/roles.decorator";
 import { CustomHttpException } from "../custom-exceptions/customhttp.exception";
 @Injectable()

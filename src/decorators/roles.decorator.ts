@@ -1,5 +1,5 @@
 import { SetMetadata } from "@nestjs/common";
-import { UserRoleEnum } from "@prisma/client";
+import { UserRoleEnum } from 'prisma/generated/browser';
 
 /**
  * Création d'une metadonnée qui sera disponible lors de l'execution de la méthode où elle est appliquée.

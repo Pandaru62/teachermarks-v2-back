@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Req, Put, Una
 import { SchoolclassService } from './schoolclass.service';
 import { CreateSchoolclassDto } from './dto/create-schoolclass.dto';
 import { UpdateSchoolclassDto } from './dto/update-schoolclass.dto';
-import { schoolclass, UserRoleEnum } from '@prisma/client';
+import { schoolclass, UserRoleEnum } from 'prisma/generated/browser';
 import { Roles } from 'src/decorators/roles.decorator';
 import { IRequestWithUser } from 'src/auth/types';
 

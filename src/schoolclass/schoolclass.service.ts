@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateSchoolclassDto } from './dto/create-schoolclass.dto';
 import { UpdateSchoolclassDto } from './dto/update-schoolclass.dto';
 import { PrismaService } from 'prisma/prisma.service';
-import { schoolclass } from '@prisma/client';
+import { schoolclass } from 'prisma/generated/browser';
 
 @Injectable()
 export class SchoolclassService {

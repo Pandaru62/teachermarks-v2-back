@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'prisma/prisma.service';
-import { profile, TrimesterEnum, user } from '@prisma/client';
+import { profile, TrimesterEnum, user } from 'prisma/generated/browser';
 import { UserWithProfile } from './entities/user.entity';
 import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 
