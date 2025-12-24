@@ -22,8 +22,11 @@ model user {
   createdSkills skill[]
   tokens        token[]
   notifications userHasNotifications[]
+  weaknesses weakness[]
+  comments comment[]
 
   @@index([id])
+  testTags testTag[]
 }
 
 model notifications {
@@ -109,6 +112,20 @@ model student {
   schoolClasses         StudentHasSchoolClass[]
   studenttest           studenttest[]
   reports               report[]
+  comments              comment[]
+}
+
+model comment {
+  id                    Int                     @id @default(autoincrement())
+  studentId             Int
+  content               String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime?               @updatedAt()
+  student               student                 @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  createdById          Int
+  createdBy            user                    @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
 }
 
 model report {
@@ -134,6 +151,7 @@ model studenttest {
   student             student                   @relation(fields: [studentId], references: [id], onDelete: Cascade)
   test                test                      @relation(fields: [testId], references: [id], onDelete: Cascade)
   studenttesthasskill studenttesthasskill[]
+  studenttesthasweaknesses studenttesthasweaknesses[]
 
   @@unique(name: "studentTestId", [studentId, testId])
   @@index([studentId])
@@ -150,6 +168,30 @@ model studenttesthasskill {
   @@id(name: "studentTestSkillId", [studentTestId, skillId])
   @@index([skillId])
   @@index([studentTestId])
+}
+
+model studenttesthasweaknesses {
+  studentTestId    Int
+  weaknessId       Int
+  description      String
+  weakness         weakness                     @relation(fields: [weaknessId], references: [id], onDelete: Cascade)
+  studenttest      studenttest                  @relation(fields: [studentTestId], references: [id], onDelete: Cascade)
+
+  @@id(name: "studentTestWeaknessId", [studentTestId, weaknessId])
+  @@index([weaknessId])
+  @@index([studentTestId])
+}
+
+model weakness {
+  id                  Int                      @id @default(autoincrement())
+  description         String
+  studenttesthasweaknesses studenttesthasweaknesses[]
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime?                @updatedAt()
+  userId              Int?
+  createdBy           user?                    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
 }
 
 model test {
@@ -178,6 +220,8 @@ model testTag {
   color       String
   createdAt   DateTime        @default(now())
   updatedAt   DateTime?       @updatedAt()
+  createdById Int
+  createdBy   user            @relation(fields: [createdById], references: [id], onDelete: Cascade)
   tests       test[]
 
   @@index([id])

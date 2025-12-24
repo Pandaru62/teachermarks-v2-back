@@ -253,6 +253,9 @@ export type userWhereInput = {
   createdSkills?: Prisma.SkillListRelationFilter
   tokens?: Prisma.TokenListRelationFilter
   notifications?: Prisma.UserHasNotificationsListRelationFilter
+  weaknesses?: Prisma.WeaknessListRelationFilter
+  comments?: Prisma.CommentListRelationFilter
+  testTags?: Prisma.TestTagListRelationFilter
 }
 
 export type userOrderByWithRelationInput = {
@@ -270,6 +273,9 @@ export type userOrderByWithRelationInput = {
   createdSkills?: Prisma.skillOrderByRelationAggregateInput
   tokens?: Prisma.tokenOrderByRelationAggregateInput
   notifications?: Prisma.userHasNotificationsOrderByRelationAggregateInput
+  weaknesses?: Prisma.weaknessOrderByRelationAggregateInput
+  comments?: Prisma.commentOrderByRelationAggregateInput
+  testTags?: Prisma.testTagOrderByRelationAggregateInput
   _relevance?: Prisma.userOrderByRelevanceInput
 }
 
@@ -291,6 +297,9 @@ export type userWhereUniqueInput = Prisma.AtLeast<{
   createdSkills?: Prisma.SkillListRelationFilter
   tokens?: Prisma.TokenListRelationFilter
   notifications?: Prisma.UserHasNotificationsListRelationFilter
+  weaknesses?: Prisma.WeaknessListRelationFilter
+  comments?: Prisma.CommentListRelationFilter
+  testTags?: Prisma.TestTagListRelationFilter
 }, "id" | "email">
 
 export type userOrderByWithAggregationInput = {
@@ -339,6 +348,9 @@ export type userCreateInput = {
   createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
   tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
   notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
 }
 
 export type userUncheckedCreateInput = {
@@ -356,6 +368,9 @@ export type userUncheckedCreateInput = {
   createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
   tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type userUpdateInput = {
@@ -372,6 +387,9 @@ export type userUpdateInput = {
   createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
   tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userUncheckedUpdateInput = {
@@ -389,6 +407,9 @@ export type userUncheckedUpdateInput = {
   createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
   tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userCreateManyInput = {
@@ -562,6 +583,50 @@ export type userUpdateOneWithoutCreatedSkillsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutCreatedSkillsInput, Prisma.userUpdateWithoutCreatedSkillsInput>, Prisma.userUncheckedUpdateWithoutCreatedSkillsInput>
 }
 
+export type userCreateNestedOneWithoutCommentsInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutCommentsInput, Prisma.userUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutCommentsInput
+  connect?: Prisma.userWhereUniqueInput
+}
+
+export type userUpdateOneRequiredWithoutCommentsNestedInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutCommentsInput, Prisma.userUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutCommentsInput
+  upsert?: Prisma.userUpsertWithoutCommentsInput
+  connect?: Prisma.userWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutCommentsInput, Prisma.userUpdateWithoutCommentsInput>, Prisma.userUncheckedUpdateWithoutCommentsInput>
+}
+
+export type userCreateNestedOneWithoutWeaknessesInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutWeaknessesInput, Prisma.userUncheckedCreateWithoutWeaknessesInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutWeaknessesInput
+  connect?: Prisma.userWhereUniqueInput
+}
+
+export type userUpdateOneWithoutWeaknessesNestedInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutWeaknessesInput, Prisma.userUncheckedCreateWithoutWeaknessesInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutWeaknessesInput
+  upsert?: Prisma.userUpsertWithoutWeaknessesInput
+  disconnect?: Prisma.userWhereInput | boolean
+  delete?: Prisma.userWhereInput | boolean
+  connect?: Prisma.userWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutWeaknessesInput, Prisma.userUpdateWithoutWeaknessesInput>, Prisma.userUncheckedUpdateWithoutWeaknessesInput>
+}
+
+export type userCreateNestedOneWithoutTestTagsInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutTestTagsInput, Prisma.userUncheckedCreateWithoutTestTagsInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutTestTagsInput
+  connect?: Prisma.userWhereUniqueInput
+}
+
+export type userUpdateOneRequiredWithoutTestTagsNestedInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutTestTagsInput, Prisma.userUncheckedCreateWithoutTestTagsInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutTestTagsInput
+  upsert?: Prisma.userUpsertWithoutTestTagsInput
+  connect?: Prisma.userWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutTestTagsInput, Prisma.userUpdateWithoutTestTagsInput>, Prisma.userUncheckedUpdateWithoutTestTagsInput>
+}
+
 export type userCreateNestedOneWithoutSchoolClassesInput = {
   create?: Prisma.XOR<Prisma.userCreateWithoutSchoolClassesInput, Prisma.userUncheckedCreateWithoutSchoolClassesInput>
   connectOrCreate?: Prisma.userCreateOrConnectWithoutSchoolClassesInput
@@ -603,6 +668,9 @@ export type userCreateWithoutNotificationsInput = {
   schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
   createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
   tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
 }
 
 export type userUncheckedCreateWithoutNotificationsInput = {
@@ -619,6 +687,9 @@ export type userUncheckedCreateWithoutNotificationsInput = {
   schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
   createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
   tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type userCreateOrConnectWithoutNotificationsInput = {
@@ -650,6 +721,9 @@ export type userUpdateWithoutNotificationsInput = {
   schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
   createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
   tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userUncheckedUpdateWithoutNotificationsInput = {
@@ -666,6 +740,9 @@ export type userUncheckedUpdateWithoutNotificationsInput = {
   schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
   createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
   tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userCreateWithoutProfileInput = {
@@ -681,6 +758,9 @@ export type userCreateWithoutProfileInput = {
   createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
   tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
   notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
 }
 
 export type userUncheckedCreateWithoutProfileInput = {
@@ -697,6 +777,9 @@ export type userUncheckedCreateWithoutProfileInput = {
   createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
   tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type userCreateOrConnectWithoutProfileInput = {
@@ -728,6 +811,9 @@ export type userUpdateWithoutProfileInput = {
   createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
   tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userUncheckedUpdateWithoutProfileInput = {
@@ -744,6 +830,9 @@ export type userUncheckedUpdateWithoutProfileInput = {
   createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
   tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userCreateWithoutCreatedSkillsInput = {
@@ -759,6 +848,9 @@ export type userCreateWithoutCreatedSkillsInput = {
   schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
   tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
   notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
 }
 
 export type userUncheckedCreateWithoutCreatedSkillsInput = {
@@ -775,6 +867,9 @@ export type userUncheckedCreateWithoutCreatedSkillsInput = {
   schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
   tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type userCreateOrConnectWithoutCreatedSkillsInput = {
@@ -806,6 +901,9 @@ export type userUpdateWithoutCreatedSkillsInput = {
   schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
   tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userUncheckedUpdateWithoutCreatedSkillsInput = {
@@ -822,6 +920,279 @@ export type userUncheckedUpdateWithoutCreatedSkillsInput = {
   schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
   tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
+export type userCreateWithoutCommentsInput = {
+  email: string
+  password: string
+  is_validated?: boolean
+  is_first_visit?: boolean
+  role: $Enums.UserRoleEnum
+  current_trimester?: $Enums.TrimesterEnum
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  profile?: Prisma.profileCreateNestedOneWithoutUserInput
+  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
+  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
+  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
+  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
+}
+
+export type userUncheckedCreateWithoutCommentsInput = {
+  id?: number
+  email: string
+  password: string
+  is_validated?: boolean
+  is_first_visit?: boolean
+  role: $Enums.UserRoleEnum
+  current_trimester?: $Enums.TrimesterEnum
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
+  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
+  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
+  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type userCreateOrConnectWithoutCommentsInput = {
+  where: Prisma.userWhereUniqueInput
+  create: Prisma.XOR<Prisma.userCreateWithoutCommentsInput, Prisma.userUncheckedCreateWithoutCommentsInput>
+}
+
+export type userUpsertWithoutCommentsInput = {
+  update: Prisma.XOR<Prisma.userUpdateWithoutCommentsInput, Prisma.userUncheckedUpdateWithoutCommentsInput>
+  create: Prisma.XOR<Prisma.userCreateWithoutCommentsInput, Prisma.userUncheckedCreateWithoutCommentsInput>
+  where?: Prisma.userWhereInput
+}
+
+export type userUpdateToOneWithWhereWithoutCommentsInput = {
+  where?: Prisma.userWhereInput
+  data: Prisma.XOR<Prisma.userUpdateWithoutCommentsInput, Prisma.userUncheckedUpdateWithoutCommentsInput>
+}
+
+export type userUpdateWithoutCommentsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
+  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
+  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
+  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
+  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
+}
+
+export type userUncheckedUpdateWithoutCommentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
+  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
+  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
+  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
+  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
+export type userCreateWithoutWeaknessesInput = {
+  email: string
+  password: string
+  is_validated?: boolean
+  is_first_visit?: boolean
+  role: $Enums.UserRoleEnum
+  current_trimester?: $Enums.TrimesterEnum
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  profile?: Prisma.profileCreateNestedOneWithoutUserInput
+  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
+  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
+  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
+  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
+  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
+}
+
+export type userUncheckedCreateWithoutWeaknessesInput = {
+  id?: number
+  email: string
+  password: string
+  is_validated?: boolean
+  is_first_visit?: boolean
+  role: $Enums.UserRoleEnum
+  current_trimester?: $Enums.TrimesterEnum
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
+  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
+  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
+  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type userCreateOrConnectWithoutWeaknessesInput = {
+  where: Prisma.userWhereUniqueInput
+  create: Prisma.XOR<Prisma.userCreateWithoutWeaknessesInput, Prisma.userUncheckedCreateWithoutWeaknessesInput>
+}
+
+export type userUpsertWithoutWeaknessesInput = {
+  update: Prisma.XOR<Prisma.userUpdateWithoutWeaknessesInput, Prisma.userUncheckedUpdateWithoutWeaknessesInput>
+  create: Prisma.XOR<Prisma.userCreateWithoutWeaknessesInput, Prisma.userUncheckedCreateWithoutWeaknessesInput>
+  where?: Prisma.userWhereInput
+}
+
+export type userUpdateToOneWithWhereWithoutWeaknessesInput = {
+  where?: Prisma.userWhereInput
+  data: Prisma.XOR<Prisma.userUpdateWithoutWeaknessesInput, Prisma.userUncheckedUpdateWithoutWeaknessesInput>
+}
+
+export type userUpdateWithoutWeaknessesInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
+  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
+  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
+  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
+  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
+  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
+}
+
+export type userUncheckedUpdateWithoutWeaknessesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
+  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
+  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
+  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
+  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
+export type userCreateWithoutTestTagsInput = {
+  email: string
+  password: string
+  is_validated?: boolean
+  is_first_visit?: boolean
+  role: $Enums.UserRoleEnum
+  current_trimester?: $Enums.TrimesterEnum
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  profile?: Prisma.profileCreateNestedOneWithoutUserInput
+  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
+  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
+  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
+  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
+}
+
+export type userUncheckedCreateWithoutTestTagsInput = {
+  id?: number
+  email: string
+  password: string
+  is_validated?: boolean
+  is_first_visit?: boolean
+  role: $Enums.UserRoleEnum
+  current_trimester?: $Enums.TrimesterEnum
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
+  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
+  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
+  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type userCreateOrConnectWithoutTestTagsInput = {
+  where: Prisma.userWhereUniqueInput
+  create: Prisma.XOR<Prisma.userCreateWithoutTestTagsInput, Prisma.userUncheckedCreateWithoutTestTagsInput>
+}
+
+export type userUpsertWithoutTestTagsInput = {
+  update: Prisma.XOR<Prisma.userUpdateWithoutTestTagsInput, Prisma.userUncheckedUpdateWithoutTestTagsInput>
+  create: Prisma.XOR<Prisma.userCreateWithoutTestTagsInput, Prisma.userUncheckedCreateWithoutTestTagsInput>
+  where?: Prisma.userWhereInput
+}
+
+export type userUpdateToOneWithWhereWithoutTestTagsInput = {
+  where?: Prisma.userWhereInput
+  data: Prisma.XOR<Prisma.userUpdateWithoutTestTagsInput, Prisma.userUncheckedUpdateWithoutTestTagsInput>
+}
+
+export type userUpdateWithoutTestTagsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
+  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
+  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
+  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
+  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
+}
+
+export type userUncheckedUpdateWithoutTestTagsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
+  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
+  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
+  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
+  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userCreateWithoutSchoolClassesInput = {
@@ -837,6 +1208,9 @@ export type userCreateWithoutSchoolClassesInput = {
   createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
   tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
   notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
 }
 
 export type userUncheckedCreateWithoutSchoolClassesInput = {
@@ -853,6 +1227,9 @@ export type userUncheckedCreateWithoutSchoolClassesInput = {
   createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
   tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type userCreateOrConnectWithoutSchoolClassesInput = {
@@ -884,6 +1261,9 @@ export type userUpdateWithoutSchoolClassesInput = {
   createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
   tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userUncheckedUpdateWithoutSchoolClassesInput = {
@@ -900,6 +1280,9 @@ export type userUncheckedUpdateWithoutSchoolClassesInput = {
   createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
   tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userCreateWithoutTokensInput = {
@@ -915,6 +1298,9 @@ export type userCreateWithoutTokensInput = {
   schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
   createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
 }
 
 export type userUncheckedCreateWithoutTokensInput = {
@@ -931,6 +1317,9 @@ export type userUncheckedCreateWithoutTokensInput = {
   schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
   createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
   notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
+  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
+  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type userCreateOrConnectWithoutTokensInput = {
@@ -962,6 +1351,9 @@ export type userUpdateWithoutTokensInput = {
   schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
   createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userUncheckedUpdateWithoutTokensInput = {
@@ -978,6 +1370,9 @@ export type userUncheckedUpdateWithoutTokensInput = {
   schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
   createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
   notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
+  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
+  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 
@@ -990,6 +1385,9 @@ export type UserCountOutputType = {
   createdSkills: number
   tokens: number
   notifications: number
+  weaknesses: number
+  comments: number
+  testTags: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -997,6 +1395,9 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   createdSkills?: boolean | UserCountOutputTypeCountCreatedSkillsArgs
   tokens?: boolean | UserCountOutputTypeCountTokensArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  weaknesses?: boolean | UserCountOutputTypeCountWeaknessesArgs
+  comments?: boolean | UserCountOutputTypeCountCommentsArgs
+  testTags?: boolean | UserCountOutputTypeCountTestTagsArgs
 }
 
 /**
@@ -1037,6 +1438,27 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.userHasNotificationsWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWeaknessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.weaknessWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.commentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTestTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.testTagWhereInput
+}
+
 
 export type userSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1053,6 +1475,9 @@ export type userSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdSkills?: boolean | Prisma.user$createdSkillsArgs<ExtArgs>
   tokens?: boolean | Prisma.user$tokensArgs<ExtArgs>
   notifications?: boolean | Prisma.user$notificationsArgs<ExtArgs>
+  weaknesses?: boolean | Prisma.user$weaknessesArgs<ExtArgs>
+  comments?: boolean | Prisma.user$commentsArgs<ExtArgs>
+  testTags?: boolean | Prisma.user$testTagsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1077,6 +1502,9 @@ export type userInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdSkills?: boolean | Prisma.user$createdSkillsArgs<ExtArgs>
   tokens?: boolean | Prisma.user$tokensArgs<ExtArgs>
   notifications?: boolean | Prisma.user$notificationsArgs<ExtArgs>
+  weaknesses?: boolean | Prisma.user$weaknessesArgs<ExtArgs>
+  comments?: boolean | Prisma.user$commentsArgs<ExtArgs>
+  testTags?: boolean | Prisma.user$testTagsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1088,6 +1516,9 @@ export type $userPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     createdSkills: Prisma.$skillPayload<ExtArgs>[]
     tokens: Prisma.$tokenPayload<ExtArgs>[]
     notifications: Prisma.$userHasNotificationsPayload<ExtArgs>[]
+    weaknesses: Prisma.$weaknessPayload<ExtArgs>[]
+    comments: Prisma.$commentPayload<ExtArgs>[]
+    testTags: Prisma.$testTagPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1444,6 +1875,9 @@ export interface Prisma__userClient<T, Null = never, ExtArgs extends runtime.Typ
   createdSkills<T extends Prisma.user$createdSkillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$createdSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$skillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tokens<T extends Prisma.user$tokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$tokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.user$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$userHasNotificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  weaknesses<T extends Prisma.user$weaknessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$weaknessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$weaknessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  comments<T extends Prisma.user$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$commentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  testTags<T extends Prisma.user$testTagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$testTagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$testTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1937,6 +2371,78 @@ export type user$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.UserHasNotificationsScalarFieldEnum | Prisma.UserHasNotificationsScalarFieldEnum[]
+}
+
+/**
+ * user.weaknesses
+ */
+export type user$weaknessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the weakness
+   */
+  select?: Prisma.weaknessSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the weakness
+   */
+  omit?: Prisma.weaknessOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.weaknessInclude<ExtArgs> | null
+  where?: Prisma.weaknessWhereInput
+  orderBy?: Prisma.weaknessOrderByWithRelationInput | Prisma.weaknessOrderByWithRelationInput[]
+  cursor?: Prisma.weaknessWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WeaknessScalarFieldEnum | Prisma.WeaknessScalarFieldEnum[]
+}
+
+/**
+ * user.comments
+ */
+export type user$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the comment
+   */
+  select?: Prisma.commentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the comment
+   */
+  omit?: Prisma.commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.commentInclude<ExtArgs> | null
+  where?: Prisma.commentWhereInput
+  orderBy?: Prisma.commentOrderByWithRelationInput | Prisma.commentOrderByWithRelationInput[]
+  cursor?: Prisma.commentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CommentScalarFieldEnum | Prisma.CommentScalarFieldEnum[]
+}
+
+/**
+ * user.testTags
+ */
+export type user$testTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the testTag
+   */
+  select?: Prisma.testTagSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the testTag
+   */
+  omit?: Prisma.testTagOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.testTagInclude<ExtArgs> | null
+  where?: Prisma.testTagWhereInput
+  orderBy?: Prisma.testTagOrderByWithRelationInput | Prisma.testTagOrderByWithRelationInput[]
+  cursor?: Prisma.testTagWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TestTagScalarFieldEnum | Prisma.TestTagScalarFieldEnum[]
 }
 
 /**

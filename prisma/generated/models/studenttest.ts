@@ -263,6 +263,7 @@ export type studenttestWhereInput = {
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.studentWhereInput>
   test?: Prisma.XOR<Prisma.TestScalarRelationFilter, Prisma.testWhereInput>
   studenttesthasskill?: Prisma.StudenttesthasskillListRelationFilter
+  studenttesthasweaknesses?: Prisma.StudenttesthasweaknessesListRelationFilter
 }
 
 export type studenttestOrderByWithRelationInput = {
@@ -278,6 +279,7 @@ export type studenttestOrderByWithRelationInput = {
   student?: Prisma.studentOrderByWithRelationInput
   test?: Prisma.testOrderByWithRelationInput
   studenttesthasskill?: Prisma.studenttesthasskillOrderByRelationAggregateInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesOrderByRelationAggregateInput
   _relevance?: Prisma.studenttestOrderByRelevanceInput
 }
 
@@ -298,6 +300,7 @@ export type studenttestWhereUniqueInput = Prisma.AtLeast<{
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.studentWhereInput>
   test?: Prisma.XOR<Prisma.TestScalarRelationFilter, Prisma.testWhereInput>
   studenttesthasskill?: Prisma.StudenttesthasskillListRelationFilter
+  studenttesthasweaknesses?: Prisma.StudenttesthasweaknessesListRelationFilter
 }, "id" | "studentTestId">
 
 export type studenttestOrderByWithAggregationInput = {
@@ -342,6 +345,7 @@ export type studenttestCreateInput = {
   student: Prisma.studentCreateNestedOneWithoutStudenttestInput
   test: Prisma.testCreateNestedOneWithoutStudenttestInput
   studenttesthasskill?: Prisma.studenttesthasskillCreateNestedManyWithoutStudenttestInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesCreateNestedManyWithoutStudenttestInput
 }
 
 export type studenttestUncheckedCreateInput = {
@@ -355,6 +359,7 @@ export type studenttestUncheckedCreateInput = {
   updatedAt?: Date | string | null
   commment?: string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedCreateNestedManyWithoutStudenttestInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedCreateNestedManyWithoutStudenttestInput
 }
 
 export type studenttestUpdateInput = {
@@ -367,6 +372,7 @@ export type studenttestUpdateInput = {
   student?: Prisma.studentUpdateOneRequiredWithoutStudenttestNestedInput
   test?: Prisma.testUpdateOneRequiredWithoutStudenttestNestedInput
   studenttesthasskill?: Prisma.studenttesthasskillUpdateManyWithoutStudenttestNestedInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUpdateManyWithoutStudenttestNestedInput
 }
 
 export type studenttestUncheckedUpdateInput = {
@@ -380,6 +386,7 @@ export type studenttestUncheckedUpdateInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedUpdateManyWithoutStudenttestNestedInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedUpdateManyWithoutStudenttestNestedInput
 }
 
 export type studenttestCreateManyInput = {
@@ -555,6 +562,20 @@ export type studenttestUpdateOneRequiredWithoutStudenttesthasskillNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.studenttestUpdateToOneWithWhereWithoutStudenttesthasskillInput, Prisma.studenttestUpdateWithoutStudenttesthasskillInput>, Prisma.studenttestUncheckedUpdateWithoutStudenttesthasskillInput>
 }
 
+export type studenttestCreateNestedOneWithoutStudenttesthasweaknessesInput = {
+  create?: Prisma.XOR<Prisma.studenttestCreateWithoutStudenttesthasweaknessesInput, Prisma.studenttestUncheckedCreateWithoutStudenttesthasweaknessesInput>
+  connectOrCreate?: Prisma.studenttestCreateOrConnectWithoutStudenttesthasweaknessesInput
+  connect?: Prisma.studenttestWhereUniqueInput
+}
+
+export type studenttestUpdateOneRequiredWithoutStudenttesthasweaknessesNestedInput = {
+  create?: Prisma.XOR<Prisma.studenttestCreateWithoutStudenttesthasweaknessesInput, Prisma.studenttestUncheckedCreateWithoutStudenttesthasweaknessesInput>
+  connectOrCreate?: Prisma.studenttestCreateOrConnectWithoutStudenttesthasweaknessesInput
+  upsert?: Prisma.studenttestUpsertWithoutStudenttesthasweaknessesInput
+  connect?: Prisma.studenttestWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.studenttestUpdateToOneWithWhereWithoutStudenttesthasweaknessesInput, Prisma.studenttestUpdateWithoutStudenttesthasweaknessesInput>, Prisma.studenttestUncheckedUpdateWithoutStudenttesthasweaknessesInput>
+}
+
 export type studenttestCreateNestedManyWithoutTestInput = {
   create?: Prisma.XOR<Prisma.studenttestCreateWithoutTestInput, Prisma.studenttestUncheckedCreateWithoutTestInput> | Prisma.studenttestCreateWithoutTestInput[] | Prisma.studenttestUncheckedCreateWithoutTestInput[]
   connectOrCreate?: Prisma.studenttestCreateOrConnectWithoutTestInput | Prisma.studenttestCreateOrConnectWithoutTestInput[]
@@ -606,6 +627,7 @@ export type studenttestCreateWithoutStudentInput = {
   commment?: string | null
   test: Prisma.testCreateNestedOneWithoutStudenttestInput
   studenttesthasskill?: Prisma.studenttesthasskillCreateNestedManyWithoutStudenttestInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesCreateNestedManyWithoutStudenttestInput
 }
 
 export type studenttestUncheckedCreateWithoutStudentInput = {
@@ -618,6 +640,7 @@ export type studenttestUncheckedCreateWithoutStudentInput = {
   updatedAt?: Date | string | null
   commment?: string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedCreateNestedManyWithoutStudenttestInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedCreateNestedManyWithoutStudenttestInput
 }
 
 export type studenttestCreateOrConnectWithoutStudentInput = {
@@ -670,6 +693,7 @@ export type studenttestCreateWithoutStudenttesthasskillInput = {
   commment?: string | null
   student: Prisma.studentCreateNestedOneWithoutStudenttestInput
   test: Prisma.testCreateNestedOneWithoutStudenttestInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesCreateNestedManyWithoutStudenttestInput
 }
 
 export type studenttestUncheckedCreateWithoutStudenttesthasskillInput = {
@@ -682,6 +706,7 @@ export type studenttestUncheckedCreateWithoutStudenttesthasskillInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   commment?: string | null
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedCreateNestedManyWithoutStudenttestInput
 }
 
 export type studenttestCreateOrConnectWithoutStudenttesthasskillInput = {
@@ -709,6 +734,7 @@ export type studenttestUpdateWithoutStudenttesthasskillInput = {
   commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   student?: Prisma.studentUpdateOneRequiredWithoutStudenttestNestedInput
   test?: Prisma.testUpdateOneRequiredWithoutStudenttestNestedInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUpdateManyWithoutStudenttestNestedInput
 }
 
 export type studenttestUncheckedUpdateWithoutStudenttesthasskillInput = {
@@ -721,6 +747,73 @@ export type studenttestUncheckedUpdateWithoutStudenttesthasskillInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedUpdateManyWithoutStudenttestNestedInput
+}
+
+export type studenttestCreateWithoutStudenttesthasweaknessesInput = {
+  mark: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isAbsent?: boolean
+  isUnmarked?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  commment?: string | null
+  student: Prisma.studentCreateNestedOneWithoutStudenttestInput
+  test: Prisma.testCreateNestedOneWithoutStudenttestInput
+  studenttesthasskill?: Prisma.studenttesthasskillCreateNestedManyWithoutStudenttestInput
+}
+
+export type studenttestUncheckedCreateWithoutStudenttesthasweaknessesInput = {
+  id?: number
+  studentId: number
+  testId: number
+  mark: runtime.Decimal | runtime.DecimalJsLike | number | string
+  isAbsent?: boolean
+  isUnmarked?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  commment?: string | null
+  studenttesthasskill?: Prisma.studenttesthasskillUncheckedCreateNestedManyWithoutStudenttestInput
+}
+
+export type studenttestCreateOrConnectWithoutStudenttesthasweaknessesInput = {
+  where: Prisma.studenttestWhereUniqueInput
+  create: Prisma.XOR<Prisma.studenttestCreateWithoutStudenttesthasweaknessesInput, Prisma.studenttestUncheckedCreateWithoutStudenttesthasweaknessesInput>
+}
+
+export type studenttestUpsertWithoutStudenttesthasweaknessesInput = {
+  update: Prisma.XOR<Prisma.studenttestUpdateWithoutStudenttesthasweaknessesInput, Prisma.studenttestUncheckedUpdateWithoutStudenttesthasweaknessesInput>
+  create: Prisma.XOR<Prisma.studenttestCreateWithoutStudenttesthasweaknessesInput, Prisma.studenttestUncheckedCreateWithoutStudenttesthasweaknessesInput>
+  where?: Prisma.studenttestWhereInput
+}
+
+export type studenttestUpdateToOneWithWhereWithoutStudenttesthasweaknessesInput = {
+  where?: Prisma.studenttestWhereInput
+  data: Prisma.XOR<Prisma.studenttestUpdateWithoutStudenttesthasweaknessesInput, Prisma.studenttestUncheckedUpdateWithoutStudenttesthasweaknessesInput>
+}
+
+export type studenttestUpdateWithoutStudenttesthasweaknessesInput = {
+  mark?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isAbsent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  student?: Prisma.studentUpdateOneRequiredWithoutStudenttestNestedInput
+  test?: Prisma.testUpdateOneRequiredWithoutStudenttestNestedInput
+  studenttesthasskill?: Prisma.studenttesthasskillUpdateManyWithoutStudenttestNestedInput
+}
+
+export type studenttestUncheckedUpdateWithoutStudenttesthasweaknessesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.IntFieldUpdateOperationsInput | number
+  testId?: Prisma.IntFieldUpdateOperationsInput | number
+  mark?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  isAbsent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studenttesthasskill?: Prisma.studenttesthasskillUncheckedUpdateManyWithoutStudenttestNestedInput
 }
 
 export type studenttestCreateWithoutTestInput = {
@@ -732,6 +825,7 @@ export type studenttestCreateWithoutTestInput = {
   commment?: string | null
   student: Prisma.studentCreateNestedOneWithoutStudenttestInput
   studenttesthasskill?: Prisma.studenttesthasskillCreateNestedManyWithoutStudenttestInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesCreateNestedManyWithoutStudenttestInput
 }
 
 export type studenttestUncheckedCreateWithoutTestInput = {
@@ -744,6 +838,7 @@ export type studenttestUncheckedCreateWithoutTestInput = {
   updatedAt?: Date | string | null
   commment?: string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedCreateNestedManyWithoutStudenttestInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedCreateNestedManyWithoutStudenttestInput
 }
 
 export type studenttestCreateOrConnectWithoutTestInput = {
@@ -792,6 +887,7 @@ export type studenttestUpdateWithoutStudentInput = {
   commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   test?: Prisma.testUpdateOneRequiredWithoutStudenttestNestedInput
   studenttesthasskill?: Prisma.studenttesthasskillUpdateManyWithoutStudenttestNestedInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUpdateManyWithoutStudenttestNestedInput
 }
 
 export type studenttestUncheckedUpdateWithoutStudentInput = {
@@ -804,6 +900,7 @@ export type studenttestUncheckedUpdateWithoutStudentInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedUpdateManyWithoutStudenttestNestedInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedUpdateManyWithoutStudenttestNestedInput
 }
 
 export type studenttestUncheckedUpdateManyWithoutStudentInput = {
@@ -837,6 +934,7 @@ export type studenttestUpdateWithoutTestInput = {
   commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   student?: Prisma.studentUpdateOneRequiredWithoutStudenttestNestedInput
   studenttesthasskill?: Prisma.studenttesthasskillUpdateManyWithoutStudenttestNestedInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUpdateManyWithoutStudenttestNestedInput
 }
 
 export type studenttestUncheckedUpdateWithoutTestInput = {
@@ -849,6 +947,7 @@ export type studenttestUncheckedUpdateWithoutTestInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedUpdateManyWithoutStudenttestNestedInput
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedUpdateManyWithoutStudenttestNestedInput
 }
 
 export type studenttestUncheckedUpdateManyWithoutTestInput = {
@@ -869,10 +968,12 @@ export type studenttestUncheckedUpdateManyWithoutTestInput = {
 
 export type StudenttestCountOutputType = {
   studenttesthasskill: number
+  studenttesthasweaknesses: number
 }
 
 export type StudenttestCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   studenttesthasskill?: boolean | StudenttestCountOutputTypeCountStudenttesthasskillArgs
+  studenttesthasweaknesses?: boolean | StudenttestCountOutputTypeCountStudenttesthasweaknessesArgs
 }
 
 /**
@@ -892,6 +993,13 @@ export type StudenttestCountOutputTypeCountStudenttesthasskillArgs<ExtArgs exten
   where?: Prisma.studenttesthasskillWhereInput
 }
 
+/**
+ * StudenttestCountOutputType without action
+ */
+export type StudenttestCountOutputTypeCountStudenttesthasweaknessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.studenttesthasweaknessesWhereInput
+}
+
 
 export type studenttestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -906,6 +1014,7 @@ export type studenttestSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   student?: boolean | Prisma.studentDefaultArgs<ExtArgs>
   test?: boolean | Prisma.testDefaultArgs<ExtArgs>
   studenttesthasskill?: boolean | Prisma.studenttest$studenttesthasskillArgs<ExtArgs>
+  studenttesthasweaknesses?: boolean | Prisma.studenttest$studenttesthasweaknessesArgs<ExtArgs>
   _count?: boolean | Prisma.StudenttestCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["studenttest"]>
 
@@ -928,6 +1037,7 @@ export type studenttestInclude<ExtArgs extends runtime.Types.Extensions.Internal
   student?: boolean | Prisma.studentDefaultArgs<ExtArgs>
   test?: boolean | Prisma.testDefaultArgs<ExtArgs>
   studenttesthasskill?: boolean | Prisma.studenttest$studenttesthasskillArgs<ExtArgs>
+  studenttesthasweaknesses?: boolean | Prisma.studenttest$studenttesthasweaknessesArgs<ExtArgs>
   _count?: boolean | Prisma.StudenttestCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -937,6 +1047,7 @@ export type $studenttestPayload<ExtArgs extends runtime.Types.Extensions.Interna
     student: Prisma.$studentPayload<ExtArgs>
     test: Prisma.$testPayload<ExtArgs>
     studenttesthasskill: Prisma.$studenttesthasskillPayload<ExtArgs>[]
+    studenttesthasweaknesses: Prisma.$studenttesthasweaknessesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1291,6 +1402,7 @@ export interface Prisma__studenttestClient<T, Null = never, ExtArgs extends runt
   student<T extends Prisma.studentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.studentDefaultArgs<ExtArgs>>): Prisma.Prisma__studentClient<runtime.Types.Result.GetResult<Prisma.$studentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   test<T extends Prisma.testDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.testDefaultArgs<ExtArgs>>): Prisma.Prisma__testClient<runtime.Types.Result.GetResult<Prisma.$testPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   studenttesthasskill<T extends Prisma.studenttest$studenttesthasskillArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.studenttest$studenttesthasskillArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$studenttesthasskillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  studenttesthasweaknesses<T extends Prisma.studenttest$studenttesthasweaknessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.studenttest$studenttesthasweaknessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$studenttesthasweaknessesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1693,6 +1805,30 @@ export type studenttest$studenttesthasskillArgs<ExtArgs extends runtime.Types.Ex
   take?: number
   skip?: number
   distinct?: Prisma.StudenttesthasskillScalarFieldEnum | Prisma.StudenttesthasskillScalarFieldEnum[]
+}
+
+/**
+ * studenttest.studenttesthasweaknesses
+ */
+export type studenttest$studenttesthasweaknessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the studenttesthasweaknesses
+   */
+  select?: Prisma.studenttesthasweaknessesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the studenttesthasweaknesses
+   */
+  omit?: Prisma.studenttesthasweaknessesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.studenttesthasweaknessesInclude<ExtArgs> | null
+  where?: Prisma.studenttesthasweaknessesWhereInput
+  orderBy?: Prisma.studenttesthasweaknessesOrderByWithRelationInput | Prisma.studenttesthasweaknessesOrderByWithRelationInput[]
+  cursor?: Prisma.studenttesthasweaknessesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StudenttesthasweaknessesScalarFieldEnum | Prisma.StudenttesthasweaknessesScalarFieldEnum[]
 }
 
 /**

@@ -28,10 +28,12 @@ export type AggregateTestTag = {
 
 export type TestTagAvgAggregateOutputType = {
   id: number | null
+  createdById: number | null
 }
 
 export type TestTagSumAggregateOutputType = {
   id: number | null
+  createdById: number | null
 }
 
 export type TestTagMinAggregateOutputType = {
@@ -40,6 +42,7 @@ export type TestTagMinAggregateOutputType = {
   color: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: number | null
 }
 
 export type TestTagMaxAggregateOutputType = {
@@ -48,6 +51,7 @@ export type TestTagMaxAggregateOutputType = {
   color: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdById: number | null
 }
 
 export type TestTagCountAggregateOutputType = {
@@ -56,16 +60,19 @@ export type TestTagCountAggregateOutputType = {
   color: number
   createdAt: number
   updatedAt: number
+  createdById: number
   _all: number
 }
 
 
 export type TestTagAvgAggregateInputType = {
   id?: true
+  createdById?: true
 }
 
 export type TestTagSumAggregateInputType = {
   id?: true
+  createdById?: true
 }
 
 export type TestTagMinAggregateInputType = {
@@ -74,6 +81,7 @@ export type TestTagMinAggregateInputType = {
   color?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
 }
 
 export type TestTagMaxAggregateInputType = {
@@ -82,6 +90,7 @@ export type TestTagMaxAggregateInputType = {
   color?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
 }
 
 export type TestTagCountAggregateInputType = {
@@ -90,6 +99,7 @@ export type TestTagCountAggregateInputType = {
   color?: true
   createdAt?: true
   updatedAt?: true
+  createdById?: true
   _all?: true
 }
 
@@ -185,6 +195,7 @@ export type TestTagGroupByOutputType = {
   color: string
   createdAt: Date
   updatedAt: Date | null
+  createdById: number
   _count: TestTagCountAggregateOutputType | null
   _avg: TestTagAvgAggregateOutputType | null
   _sum: TestTagSumAggregateOutputType | null
@@ -216,6 +227,8 @@ export type testTagWhereInput = {
   color?: Prisma.StringFilter<"testTag"> | string
   createdAt?: Prisma.DateTimeFilter<"testTag"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"testTag"> | Date | string | null
+  createdById?: Prisma.IntFilter<"testTag"> | number
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
   tests?: Prisma.TestListRelationFilter
 }
 
@@ -225,6 +238,8 @@ export type testTagOrderByWithRelationInput = {
   color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+  createdBy?: Prisma.userOrderByWithRelationInput
   tests?: Prisma.testOrderByRelationAggregateInput
   _relevance?: Prisma.testTagOrderByRelevanceInput
 }
@@ -238,6 +253,8 @@ export type testTagWhereUniqueInput = Prisma.AtLeast<{
   color?: Prisma.StringFilter<"testTag"> | string
   createdAt?: Prisma.DateTimeFilter<"testTag"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"testTag"> | Date | string | null
+  createdById?: Prisma.IntFilter<"testTag"> | number
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
   tests?: Prisma.TestListRelationFilter
 }, "id">
 
@@ -247,6 +264,7 @@ export type testTagOrderByWithAggregationInput = {
   color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdById?: Prisma.SortOrder
   _count?: Prisma.testTagCountOrderByAggregateInput
   _avg?: Prisma.testTagAvgOrderByAggregateInput
   _max?: Prisma.testTagMaxOrderByAggregateInput
@@ -263,6 +281,7 @@ export type testTagScalarWhereWithAggregatesInput = {
   color?: Prisma.StringWithAggregatesFilter<"testTag"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"testTag"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"testTag"> | Date | string | null
+  createdById?: Prisma.IntWithAggregatesFilter<"testTag"> | number
 }
 
 export type testTagCreateInput = {
@@ -270,6 +289,7 @@ export type testTagCreateInput = {
   color: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  createdBy: Prisma.userCreateNestedOneWithoutTestTagsInput
   tests?: Prisma.testCreateNestedManyWithoutTestTagInput
 }
 
@@ -279,6 +299,7 @@ export type testTagUncheckedCreateInput = {
   color: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  createdById: number
   tests?: Prisma.testUncheckedCreateNestedManyWithoutTestTagInput
 }
 
@@ -287,6 +308,7 @@ export type testTagUpdateInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.userUpdateOneRequiredWithoutTestTagsNestedInput
   tests?: Prisma.testUpdateManyWithoutTestTagNestedInput
 }
 
@@ -296,6 +318,7 @@ export type testTagUncheckedUpdateInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.IntFieldUpdateOperationsInput | number
   tests?: Prisma.testUncheckedUpdateManyWithoutTestTagNestedInput
 }
 
@@ -305,6 +328,7 @@ export type testTagCreateManyInput = {
   color: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  createdById: number
 }
 
 export type testTagUpdateManyMutationInput = {
@@ -320,6 +344,17 @@ export type testTagUncheckedUpdateManyInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type TestTagListRelationFilter = {
+  every?: Prisma.testTagWhereInput
+  some?: Prisma.testTagWhereInput
+  none?: Prisma.testTagWhereInput
+}
+
+export type testTagOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type TestTagNullableScalarRelationFilter = {
@@ -339,10 +374,12 @@ export type testTagCountOrderByAggregateInput = {
   color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
 }
 
 export type testTagAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
 }
 
 export type testTagMaxOrderByAggregateInput = {
@@ -351,6 +388,7 @@ export type testTagMaxOrderByAggregateInput = {
   color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
 }
 
 export type testTagMinOrderByAggregateInput = {
@@ -359,10 +397,54 @@ export type testTagMinOrderByAggregateInput = {
   color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
 }
 
 export type testTagSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  createdById?: Prisma.SortOrder
+}
+
+export type testTagCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.testTagCreateWithoutCreatedByInput, Prisma.testTagUncheckedCreateWithoutCreatedByInput> | Prisma.testTagCreateWithoutCreatedByInput[] | Prisma.testTagUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.testTagCreateOrConnectWithoutCreatedByInput | Prisma.testTagCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.testTagCreateManyCreatedByInputEnvelope
+  connect?: Prisma.testTagWhereUniqueInput | Prisma.testTagWhereUniqueInput[]
+}
+
+export type testTagUncheckedCreateNestedManyWithoutCreatedByInput = {
+  create?: Prisma.XOR<Prisma.testTagCreateWithoutCreatedByInput, Prisma.testTagUncheckedCreateWithoutCreatedByInput> | Prisma.testTagCreateWithoutCreatedByInput[] | Prisma.testTagUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.testTagCreateOrConnectWithoutCreatedByInput | Prisma.testTagCreateOrConnectWithoutCreatedByInput[]
+  createMany?: Prisma.testTagCreateManyCreatedByInputEnvelope
+  connect?: Prisma.testTagWhereUniqueInput | Prisma.testTagWhereUniqueInput[]
+}
+
+export type testTagUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.testTagCreateWithoutCreatedByInput, Prisma.testTagUncheckedCreateWithoutCreatedByInput> | Prisma.testTagCreateWithoutCreatedByInput[] | Prisma.testTagUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.testTagCreateOrConnectWithoutCreatedByInput | Prisma.testTagCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.testTagUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.testTagUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.testTagCreateManyCreatedByInputEnvelope
+  set?: Prisma.testTagWhereUniqueInput | Prisma.testTagWhereUniqueInput[]
+  disconnect?: Prisma.testTagWhereUniqueInput | Prisma.testTagWhereUniqueInput[]
+  delete?: Prisma.testTagWhereUniqueInput | Prisma.testTagWhereUniqueInput[]
+  connect?: Prisma.testTagWhereUniqueInput | Prisma.testTagWhereUniqueInput[]
+  update?: Prisma.testTagUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.testTagUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.testTagUpdateManyWithWhereWithoutCreatedByInput | Prisma.testTagUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.testTagScalarWhereInput | Prisma.testTagScalarWhereInput[]
+}
+
+export type testTagUncheckedUpdateManyWithoutCreatedByNestedInput = {
+  create?: Prisma.XOR<Prisma.testTagCreateWithoutCreatedByInput, Prisma.testTagUncheckedCreateWithoutCreatedByInput> | Prisma.testTagCreateWithoutCreatedByInput[] | Prisma.testTagUncheckedCreateWithoutCreatedByInput[]
+  connectOrCreate?: Prisma.testTagCreateOrConnectWithoutCreatedByInput | Prisma.testTagCreateOrConnectWithoutCreatedByInput[]
+  upsert?: Prisma.testTagUpsertWithWhereUniqueWithoutCreatedByInput | Prisma.testTagUpsertWithWhereUniqueWithoutCreatedByInput[]
+  createMany?: Prisma.testTagCreateManyCreatedByInputEnvelope
+  set?: Prisma.testTagWhereUniqueInput | Prisma.testTagWhereUniqueInput[]
+  disconnect?: Prisma.testTagWhereUniqueInput | Prisma.testTagWhereUniqueInput[]
+  delete?: Prisma.testTagWhereUniqueInput | Prisma.testTagWhereUniqueInput[]
+  connect?: Prisma.testTagWhereUniqueInput | Prisma.testTagWhereUniqueInput[]
+  update?: Prisma.testTagUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.testTagUpdateWithWhereUniqueWithoutCreatedByInput[]
+  updateMany?: Prisma.testTagUpdateManyWithWhereWithoutCreatedByInput | Prisma.testTagUpdateManyWithWhereWithoutCreatedByInput[]
+  deleteMany?: Prisma.testTagScalarWhereInput | Prisma.testTagScalarWhereInput[]
 }
 
 export type testTagCreateNestedOneWithoutTestsInput = {
@@ -381,11 +463,67 @@ export type testTagUpdateOneWithoutTestsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.testTagUpdateToOneWithWhereWithoutTestsInput, Prisma.testTagUpdateWithoutTestsInput>, Prisma.testTagUncheckedUpdateWithoutTestsInput>
 }
 
+export type testTagCreateWithoutCreatedByInput = {
+  name: string
+  color: string
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  tests?: Prisma.testCreateNestedManyWithoutTestTagInput
+}
+
+export type testTagUncheckedCreateWithoutCreatedByInput = {
+  id?: number
+  name: string
+  color: string
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  tests?: Prisma.testUncheckedCreateNestedManyWithoutTestTagInput
+}
+
+export type testTagCreateOrConnectWithoutCreatedByInput = {
+  where: Prisma.testTagWhereUniqueInput
+  create: Prisma.XOR<Prisma.testTagCreateWithoutCreatedByInput, Prisma.testTagUncheckedCreateWithoutCreatedByInput>
+}
+
+export type testTagCreateManyCreatedByInputEnvelope = {
+  data: Prisma.testTagCreateManyCreatedByInput | Prisma.testTagCreateManyCreatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type testTagUpsertWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.testTagWhereUniqueInput
+  update: Prisma.XOR<Prisma.testTagUpdateWithoutCreatedByInput, Prisma.testTagUncheckedUpdateWithoutCreatedByInput>
+  create: Prisma.XOR<Prisma.testTagCreateWithoutCreatedByInput, Prisma.testTagUncheckedCreateWithoutCreatedByInput>
+}
+
+export type testTagUpdateWithWhereUniqueWithoutCreatedByInput = {
+  where: Prisma.testTagWhereUniqueInput
+  data: Prisma.XOR<Prisma.testTagUpdateWithoutCreatedByInput, Prisma.testTagUncheckedUpdateWithoutCreatedByInput>
+}
+
+export type testTagUpdateManyWithWhereWithoutCreatedByInput = {
+  where: Prisma.testTagScalarWhereInput
+  data: Prisma.XOR<Prisma.testTagUpdateManyMutationInput, Prisma.testTagUncheckedUpdateManyWithoutCreatedByInput>
+}
+
+export type testTagScalarWhereInput = {
+  AND?: Prisma.testTagScalarWhereInput | Prisma.testTagScalarWhereInput[]
+  OR?: Prisma.testTagScalarWhereInput[]
+  NOT?: Prisma.testTagScalarWhereInput | Prisma.testTagScalarWhereInput[]
+  id?: Prisma.IntFilter<"testTag"> | number
+  name?: Prisma.StringFilter<"testTag"> | string
+  color?: Prisma.StringFilter<"testTag"> | string
+  createdAt?: Prisma.DateTimeFilter<"testTag"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"testTag"> | Date | string | null
+  createdById?: Prisma.IntFilter<"testTag"> | number
+}
+
 export type testTagCreateWithoutTestsInput = {
   name: string
   color: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  createdBy: Prisma.userCreateNestedOneWithoutTestTagsInput
 }
 
 export type testTagUncheckedCreateWithoutTestsInput = {
@@ -394,6 +532,7 @@ export type testTagUncheckedCreateWithoutTestsInput = {
   color: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  createdById: number
 }
 
 export type testTagCreateOrConnectWithoutTestsInput = {
@@ -417,9 +556,44 @@ export type testTagUpdateWithoutTestsInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdBy?: Prisma.userUpdateOneRequiredWithoutTestTagsNestedInput
 }
 
 export type testTagUncheckedUpdateWithoutTestsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdById?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type testTagCreateManyCreatedByInput = {
+  id?: number
+  name: string
+  color: string
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+}
+
+export type testTagUpdateWithoutCreatedByInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tests?: Prisma.testUpdateManyWithoutTestTagNestedInput
+}
+
+export type testTagUncheckedUpdateWithoutCreatedByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tests?: Prisma.testUncheckedUpdateManyWithoutTestTagNestedInput
+}
+
+export type testTagUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
@@ -464,6 +638,8 @@ export type testTagSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   color?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
+  createdBy?: boolean | Prisma.userDefaultArgs<ExtArgs>
   tests?: boolean | Prisma.testTag$testsArgs<ExtArgs>
   _count?: boolean | Prisma.TestTagCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["testTag"]>
@@ -476,10 +652,12 @@ export type testTagSelectScalar = {
   color?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdById?: boolean
 }
 
-export type testTagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "color" | "createdAt" | "updatedAt", ExtArgs["result"]["testTag"]>
+export type testTagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "color" | "createdAt" | "updatedAt" | "createdById", ExtArgs["result"]["testTag"]>
 export type testTagInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.userDefaultArgs<ExtArgs>
   tests?: boolean | Prisma.testTag$testsArgs<ExtArgs>
   _count?: boolean | Prisma.TestTagCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -487,6 +665,7 @@ export type testTagInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type $testTagPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "testTag"
   objects: {
+    createdBy: Prisma.$userPayload<ExtArgs>
     tests: Prisma.$testPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -495,6 +674,7 @@ export type $testTagPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     color: string
     createdAt: Date
     updatedAt: Date | null
+    createdById: number
   }, ExtArgs["result"]["testTag"]>
   composites: {}
 }
@@ -835,6 +1015,7 @@ readonly fields: testTagFieldRefs;
  */
 export interface Prisma__testTagClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  createdBy<T extends Prisma.userDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.userDefaultArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tests<T extends Prisma.testTag$testsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.testTag$testsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$testPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -870,6 +1051,7 @@ export interface testTagFieldRefs {
   readonly color: Prisma.FieldRef<"testTag", 'String'>
   readonly createdAt: Prisma.FieldRef<"testTag", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"testTag", 'DateTime'>
+  readonly createdById: Prisma.FieldRef<"testTag", 'Int'>
 }
     
 

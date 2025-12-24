@@ -59,9 +59,12 @@ export const ModelName = {
   schoolclass: 'schoolclass',
   skill: 'skill',
   student: 'student',
+  comment: 'comment',
   report: 'report',
   studenttest: 'studenttest',
   studenttesthasskill: 'studenttesthasskill',
+  studenttesthasweaknesses: 'studenttesthasweaknesses',
+  weakness: 'weakness',
   test: 'test',
   testTag: 'testTag',
   testhasskill: 'testhasskill',
@@ -181,6 +184,18 @@ export const StudentScalarFieldEnum = {
 export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
 
 
+export const CommentScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById'
+} as const
+
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
 export const ReportScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
@@ -215,6 +230,26 @@ export const StudenttesthasskillScalarFieldEnum = {
 export type StudenttesthasskillScalarFieldEnum = (typeof StudenttesthasskillScalarFieldEnum)[keyof typeof StudenttesthasskillScalarFieldEnum]
 
 
+export const StudenttesthasweaknessesScalarFieldEnum = {
+  studentTestId: 'studentTestId',
+  weaknessId: 'weaknessId',
+  description: 'description'
+} as const
+
+export type StudenttesthasweaknessesScalarFieldEnum = (typeof StudenttesthasweaknessesScalarFieldEnum)[keyof typeof StudenttesthasweaknessesScalarFieldEnum]
+
+
+export const WeaknessScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type WeaknessScalarFieldEnum = (typeof WeaknessScalarFieldEnum)[keyof typeof WeaknessScalarFieldEnum]
+
+
 export const TestScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -237,7 +272,8 @@ export const TestTagScalarFieldEnum = {
   name: 'name',
   color: 'color',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdById: 'createdById'
 } as const
 
 export type TestTagScalarFieldEnum = (typeof TestTagScalarFieldEnum)[keyof typeof TestTagScalarFieldEnum]
@@ -352,6 +388,13 @@ export const studentOrderByRelevanceFieldEnum = {
 export type studentOrderByRelevanceFieldEnum = (typeof studentOrderByRelevanceFieldEnum)[keyof typeof studentOrderByRelevanceFieldEnum]
 
 
+export const commentOrderByRelevanceFieldEnum = {
+  content: 'content'
+} as const
+
+export type commentOrderByRelevanceFieldEnum = (typeof commentOrderByRelevanceFieldEnum)[keyof typeof commentOrderByRelevanceFieldEnum]
+
+
 export const reportOrderByRelevanceFieldEnum = {
   description: 'description'
 } as const
@@ -364,6 +407,20 @@ export const studenttestOrderByRelevanceFieldEnum = {
 } as const
 
 export type studenttestOrderByRelevanceFieldEnum = (typeof studenttestOrderByRelevanceFieldEnum)[keyof typeof studenttestOrderByRelevanceFieldEnum]
+
+
+export const studenttesthasweaknessesOrderByRelevanceFieldEnum = {
+  description: 'description'
+} as const
+
+export type studenttesthasweaknessesOrderByRelevanceFieldEnum = (typeof studenttesthasweaknessesOrderByRelevanceFieldEnum)[keyof typeof studenttesthasweaknessesOrderByRelevanceFieldEnum]
+
+
+export const weaknessOrderByRelevanceFieldEnum = {
+  description: 'description'
+} as const
+
+export type weaknessOrderByRelevanceFieldEnum = (typeof weaknessOrderByRelevanceFieldEnum)[keyof typeof weaknessOrderByRelevanceFieldEnum]
 
 
 export const testOrderByRelevanceFieldEnum = {

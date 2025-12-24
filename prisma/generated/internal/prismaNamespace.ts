@@ -392,9 +392,12 @@ export const ModelName = {
   schoolclass: 'schoolclass',
   skill: 'skill',
   student: 'student',
+  comment: 'comment',
   report: 'report',
   studenttest: 'studenttest',
   studenttesthasskill: 'studenttesthasskill',
+  studenttesthasweaknesses: 'studenttesthasweaknesses',
+  weakness: 'weakness',
   test: 'test',
   testTag: 'testTag',
   testhasskill: 'testhasskill',
@@ -416,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "notifications" | "userHasNotifications" | "profile" | "form" | "schoolclass" | "skill" | "student" | "report" | "studenttest" | "studenttesthasskill" | "test" | "testTag" | "testhasskill" | "userHasSchoolClass" | "studentHasSchoolClass" | "token"
+    modelProps: "user" | "notifications" | "userHasNotifications" | "profile" | "form" | "schoolclass" | "skill" | "student" | "comment" | "report" | "studenttest" | "studenttesthasskill" | "studenttesthasweaknesses" | "weakness" | "test" | "testTag" | "testhasskill" | "userHasSchoolClass" | "studentHasSchoolClass" | "token"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -948,6 +951,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    comment: {
+      payload: Prisma.$commentPayload<ExtArgs>
+      fields: Prisma.commentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.commentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$commentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.commentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$commentPayload>
+        }
+        findFirst: {
+          args: Prisma.commentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$commentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.commentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$commentPayload>
+        }
+        findMany: {
+          args: Prisma.commentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$commentPayload>[]
+        }
+        create: {
+          args: Prisma.commentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$commentPayload>
+        }
+        createMany: {
+          args: Prisma.commentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.commentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$commentPayload>
+        }
+        update: {
+          args: Prisma.commentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$commentPayload>
+        }
+        deleteMany: {
+          args: Prisma.commentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.commentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.commentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$commentPayload>
+        }
+        aggregate: {
+          args: Prisma.CommentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateComment>
+        }
+        groupBy: {
+          args: Prisma.commentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CommentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.commentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CommentCountAggregateOutputType> | number
+        }
+      }
+    }
     report: {
       payload: Prisma.$reportPayload<ExtArgs>
       fields: Prisma.reportFieldRefs
@@ -1143,6 +1212,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.studenttesthasskillCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.StudenttesthasskillCountAggregateOutputType> | number
+        }
+      }
+    }
+    studenttesthasweaknesses: {
+      payload: Prisma.$studenttesthasweaknessesPayload<ExtArgs>
+      fields: Prisma.studenttesthasweaknessesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.studenttesthasweaknessesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$studenttesthasweaknessesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.studenttesthasweaknessesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$studenttesthasweaknessesPayload>
+        }
+        findFirst: {
+          args: Prisma.studenttesthasweaknessesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$studenttesthasweaknessesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.studenttesthasweaknessesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$studenttesthasweaknessesPayload>
+        }
+        findMany: {
+          args: Prisma.studenttesthasweaknessesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$studenttesthasweaknessesPayload>[]
+        }
+        create: {
+          args: Prisma.studenttesthasweaknessesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$studenttesthasweaknessesPayload>
+        }
+        createMany: {
+          args: Prisma.studenttesthasweaknessesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.studenttesthasweaknessesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$studenttesthasweaknessesPayload>
+        }
+        update: {
+          args: Prisma.studenttesthasweaknessesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$studenttesthasweaknessesPayload>
+        }
+        deleteMany: {
+          args: Prisma.studenttesthasweaknessesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.studenttesthasweaknessesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.studenttesthasweaknessesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$studenttesthasweaknessesPayload>
+        }
+        aggregate: {
+          args: Prisma.StudenttesthasweaknessesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStudenttesthasweaknesses>
+        }
+        groupBy: {
+          args: Prisma.studenttesthasweaknessesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudenttesthasweaknessesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.studenttesthasweaknessesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StudenttesthasweaknessesCountAggregateOutputType> | number
+        }
+      }
+    }
+    weakness: {
+      payload: Prisma.$weaknessPayload<ExtArgs>
+      fields: Prisma.weaknessFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.weaknessFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$weaknessPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.weaknessFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$weaknessPayload>
+        }
+        findFirst: {
+          args: Prisma.weaknessFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$weaknessPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.weaknessFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$weaknessPayload>
+        }
+        findMany: {
+          args: Prisma.weaknessFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$weaknessPayload>[]
+        }
+        create: {
+          args: Prisma.weaknessCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$weaknessPayload>
+        }
+        createMany: {
+          args: Prisma.weaknessCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.weaknessDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$weaknessPayload>
+        }
+        update: {
+          args: Prisma.weaknessUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$weaknessPayload>
+        }
+        deleteMany: {
+          args: Prisma.weaknessDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.weaknessUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.weaknessUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$weaknessPayload>
+        }
+        aggregate: {
+          args: Prisma.WeaknessAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWeakness>
+        }
+        groupBy: {
+          args: Prisma.weaknessGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WeaknessGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.weaknessCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WeaknessCountAggregateOutputType> | number
         }
       }
     }
@@ -1676,6 +1877,18 @@ export const StudentScalarFieldEnum = {
 export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
 
 
+export const CommentScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById'
+} as const
+
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
 export const ReportScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
@@ -1710,6 +1923,26 @@ export const StudenttesthasskillScalarFieldEnum = {
 export type StudenttesthasskillScalarFieldEnum = (typeof StudenttesthasskillScalarFieldEnum)[keyof typeof StudenttesthasskillScalarFieldEnum]
 
 
+export const StudenttesthasweaknessesScalarFieldEnum = {
+  studentTestId: 'studentTestId',
+  weaknessId: 'weaknessId',
+  description: 'description'
+} as const
+
+export type StudenttesthasweaknessesScalarFieldEnum = (typeof StudenttesthasweaknessesScalarFieldEnum)[keyof typeof StudenttesthasweaknessesScalarFieldEnum]
+
+
+export const WeaknessScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type WeaknessScalarFieldEnum = (typeof WeaknessScalarFieldEnum)[keyof typeof WeaknessScalarFieldEnum]
+
+
 export const TestScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1732,7 +1965,8 @@ export const TestTagScalarFieldEnum = {
   name: 'name',
   color: 'color',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdById: 'createdById'
 } as const
 
 export type TestTagScalarFieldEnum = (typeof TestTagScalarFieldEnum)[keyof typeof TestTagScalarFieldEnum]
@@ -1847,6 +2081,13 @@ export const studentOrderByRelevanceFieldEnum = {
 export type studentOrderByRelevanceFieldEnum = (typeof studentOrderByRelevanceFieldEnum)[keyof typeof studentOrderByRelevanceFieldEnum]
 
 
+export const commentOrderByRelevanceFieldEnum = {
+  content: 'content'
+} as const
+
+export type commentOrderByRelevanceFieldEnum = (typeof commentOrderByRelevanceFieldEnum)[keyof typeof commentOrderByRelevanceFieldEnum]
+
+
 export const reportOrderByRelevanceFieldEnum = {
   description: 'description'
 } as const
@@ -1859,6 +2100,20 @@ export const studenttestOrderByRelevanceFieldEnum = {
 } as const
 
 export type studenttestOrderByRelevanceFieldEnum = (typeof studenttestOrderByRelevanceFieldEnum)[keyof typeof studenttestOrderByRelevanceFieldEnum]
+
+
+export const studenttesthasweaknessesOrderByRelevanceFieldEnum = {
+  description: 'description'
+} as const
+
+export type studenttesthasweaknessesOrderByRelevanceFieldEnum = (typeof studenttesthasweaknessesOrderByRelevanceFieldEnum)[keyof typeof studenttesthasweaknessesOrderByRelevanceFieldEnum]
+
+
+export const weaknessOrderByRelevanceFieldEnum = {
+  description: 'description'
+} as const
+
+export type weaknessOrderByRelevanceFieldEnum = (typeof weaknessOrderByRelevanceFieldEnum)[keyof typeof weaknessOrderByRelevanceFieldEnum]
 
 
 export const testOrderByRelevanceFieldEnum = {
@@ -2062,9 +2317,12 @@ export type GlobalOmitConfig = {
   schoolclass?: Prisma.schoolclassOmit
   skill?: Prisma.skillOmit
   student?: Prisma.studentOmit
+  comment?: Prisma.commentOmit
   report?: Prisma.reportOmit
   studenttest?: Prisma.studenttestOmit
   studenttesthasskill?: Prisma.studenttesthasskillOmit
+  studenttesthasweaknesses?: Prisma.studenttesthasweaknessesOmit
+  weakness?: Prisma.weaknessOmit
   test?: Prisma.testOmit
   testTag?: Prisma.testTagOmit
   testhasskill?: Prisma.testhasskillOmit

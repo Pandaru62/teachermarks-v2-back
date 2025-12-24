@@ -219,6 +219,7 @@ export type studentWhereInput = {
   schoolClasses?: Prisma.StudentHasSchoolClassListRelationFilter
   studenttest?: Prisma.StudenttestListRelationFilter
   reports?: Prisma.ReportListRelationFilter
+  comments?: Prisma.CommentListRelationFilter
 }
 
 export type studentOrderByWithRelationInput = {
@@ -230,6 +231,7 @@ export type studentOrderByWithRelationInput = {
   schoolClasses?: Prisma.StudentHasSchoolClassOrderByRelationAggregateInput
   studenttest?: Prisma.studenttestOrderByRelationAggregateInput
   reports?: Prisma.reportOrderByRelationAggregateInput
+  comments?: Prisma.commentOrderByRelationAggregateInput
   _relevance?: Prisma.studentOrderByRelevanceInput
 }
 
@@ -245,6 +247,7 @@ export type studentWhereUniqueInput = Prisma.AtLeast<{
   schoolClasses?: Prisma.StudentHasSchoolClassListRelationFilter
   studenttest?: Prisma.StudenttestListRelationFilter
   reports?: Prisma.ReportListRelationFilter
+  comments?: Prisma.CommentListRelationFilter
 }, "id">
 
 export type studentOrderByWithAggregationInput = {
@@ -279,6 +282,7 @@ export type studentCreateInput = {
   schoolClasses?: Prisma.StudentHasSchoolClassCreateNestedManyWithoutStudentInput
   studenttest?: Prisma.studenttestCreateNestedManyWithoutStudentInput
   reports?: Prisma.reportCreateNestedManyWithoutStudentInput
+  comments?: Prisma.commentCreateNestedManyWithoutStudentInput
 }
 
 export type studentUncheckedCreateInput = {
@@ -290,6 +294,7 @@ export type studentUncheckedCreateInput = {
   schoolClasses?: Prisma.StudentHasSchoolClassUncheckedCreateNestedManyWithoutStudentInput
   studenttest?: Prisma.studenttestUncheckedCreateNestedManyWithoutStudentInput
   reports?: Prisma.reportUncheckedCreateNestedManyWithoutStudentInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type studentUpdateInput = {
@@ -300,6 +305,7 @@ export type studentUpdateInput = {
   schoolClasses?: Prisma.StudentHasSchoolClassUpdateManyWithoutStudentNestedInput
   studenttest?: Prisma.studenttestUpdateManyWithoutStudentNestedInput
   reports?: Prisma.reportUpdateManyWithoutStudentNestedInput
+  comments?: Prisma.commentUpdateManyWithoutStudentNestedInput
 }
 
 export type studentUncheckedUpdateInput = {
@@ -311,6 +317,7 @@ export type studentUncheckedUpdateInput = {
   schoolClasses?: Prisma.StudentHasSchoolClassUncheckedUpdateManyWithoutStudentNestedInput
   studenttest?: Prisma.studenttestUncheckedUpdateManyWithoutStudentNestedInput
   reports?: Prisma.reportUncheckedUpdateManyWithoutStudentNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type studentCreateManyInput = {
@@ -379,6 +386,20 @@ export type StudentScalarRelationFilter = {
   isNot?: Prisma.studentWhereInput
 }
 
+export type studentCreateNestedOneWithoutCommentsInput = {
+  create?: Prisma.XOR<Prisma.studentCreateWithoutCommentsInput, Prisma.studentUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.studentCreateOrConnectWithoutCommentsInput
+  connect?: Prisma.studentWhereUniqueInput
+}
+
+export type studentUpdateOneRequiredWithoutCommentsNestedInput = {
+  create?: Prisma.XOR<Prisma.studentCreateWithoutCommentsInput, Prisma.studentUncheckedCreateWithoutCommentsInput>
+  connectOrCreate?: Prisma.studentCreateOrConnectWithoutCommentsInput
+  upsert?: Prisma.studentUpsertWithoutCommentsInput
+  connect?: Prisma.studentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.studentUpdateToOneWithWhereWithoutCommentsInput, Prisma.studentUpdateWithoutCommentsInput>, Prisma.studentUncheckedUpdateWithoutCommentsInput>
+}
+
 export type studentCreateNestedOneWithoutReportsInput = {
   create?: Prisma.XOR<Prisma.studentCreateWithoutReportsInput, Prisma.studentUncheckedCreateWithoutReportsInput>
   connectOrCreate?: Prisma.studentCreateOrConnectWithoutReportsInput
@@ -421,6 +442,64 @@ export type studentUpdateOneRequiredWithoutSchoolClassesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.studentUpdateToOneWithWhereWithoutSchoolClassesInput, Prisma.studentUpdateWithoutSchoolClassesInput>, Prisma.studentUncheckedUpdateWithoutSchoolClassesInput>
 }
 
+export type studentCreateWithoutCommentsInput = {
+  lastName: string
+  firstName: string
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  schoolClasses?: Prisma.StudentHasSchoolClassCreateNestedManyWithoutStudentInput
+  studenttest?: Prisma.studenttestCreateNestedManyWithoutStudentInput
+  reports?: Prisma.reportCreateNestedManyWithoutStudentInput
+}
+
+export type studentUncheckedCreateWithoutCommentsInput = {
+  id?: number
+  lastName: string
+  firstName: string
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  schoolClasses?: Prisma.StudentHasSchoolClassUncheckedCreateNestedManyWithoutStudentInput
+  studenttest?: Prisma.studenttestUncheckedCreateNestedManyWithoutStudentInput
+  reports?: Prisma.reportUncheckedCreateNestedManyWithoutStudentInput
+}
+
+export type studentCreateOrConnectWithoutCommentsInput = {
+  where: Prisma.studentWhereUniqueInput
+  create: Prisma.XOR<Prisma.studentCreateWithoutCommentsInput, Prisma.studentUncheckedCreateWithoutCommentsInput>
+}
+
+export type studentUpsertWithoutCommentsInput = {
+  update: Prisma.XOR<Prisma.studentUpdateWithoutCommentsInput, Prisma.studentUncheckedUpdateWithoutCommentsInput>
+  create: Prisma.XOR<Prisma.studentCreateWithoutCommentsInput, Prisma.studentUncheckedCreateWithoutCommentsInput>
+  where?: Prisma.studentWhereInput
+}
+
+export type studentUpdateToOneWithWhereWithoutCommentsInput = {
+  where?: Prisma.studentWhereInput
+  data: Prisma.XOR<Prisma.studentUpdateWithoutCommentsInput, Prisma.studentUncheckedUpdateWithoutCommentsInput>
+}
+
+export type studentUpdateWithoutCommentsInput = {
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  schoolClasses?: Prisma.StudentHasSchoolClassUpdateManyWithoutStudentNestedInput
+  studenttest?: Prisma.studenttestUpdateManyWithoutStudentNestedInput
+  reports?: Prisma.reportUpdateManyWithoutStudentNestedInput
+}
+
+export type studentUncheckedUpdateWithoutCommentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  schoolClasses?: Prisma.StudentHasSchoolClassUncheckedUpdateManyWithoutStudentNestedInput
+  studenttest?: Prisma.studenttestUncheckedUpdateManyWithoutStudentNestedInput
+  reports?: Prisma.reportUncheckedUpdateManyWithoutStudentNestedInput
+}
+
 export type studentCreateWithoutReportsInput = {
   lastName: string
   firstName: string
@@ -428,6 +507,7 @@ export type studentCreateWithoutReportsInput = {
   updatedAt?: Date | string | null
   schoolClasses?: Prisma.StudentHasSchoolClassCreateNestedManyWithoutStudentInput
   studenttest?: Prisma.studenttestCreateNestedManyWithoutStudentInput
+  comments?: Prisma.commentCreateNestedManyWithoutStudentInput
 }
 
 export type studentUncheckedCreateWithoutReportsInput = {
@@ -438,6 +518,7 @@ export type studentUncheckedCreateWithoutReportsInput = {
   updatedAt?: Date | string | null
   schoolClasses?: Prisma.StudentHasSchoolClassUncheckedCreateNestedManyWithoutStudentInput
   studenttest?: Prisma.studenttestUncheckedCreateNestedManyWithoutStudentInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type studentCreateOrConnectWithoutReportsInput = {
@@ -463,6 +544,7 @@ export type studentUpdateWithoutReportsInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   schoolClasses?: Prisma.StudentHasSchoolClassUpdateManyWithoutStudentNestedInput
   studenttest?: Prisma.studenttestUpdateManyWithoutStudentNestedInput
+  comments?: Prisma.commentUpdateManyWithoutStudentNestedInput
 }
 
 export type studentUncheckedUpdateWithoutReportsInput = {
@@ -473,6 +555,7 @@ export type studentUncheckedUpdateWithoutReportsInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   schoolClasses?: Prisma.StudentHasSchoolClassUncheckedUpdateManyWithoutStudentNestedInput
   studenttest?: Prisma.studenttestUncheckedUpdateManyWithoutStudentNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type studentCreateWithoutStudenttestInput = {
@@ -482,6 +565,7 @@ export type studentCreateWithoutStudenttestInput = {
   updatedAt?: Date | string | null
   schoolClasses?: Prisma.StudentHasSchoolClassCreateNestedManyWithoutStudentInput
   reports?: Prisma.reportCreateNestedManyWithoutStudentInput
+  comments?: Prisma.commentCreateNestedManyWithoutStudentInput
 }
 
 export type studentUncheckedCreateWithoutStudenttestInput = {
@@ -492,6 +576,7 @@ export type studentUncheckedCreateWithoutStudenttestInput = {
   updatedAt?: Date | string | null
   schoolClasses?: Prisma.StudentHasSchoolClassUncheckedCreateNestedManyWithoutStudentInput
   reports?: Prisma.reportUncheckedCreateNestedManyWithoutStudentInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type studentCreateOrConnectWithoutStudenttestInput = {
@@ -517,6 +602,7 @@ export type studentUpdateWithoutStudenttestInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   schoolClasses?: Prisma.StudentHasSchoolClassUpdateManyWithoutStudentNestedInput
   reports?: Prisma.reportUpdateManyWithoutStudentNestedInput
+  comments?: Prisma.commentUpdateManyWithoutStudentNestedInput
 }
 
 export type studentUncheckedUpdateWithoutStudenttestInput = {
@@ -527,6 +613,7 @@ export type studentUncheckedUpdateWithoutStudenttestInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   schoolClasses?: Prisma.StudentHasSchoolClassUncheckedUpdateManyWithoutStudentNestedInput
   reports?: Prisma.reportUncheckedUpdateManyWithoutStudentNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type studentCreateWithoutSchoolClassesInput = {
@@ -536,6 +623,7 @@ export type studentCreateWithoutSchoolClassesInput = {
   updatedAt?: Date | string | null
   studenttest?: Prisma.studenttestCreateNestedManyWithoutStudentInput
   reports?: Prisma.reportCreateNestedManyWithoutStudentInput
+  comments?: Prisma.commentCreateNestedManyWithoutStudentInput
 }
 
 export type studentUncheckedCreateWithoutSchoolClassesInput = {
@@ -546,6 +634,7 @@ export type studentUncheckedCreateWithoutSchoolClassesInput = {
   updatedAt?: Date | string | null
   studenttest?: Prisma.studenttestUncheckedCreateNestedManyWithoutStudentInput
   reports?: Prisma.reportUncheckedCreateNestedManyWithoutStudentInput
+  comments?: Prisma.commentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type studentCreateOrConnectWithoutSchoolClassesInput = {
@@ -571,6 +660,7 @@ export type studentUpdateWithoutSchoolClassesInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   studenttest?: Prisma.studenttestUpdateManyWithoutStudentNestedInput
   reports?: Prisma.reportUpdateManyWithoutStudentNestedInput
+  comments?: Prisma.commentUpdateManyWithoutStudentNestedInput
 }
 
 export type studentUncheckedUpdateWithoutSchoolClassesInput = {
@@ -581,6 +671,7 @@ export type studentUncheckedUpdateWithoutSchoolClassesInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   studenttest?: Prisma.studenttestUncheckedUpdateManyWithoutStudentNestedInput
   reports?: Prisma.reportUncheckedUpdateManyWithoutStudentNestedInput
+  comments?: Prisma.commentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 
@@ -592,12 +683,14 @@ export type StudentCountOutputType = {
   schoolClasses: number
   studenttest: number
   reports: number
+  comments: number
 }
 
 export type StudentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   schoolClasses?: boolean | StudentCountOutputTypeCountSchoolClassesArgs
   studenttest?: boolean | StudentCountOutputTypeCountStudenttestArgs
   reports?: boolean | StudentCountOutputTypeCountReportsArgs
+  comments?: boolean | StudentCountOutputTypeCountCommentsArgs
 }
 
 /**
@@ -631,6 +724,13 @@ export type StudentCountOutputTypeCountReportsArgs<ExtArgs extends runtime.Types
   where?: Prisma.reportWhereInput
 }
 
+/**
+ * StudentCountOutputType without action
+ */
+export type StudentCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.commentWhereInput
+}
+
 
 export type studentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -641,6 +741,7 @@ export type studentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   schoolClasses?: boolean | Prisma.student$schoolClassesArgs<ExtArgs>
   studenttest?: boolean | Prisma.student$studenttestArgs<ExtArgs>
   reports?: boolean | Prisma.student$reportsArgs<ExtArgs>
+  comments?: boolean | Prisma.student$commentsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["student"]>
 
@@ -659,6 +760,7 @@ export type studentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   schoolClasses?: boolean | Prisma.student$schoolClassesArgs<ExtArgs>
   studenttest?: boolean | Prisma.student$studenttestArgs<ExtArgs>
   reports?: boolean | Prisma.student$reportsArgs<ExtArgs>
+  comments?: boolean | Prisma.student$commentsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -668,6 +770,7 @@ export type $studentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     schoolClasses: Prisma.$StudentHasSchoolClassPayload<ExtArgs>[]
     studenttest: Prisma.$studenttestPayload<ExtArgs>[]
     reports: Prisma.$reportPayload<ExtArgs>[]
+    comments: Prisma.$commentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1018,6 +1121,7 @@ export interface Prisma__studentClient<T, Null = never, ExtArgs extends runtime.
   schoolClasses<T extends Prisma.student$schoolClassesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.student$schoolClassesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentHasSchoolClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studenttest<T extends Prisma.student$studenttestArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.student$studenttestArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$studenttestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reports<T extends Prisma.student$reportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.student$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$reportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  comments<T extends Prisma.student$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.student$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$commentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1464,6 +1568,30 @@ export type student$reportsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ReportScalarFieldEnum | Prisma.ReportScalarFieldEnum[]
+}
+
+/**
+ * student.comments
+ */
+export type student$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the comment
+   */
+  select?: Prisma.commentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the comment
+   */
+  omit?: Prisma.commentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.commentInclude<ExtArgs> | null
+  where?: Prisma.commentWhereInput
+  orderBy?: Prisma.commentOrderByWithRelationInput | Prisma.commentOrderByWithRelationInput[]
+  cursor?: Prisma.commentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CommentScalarFieldEnum | Prisma.CommentScalarFieldEnum[]
 }
 
 /**

@@ -78,6 +78,11 @@ export type skill = Prisma.skillModel
  */
 export type student = Prisma.studentModel
 /**
+ * Model comment
+ * 
+ */
+export type comment = Prisma.commentModel
+/**
  * Model report
  * 
  */
@@ -92,6 +97,16 @@ export type studenttest = Prisma.studenttestModel
  * 
  */
 export type studenttesthasskill = Prisma.studenttesthasskillModel
+/**
+ * Model studenttesthasweaknesses
+ * 
+ */
+export type studenttesthasweaknesses = Prisma.studenttesthasweaknessesModel
+/**
+ * Model weakness
+ * 
+ */
+export type weakness = Prisma.weaknessModel
 /**
  * Model test
  * 

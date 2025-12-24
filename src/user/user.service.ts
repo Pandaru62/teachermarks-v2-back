@@ -39,7 +39,8 @@ export class UserService {
             lastname: true,
             school: true
           }
-        }
+        },
+        
       }
     })
   }

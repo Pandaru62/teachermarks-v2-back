@@ -11,7 +11,9 @@ export class PrismaService extends PrismaClient {
       user: process.env.DB_USER || "root",
       password: process.env.DB_PASSWORD || "root",
       database: process.env.DB_NAME || "teachermarks",
-      connectionLimit: 5
+      connectionLimit: 5,
+      ssl: false, 
+      allowPublicKeyRetrieval: true
     });
     super({ adapter });
   }

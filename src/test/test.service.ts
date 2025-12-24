@@ -15,6 +15,11 @@ export type TestWithClassAndSkills = {
   scale: number;
   schoolClassId: number;
   trimester: TrimesterEnum;
+  testTag?: {
+    id: number;
+    name: string;
+    color: string;
+  }
   schoolclass: {
     name: string;
     count: number;
@@ -59,6 +64,13 @@ export class TestService {
                   }
                 }
               }
+            },
+            testTag: {
+              select: {
+                id: true,
+                name: true,
+                color: true
+              }
             }
           },
           orderBy: {
@@ -92,6 +104,13 @@ export class TestService {
                 }
               }
             }
+          },
+          testTag: {
+            select: {
+              id: true,
+              name: true,
+              color: true
+            }
           }
         }
       })
@@ -114,7 +133,8 @@ export class TestService {
             id: sk.skill.id,
             name: sk.skill.name,
             abbreviation: sk.skill.abbreviation
-          }))
+          })),
+          testTag: test.testTag
         }
     }
 
@@ -135,6 +155,11 @@ async create(data: CreateTestDto): Promise<test & { skills: { id: number; name: 
               id: data.schoolClassId,
             },
           },
+          testTag: data.testTagId
+            ? {
+                connect: { id: data.testTagId },
+              }
+            : undefined,
         },
       }),
     ]);
@@ -182,10 +207,8 @@ async create(data: CreateTestDto): Promise<test & { skills: { id: number; name: 
         coefficient: data.coefficient,
         date : new Date(data.date),
         scale : data.scale,
-        trimester: data.trimester
-      },
-      include: {
-
+        trimester: data.trimester,
+        testTagId: data.testTagId,
       }
     })
 

@@ -8,13 +8,15 @@ import { IPayloadType, IRequestWithRefreshToken } from './types';
 import { TypeTokenEnum } from 'prisma/generated/browser';
 import { Public } from 'src/decorators/public.decorator';
 import { Request, Response } from 'express';
+import { NotificationsService } from 'src/notifications/notifications.service';
 
 @Public()
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly notificationsService: NotificationsService
   ) {}
 
 
@@ -62,6 +64,9 @@ export class AuthController {
     maxAge: 1000 * 60 * 60 * 24 * 7
   });
 
+    // Retrive last unread notification
+    const lastNotif = await this.notificationsService.findLastUnreadNotification(userFound.id);
+
     return {
       access_token,
       user: {
@@ -71,7 +76,12 @@ export class AuthController {
         school: userFound.profile.school,
         id: userFound.id,
         is_first_visit: userFound.is_first_visit,
-        current_trimester: userFound.current_trimester
+        current_trimester: userFound.current_trimester,
+        lastNotif: {
+          title: lastNotif.title,
+          message: lastNotif.message,
+          createdAt: lastNotif.createdAt
+        }
       }
     }
   }
@@ -146,10 +156,10 @@ export class AuthController {
       TypeTokenEnum.REFRESH_TOKEN
     );
 
-    // Set new cookie
+    // Set new cookie (secure only in production)
     res.cookie('refresh_token', newRefreshToken, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'none',
       path: '/',
       maxAge: 1000 * 60 * 60 * 24 * 7
@@ -167,13 +177,13 @@ export class AuthController {
     const refreshToken = req.cookies['refresh_token'];
     if (refreshToken) {
       const payload = await this.authService.verifyJwt(refreshToken, process.env.JWT_REFRESH_SECRET);
-      await this.authService.deleteToken(payload.sub); // remove stored hashed token
-        // Clear cookie client-side
+      await this.authService.deleteToken({ user_id: payload.sub, type: TypeTokenEnum.REFRESH_TOKEN }); // remove stored hashed token
+        // Clear cookie client-side (must match cookie path/sameSite used when setting it)
       res.clearCookie('refresh_token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        path: '/auth/refresh-token'
+        sameSite: 'none',
+        path: '/'
       });
 
     }

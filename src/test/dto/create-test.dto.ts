@@ -1,10 +1,9 @@
 import { TrimesterEnum } from 'prisma/generated/browser';
-import { IsEnum, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { Decimal } from 'prisma/generated/internal/prismaNamespace';
 
 export class CreateTestDto {
 
-    
     @IsNotEmpty()
     @IsString()
     name: string;
@@ -32,5 +31,9 @@ export class CreateTestDto {
     coefficient: Decimal;
 
     skills: {id: number, name: string}[];
+
+    @IsOptional()
+    @IsNumber()
+    testTagId: number;
 
 }
