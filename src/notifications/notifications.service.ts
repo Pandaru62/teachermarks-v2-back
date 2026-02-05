@@ -18,7 +18,7 @@ export class NotificationsService {
     });
   }
 
-  async findLastUnreadNotification(userId: number): Promise<notifications> {
+  async findLastUnreadNotification(userId: number): Promise<notifications> | null {
     const lastNotif = await this.prismaService.userHasNotifications.findFirst({
       where: { 
           userId,
@@ -31,6 +31,9 @@ export class NotificationsService {
         }
     });
 
+    if  (!lastNotif) {
+      return null;
+    }
     return this.prismaService.notifications.findUnique({
       where: { id: lastNotif.notificationId },
     });

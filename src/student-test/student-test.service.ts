@@ -8,6 +8,7 @@ const selectReturn = {
     mark: true,
     isAbsent: true,
     isUnmarked: true,
+    comment: true,
     student: {
       select: {
         id: true,
@@ -66,6 +67,7 @@ export class StudentTestService {
         mark: data.mark,
         isAbsent: data.isAbsent,
         isUnmarked: data.isUnmarked,
+        comment: data.comment,
         student: {
           connect: {
             id: studentId
@@ -114,6 +116,7 @@ export class StudentTestService {
         mark: true,
         isAbsent: true,
         isUnmarked: true,
+        comment: true,
         test: {
           select: {
             id: true,
@@ -226,7 +229,8 @@ export class StudentTestService {
       data: {
         isAbsent: updatedStudentTest.isAbsent,
         isUnmarked: updatedStudentTest.isUnmarked,
-        mark: updatedStudentTest.mark
+        mark: updatedStudentTest.mark,
+        comment: updatedStudentTest.comment
       },
       select: selectReturn
     })

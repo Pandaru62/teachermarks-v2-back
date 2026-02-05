@@ -77,11 +77,11 @@ export class AuthController {
         id: userFound.id,
         is_first_visit: userFound.is_first_visit,
         current_trimester: userFound.current_trimester,
-        lastNotif: {
+        lastNotif: lastNotif ? {
           title: lastNotif.title,
           message: lastNotif.message,
           createdAt: lastNotif.createdAt
-        }
+        } : null
       }
     }
   }

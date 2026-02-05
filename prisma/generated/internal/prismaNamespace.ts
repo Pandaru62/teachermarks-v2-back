@@ -1908,7 +1908,7 @@ export const StudenttestScalarFieldEnum = {
   isUnmarked: 'isUnmarked',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  commment: 'commment'
+  comment: 'comment'
 } as const
 
 export type StudenttestScalarFieldEnum = (typeof StudenttestScalarFieldEnum)[keyof typeof StudenttestScalarFieldEnum]
@@ -2096,7 +2096,7 @@ export type reportOrderByRelevanceFieldEnum = (typeof reportOrderByRelevanceFiel
 
 
 export const studenttestOrderByRelevanceFieldEnum = {
-  commment: 'commment'
+  comment: 'comment'
 } as const
 
 export type studenttestOrderByRelevanceFieldEnum = (typeof studenttestOrderByRelevanceFieldEnum)[keyof typeof studenttestOrderByRelevanceFieldEnum]

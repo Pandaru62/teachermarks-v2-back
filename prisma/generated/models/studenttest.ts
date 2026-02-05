@@ -49,7 +49,7 @@ export type StudenttestMinAggregateOutputType = {
   isUnmarked: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  commment: string | null
+  comment: string | null
 }
 
 export type StudenttestMaxAggregateOutputType = {
@@ -61,7 +61,7 @@ export type StudenttestMaxAggregateOutputType = {
   isUnmarked: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  commment: string | null
+  comment: string | null
 }
 
 export type StudenttestCountAggregateOutputType = {
@@ -73,7 +73,7 @@ export type StudenttestCountAggregateOutputType = {
   isUnmarked: number
   createdAt: number
   updatedAt: number
-  commment: number
+  comment: number
   _all: number
 }
 
@@ -101,7 +101,7 @@ export type StudenttestMinAggregateInputType = {
   isUnmarked?: true
   createdAt?: true
   updatedAt?: true
-  commment?: true
+  comment?: true
 }
 
 export type StudenttestMaxAggregateInputType = {
@@ -113,7 +113,7 @@ export type StudenttestMaxAggregateInputType = {
   isUnmarked?: true
   createdAt?: true
   updatedAt?: true
-  commment?: true
+  comment?: true
 }
 
 export type StudenttestCountAggregateInputType = {
@@ -125,7 +125,7 @@ export type StudenttestCountAggregateInputType = {
   isUnmarked?: true
   createdAt?: true
   updatedAt?: true
-  commment?: true
+  comment?: true
   _all?: true
 }
 
@@ -224,7 +224,7 @@ export type StudenttestGroupByOutputType = {
   isUnmarked: boolean
   createdAt: Date
   updatedAt: Date | null
-  commment: string | null
+  comment: string | null
   _count: StudenttestCountAggregateOutputType | null
   _avg: StudenttestAvgAggregateOutputType | null
   _sum: StudenttestSumAggregateOutputType | null
@@ -259,7 +259,7 @@ export type studenttestWhereInput = {
   isUnmarked?: Prisma.BoolFilter<"studenttest"> | boolean
   createdAt?: Prisma.DateTimeFilter<"studenttest"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"studenttest"> | Date | string | null
-  commment?: Prisma.StringNullableFilter<"studenttest"> | string | null
+  comment?: Prisma.StringNullableFilter<"studenttest"> | string | null
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.studentWhereInput>
   test?: Prisma.XOR<Prisma.TestScalarRelationFilter, Prisma.testWhereInput>
   studenttesthasskill?: Prisma.StudenttesthasskillListRelationFilter
@@ -275,7 +275,7 @@ export type studenttestOrderByWithRelationInput = {
   isUnmarked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  commment?: Prisma.SortOrderInput | Prisma.SortOrder
+  comment?: Prisma.SortOrderInput | Prisma.SortOrder
   student?: Prisma.studentOrderByWithRelationInput
   test?: Prisma.testOrderByWithRelationInput
   studenttesthasskill?: Prisma.studenttesthasskillOrderByRelationAggregateInput
@@ -296,7 +296,7 @@ export type studenttestWhereUniqueInput = Prisma.AtLeast<{
   isUnmarked?: Prisma.BoolFilter<"studenttest"> | boolean
   createdAt?: Prisma.DateTimeFilter<"studenttest"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"studenttest"> | Date | string | null
-  commment?: Prisma.StringNullableFilter<"studenttest"> | string | null
+  comment?: Prisma.StringNullableFilter<"studenttest"> | string | null
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.studentWhereInput>
   test?: Prisma.XOR<Prisma.TestScalarRelationFilter, Prisma.testWhereInput>
   studenttesthasskill?: Prisma.StudenttesthasskillListRelationFilter
@@ -312,7 +312,7 @@ export type studenttestOrderByWithAggregationInput = {
   isUnmarked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  commment?: Prisma.SortOrderInput | Prisma.SortOrder
+  comment?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.studenttestCountOrderByAggregateInput
   _avg?: Prisma.studenttestAvgOrderByAggregateInput
   _max?: Prisma.studenttestMaxOrderByAggregateInput
@@ -332,7 +332,7 @@ export type studenttestScalarWhereWithAggregatesInput = {
   isUnmarked?: Prisma.BoolWithAggregatesFilter<"studenttest"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"studenttest"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"studenttest"> | Date | string | null
-  commment?: Prisma.StringNullableWithAggregatesFilter<"studenttest"> | string | null
+  comment?: Prisma.StringNullableWithAggregatesFilter<"studenttest"> | string | null
 }
 
 export type studenttestCreateInput = {
@@ -341,7 +341,7 @@ export type studenttestCreateInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
   student: Prisma.studentCreateNestedOneWithoutStudenttestInput
   test: Prisma.testCreateNestedOneWithoutStudenttestInput
   studenttesthasskill?: Prisma.studenttesthasskillCreateNestedManyWithoutStudenttestInput
@@ -357,7 +357,7 @@ export type studenttestUncheckedCreateInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedCreateNestedManyWithoutStudenttestInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedCreateNestedManyWithoutStudenttestInput
 }
@@ -368,7 +368,7 @@ export type studenttestUpdateInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   student?: Prisma.studentUpdateOneRequiredWithoutStudenttestNestedInput
   test?: Prisma.testUpdateOneRequiredWithoutStudenttestNestedInput
   studenttesthasskill?: Prisma.studenttesthasskillUpdateManyWithoutStudenttestNestedInput
@@ -384,7 +384,7 @@ export type studenttestUncheckedUpdateInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedUpdateManyWithoutStudenttestNestedInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedUpdateManyWithoutStudenttestNestedInput
 }
@@ -398,7 +398,7 @@ export type studenttestCreateManyInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
 }
 
 export type studenttestUpdateManyMutationInput = {
@@ -407,7 +407,7 @@ export type studenttestUpdateManyMutationInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type studenttestUncheckedUpdateManyInput = {
@@ -419,7 +419,7 @@ export type studenttestUncheckedUpdateManyInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type StudenttestListRelationFilter = {
@@ -452,7 +452,7 @@ export type studenttestCountOrderByAggregateInput = {
   isUnmarked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  commment?: Prisma.SortOrder
+  comment?: Prisma.SortOrder
 }
 
 export type studenttestAvgOrderByAggregateInput = {
@@ -471,7 +471,7 @@ export type studenttestMaxOrderByAggregateInput = {
   isUnmarked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  commment?: Prisma.SortOrder
+  comment?: Prisma.SortOrder
 }
 
 export type studenttestMinOrderByAggregateInput = {
@@ -483,7 +483,7 @@ export type studenttestMinOrderByAggregateInput = {
   isUnmarked?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  commment?: Prisma.SortOrder
+  comment?: Prisma.SortOrder
 }
 
 export type studenttestSumOrderByAggregateInput = {
@@ -624,7 +624,7 @@ export type studenttestCreateWithoutStudentInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
   test: Prisma.testCreateNestedOneWithoutStudenttestInput
   studenttesthasskill?: Prisma.studenttesthasskillCreateNestedManyWithoutStudenttestInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesCreateNestedManyWithoutStudenttestInput
@@ -638,7 +638,7 @@ export type studenttestUncheckedCreateWithoutStudentInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedCreateNestedManyWithoutStudenttestInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedCreateNestedManyWithoutStudenttestInput
 }
@@ -681,7 +681,7 @@ export type studenttestScalarWhereInput = {
   isUnmarked?: Prisma.BoolFilter<"studenttest"> | boolean
   createdAt?: Prisma.DateTimeFilter<"studenttest"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"studenttest"> | Date | string | null
-  commment?: Prisma.StringNullableFilter<"studenttest"> | string | null
+  comment?: Prisma.StringNullableFilter<"studenttest"> | string | null
 }
 
 export type studenttestCreateWithoutStudenttesthasskillInput = {
@@ -690,7 +690,7 @@ export type studenttestCreateWithoutStudenttesthasskillInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
   student: Prisma.studentCreateNestedOneWithoutStudenttestInput
   test: Prisma.testCreateNestedOneWithoutStudenttestInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesCreateNestedManyWithoutStudenttestInput
@@ -705,7 +705,7 @@ export type studenttestUncheckedCreateWithoutStudenttesthasskillInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedCreateNestedManyWithoutStudenttestInput
 }
 
@@ -731,7 +731,7 @@ export type studenttestUpdateWithoutStudenttesthasskillInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   student?: Prisma.studentUpdateOneRequiredWithoutStudenttestNestedInput
   test?: Prisma.testUpdateOneRequiredWithoutStudenttestNestedInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUpdateManyWithoutStudenttestNestedInput
@@ -746,7 +746,7 @@ export type studenttestUncheckedUpdateWithoutStudenttesthasskillInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedUpdateManyWithoutStudenttestNestedInput
 }
 
@@ -756,7 +756,7 @@ export type studenttestCreateWithoutStudenttesthasweaknessesInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
   student: Prisma.studentCreateNestedOneWithoutStudenttestInput
   test: Prisma.testCreateNestedOneWithoutStudenttestInput
   studenttesthasskill?: Prisma.studenttesthasskillCreateNestedManyWithoutStudenttestInput
@@ -771,7 +771,7 @@ export type studenttestUncheckedCreateWithoutStudenttesthasweaknessesInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedCreateNestedManyWithoutStudenttestInput
 }
 
@@ -797,7 +797,7 @@ export type studenttestUpdateWithoutStudenttesthasweaknessesInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   student?: Prisma.studentUpdateOneRequiredWithoutStudenttestNestedInput
   test?: Prisma.testUpdateOneRequiredWithoutStudenttestNestedInput
   studenttesthasskill?: Prisma.studenttesthasskillUpdateManyWithoutStudenttestNestedInput
@@ -812,7 +812,7 @@ export type studenttestUncheckedUpdateWithoutStudenttesthasweaknessesInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedUpdateManyWithoutStudenttestNestedInput
 }
 
@@ -822,7 +822,7 @@ export type studenttestCreateWithoutTestInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
   student: Prisma.studentCreateNestedOneWithoutStudenttestInput
   studenttesthasskill?: Prisma.studenttesthasskillCreateNestedManyWithoutStudenttestInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesCreateNestedManyWithoutStudenttestInput
@@ -836,7 +836,7 @@ export type studenttestUncheckedCreateWithoutTestInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedCreateNestedManyWithoutStudenttestInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedCreateNestedManyWithoutStudenttestInput
 }
@@ -875,7 +875,7 @@ export type studenttestCreateManyStudentInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
 }
 
 export type studenttestUpdateWithoutStudentInput = {
@@ -884,7 +884,7 @@ export type studenttestUpdateWithoutStudentInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   test?: Prisma.testUpdateOneRequiredWithoutStudenttestNestedInput
   studenttesthasskill?: Prisma.studenttesthasskillUpdateManyWithoutStudenttestNestedInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUpdateManyWithoutStudenttestNestedInput
@@ -898,7 +898,7 @@ export type studenttestUncheckedUpdateWithoutStudentInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedUpdateManyWithoutStudenttestNestedInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedUpdateManyWithoutStudenttestNestedInput
 }
@@ -911,7 +911,7 @@ export type studenttestUncheckedUpdateManyWithoutStudentInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type studenttestCreateManyTestInput = {
@@ -922,7 +922,7 @@ export type studenttestCreateManyTestInput = {
   isUnmarked?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  commment?: string | null
+  comment?: string | null
 }
 
 export type studenttestUpdateWithoutTestInput = {
@@ -931,7 +931,7 @@ export type studenttestUpdateWithoutTestInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   student?: Prisma.studentUpdateOneRequiredWithoutStudenttestNestedInput
   studenttesthasskill?: Prisma.studenttesthasskillUpdateManyWithoutStudenttestNestedInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUpdateManyWithoutStudenttestNestedInput
@@ -945,7 +945,7 @@ export type studenttestUncheckedUpdateWithoutTestInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedUpdateManyWithoutStudenttestNestedInput
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedUpdateManyWithoutStudenttestNestedInput
 }
@@ -958,7 +958,7 @@ export type studenttestUncheckedUpdateManyWithoutTestInput = {
   isUnmarked?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  commment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1010,7 +1010,7 @@ export type studenttestSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   isUnmarked?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  commment?: boolean
+  comment?: boolean
   student?: boolean | Prisma.studentDefaultArgs<ExtArgs>
   test?: boolean | Prisma.testDefaultArgs<ExtArgs>
   studenttesthasskill?: boolean | Prisma.studenttest$studenttesthasskillArgs<ExtArgs>
@@ -1029,10 +1029,10 @@ export type studenttestSelectScalar = {
   isUnmarked?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  commment?: boolean
+  comment?: boolean
 }
 
-export type studenttestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "testId" | "mark" | "isAbsent" | "isUnmarked" | "createdAt" | "updatedAt" | "commment", ExtArgs["result"]["studenttest"]>
+export type studenttestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "testId" | "mark" | "isAbsent" | "isUnmarked" | "createdAt" | "updatedAt" | "comment", ExtArgs["result"]["studenttest"]>
 export type studenttestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.studentDefaultArgs<ExtArgs>
   test?: boolean | Prisma.testDefaultArgs<ExtArgs>
@@ -1058,7 +1058,7 @@ export type $studenttestPayload<ExtArgs extends runtime.Types.Extensions.Interna
     isUnmarked: boolean
     createdAt: Date
     updatedAt: Date | null
-    commment: string | null
+    comment: string | null
   }, ExtArgs["result"]["studenttest"]>
   composites: {}
 }
@@ -1440,7 +1440,7 @@ export interface studenttestFieldRefs {
   readonly isUnmarked: Prisma.FieldRef<"studenttest", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"studenttest", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"studenttest", 'DateTime'>
-  readonly commment: Prisma.FieldRef<"studenttest", 'String'>
+  readonly comment: Prisma.FieldRef<"studenttest", 'String'>
 }
     
 

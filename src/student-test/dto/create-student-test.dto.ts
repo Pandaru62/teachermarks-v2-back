@@ -12,6 +12,8 @@ export class CreateStudentTestDto {
     @IsBoolean()
     isUnmarked?: boolean;
 
+    comment?: string;
+
     skills: { 
         skillId: number;
         level: LevelEnum;
