@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateSchoolclassDto } from './dto/create-schoolclass.dto';
 import { UpdateSchoolclassDto } from './dto/update-schoolclass.dto';
 import { PrismaService } from 'prisma/prisma.service';
-import { schoolclass } from 'prisma/generated/browser';
+import { schoolclass, SchoolYearEnum } from 'prisma/generated/browser';
 
 @Injectable()
 export class SchoolclassService {
@@ -16,13 +16,15 @@ export class SchoolclassService {
       {data: {
         color: data.color,
         name: data.name,
+        // TO CHANGE
+        schoolYear: SchoolYearEnum.Y2026_2027,
         form: {connect: {id: data.formId}}
       }
     })
 
     // connect the class to the teacher
-    if (newClass) await this.prismaService.userHasSchoolClass.create({
-      data: {schoolClassId: newClass.id, userId }
+    if (newClass) await this.prismaService.teacherHasSchoolClass.create({
+      data: {schoolClassId: newClass.id, teacherId: userId }
     })
     return newClass;
   }
@@ -34,7 +36,7 @@ export class SchoolclassService {
           {
             teachers:
               {some:
-                {userId}
+                {teacherId: userId}
               },
           }
       }
@@ -42,7 +44,7 @@ export class SchoolclassService {
   }
 
   async findOne(id: number, userId: number): Promise<schoolclass> {
-    return this.prismaService.schoolclass.findUnique({where: {id, teachers: {some: {userId}}}});
+    return this.prismaService.schoolclass.findUnique({where: {id, teachers: {some: {teacherId: userId}}}});
   }
 
   // Promise<Pick<schoolclass, "id" | "color" | "name">
@@ -52,7 +54,7 @@ export class SchoolclassService {
         where: {
           id, 
           teachers: {
-            some: {userId}
+            some: {teacherId: userId}
           },
         },
         select: {
@@ -93,7 +95,7 @@ export class SchoolclassService {
         where: 
           {
             id,
-            teachers: {some: {userId}}
+            teachers: {some: {teacherId: userId}}
           }, 
         data 
       }
@@ -102,17 +104,17 @@ export class SchoolclassService {
 
   /* Is the class assigned to other teachers? */
   async countTeachersByClass(schoolClassId: number): Promise<number> {
-    return this.prismaService.userHasSchoolClass.count({where: {schoolClassId}})
+    return this.prismaService.teacherHasSchoolClass.count({where: {schoolClassId}})
   }
 
   async remove(id: number, userId: number): Promise<schoolclass> {
-    return this.prismaService.schoolclass.delete({where: {id, teachers: {some: {userId}}}});
+    return this.prismaService.schoolclass.delete({where: {id, teachers: {some: {teacherId: userId}}}});
   }
 
   async archive(id: number, userId: number): Promise<schoolclass> {
     return this.prismaService.schoolclass.update(
       {
-        where: {id, teachers: {some: {userId}}},
+        where: {id, teachers: {some: {teacherId: userId}}},
         data: {
           isArchived: true
         }
@@ -123,7 +125,7 @@ export class SchoolclassService {
   async unArchive(id: number, userId: number): Promise<schoolclass> {
     return this.prismaService.schoolclass.update(
       {
-        where: {id, teachers: {some: {userId}}},
+        where: {id, teachers: {some: {teacherId: userId}}},
         data: {
           isArchived: false
         }

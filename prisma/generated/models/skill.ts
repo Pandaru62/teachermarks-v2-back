@@ -28,12 +28,12 @@ export type AggregateSkill = {
 
 export type SkillAvgAggregateOutputType = {
   id: number | null
-  userId: number | null
+  teacherId: number | null
 }
 
 export type SkillSumAggregateOutputType = {
   id: number | null
-  userId: number | null
+  teacherId: number | null
 }
 
 export type SkillMinAggregateOutputType = {
@@ -44,7 +44,7 @@ export type SkillMinAggregateOutputType = {
   isArchived: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  userId: number | null
+  teacherId: number | null
 }
 
 export type SkillMaxAggregateOutputType = {
@@ -55,7 +55,7 @@ export type SkillMaxAggregateOutputType = {
   isArchived: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
-  userId: number | null
+  teacherId: number | null
 }
 
 export type SkillCountAggregateOutputType = {
@@ -66,19 +66,19 @@ export type SkillCountAggregateOutputType = {
   isArchived: number
   createdAt: number
   updatedAt: number
-  userId: number
+  teacherId: number
   _all: number
 }
 
 
 export type SkillAvgAggregateInputType = {
   id?: true
-  userId?: true
+  teacherId?: true
 }
 
 export type SkillSumAggregateInputType = {
   id?: true
-  userId?: true
+  teacherId?: true
 }
 
 export type SkillMinAggregateInputType = {
@@ -89,7 +89,7 @@ export type SkillMinAggregateInputType = {
   isArchived?: true
   createdAt?: true
   updatedAt?: true
-  userId?: true
+  teacherId?: true
 }
 
 export type SkillMaxAggregateInputType = {
@@ -100,7 +100,7 @@ export type SkillMaxAggregateInputType = {
   isArchived?: true
   createdAt?: true
   updatedAt?: true
-  userId?: true
+  teacherId?: true
 }
 
 export type SkillCountAggregateInputType = {
@@ -111,7 +111,7 @@ export type SkillCountAggregateInputType = {
   isArchived?: true
   createdAt?: true
   updatedAt?: true
-  userId?: true
+  teacherId?: true
   _all?: true
 }
 
@@ -209,7 +209,7 @@ export type SkillGroupByOutputType = {
   isArchived: boolean
   createdAt: Date
   updatedAt: Date | null
-  userId: number | null
+  teacherId: number | null
   _count: SkillCountAggregateOutputType | null
   _avg: SkillAvgAggregateOutputType | null
   _sum: SkillSumAggregateOutputType | null
@@ -243,10 +243,10 @@ export type skillWhereInput = {
   isArchived?: Prisma.BoolFilter<"skill"> | boolean
   createdAt?: Prisma.DateTimeFilter<"skill"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"skill"> | Date | string | null
-  userId?: Prisma.IntNullableFilter<"skill"> | number | null
+  teacherId?: Prisma.IntNullableFilter<"skill"> | number | null
   studenttesthasskill?: Prisma.StudenttesthasskillListRelationFilter
   tests?: Prisma.TesthasskillListRelationFilter
-  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.userWhereInput> | null
+  createdBy?: Prisma.XOR<Prisma.TeacherNullableScalarRelationFilter, Prisma.teacherWhereInput> | null
 }
 
 export type skillOrderByWithRelationInput = {
@@ -257,10 +257,10 @@ export type skillOrderByWithRelationInput = {
   isArchived?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  teacherId?: Prisma.SortOrderInput | Prisma.SortOrder
   studenttesthasskill?: Prisma.studenttesthasskillOrderByRelationAggregateInput
   tests?: Prisma.testhasskillOrderByRelationAggregateInput
-  createdBy?: Prisma.userOrderByWithRelationInput
+  createdBy?: Prisma.teacherOrderByWithRelationInput
   _relevance?: Prisma.skillOrderByRelevanceInput
 }
 
@@ -275,10 +275,10 @@ export type skillWhereUniqueInput = Prisma.AtLeast<{
   isArchived?: Prisma.BoolFilter<"skill"> | boolean
   createdAt?: Prisma.DateTimeFilter<"skill"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"skill"> | Date | string | null
-  userId?: Prisma.IntNullableFilter<"skill"> | number | null
+  teacherId?: Prisma.IntNullableFilter<"skill"> | number | null
   studenttesthasskill?: Prisma.StudenttesthasskillListRelationFilter
   tests?: Prisma.TesthasskillListRelationFilter
-  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.userWhereInput> | null
+  createdBy?: Prisma.XOR<Prisma.TeacherNullableScalarRelationFilter, Prisma.teacherWhereInput> | null
 }, "id">
 
 export type skillOrderByWithAggregationInput = {
@@ -289,7 +289,7 @@ export type skillOrderByWithAggregationInput = {
   isArchived?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  teacherId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.skillCountOrderByAggregateInput
   _avg?: Prisma.skillAvgOrderByAggregateInput
   _max?: Prisma.skillMaxOrderByAggregateInput
@@ -308,7 +308,7 @@ export type skillScalarWhereWithAggregatesInput = {
   isArchived?: Prisma.BoolWithAggregatesFilter<"skill"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"skill"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"skill"> | Date | string | null
-  userId?: Prisma.IntNullableWithAggregatesFilter<"skill"> | number | null
+  teacherId?: Prisma.IntNullableWithAggregatesFilter<"skill"> | number | null
 }
 
 export type skillCreateInput = {
@@ -320,7 +320,7 @@ export type skillCreateInput = {
   updatedAt?: Date | string | null
   studenttesthasskill?: Prisma.studenttesthasskillCreateNestedManyWithoutSkillInput
   tests?: Prisma.testhasskillCreateNestedManyWithoutSkillInput
-  createdBy?: Prisma.userCreateNestedOneWithoutCreatedSkillsInput
+  createdBy?: Prisma.teacherCreateNestedOneWithoutCreatedSkillsInput
 }
 
 export type skillUncheckedCreateInput = {
@@ -331,7 +331,7 @@ export type skillUncheckedCreateInput = {
   isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  userId?: number | null
+  teacherId?: number | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedCreateNestedManyWithoutSkillInput
   tests?: Prisma.testhasskillUncheckedCreateNestedManyWithoutSkillInput
 }
@@ -345,7 +345,7 @@ export type skillUpdateInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   studenttesthasskill?: Prisma.studenttesthasskillUpdateManyWithoutSkillNestedInput
   tests?: Prisma.testhasskillUpdateManyWithoutSkillNestedInput
-  createdBy?: Prisma.userUpdateOneWithoutCreatedSkillsNestedInput
+  createdBy?: Prisma.teacherUpdateOneWithoutCreatedSkillsNestedInput
 }
 
 export type skillUncheckedUpdateInput = {
@@ -356,7 +356,7 @@ export type skillUncheckedUpdateInput = {
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teacherId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedUpdateManyWithoutSkillNestedInput
   tests?: Prisma.testhasskillUncheckedUpdateManyWithoutSkillNestedInput
 }
@@ -369,7 +369,7 @@ export type skillCreateManyInput = {
   isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  userId?: number | null
+  teacherId?: number | null
 }
 
 export type skillUpdateManyMutationInput = {
@@ -389,7 +389,7 @@ export type skillUncheckedUpdateManyInput = {
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teacherId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type SkillListRelationFilter = {
@@ -416,12 +416,12 @@ export type skillCountOrderByAggregateInput = {
   isArchived?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  teacherId?: Prisma.SortOrder
 }
 
 export type skillAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  teacherId?: Prisma.SortOrder
 }
 
 export type skillMaxOrderByAggregateInput = {
@@ -432,7 +432,7 @@ export type skillMaxOrderByAggregateInput = {
   isArchived?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  teacherId?: Prisma.SortOrder
 }
 
 export type skillMinOrderByAggregateInput = {
@@ -443,12 +443,12 @@ export type skillMinOrderByAggregateInput = {
   isArchived?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  teacherId?: Prisma.SortOrder
 }
 
 export type skillSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  teacherId?: Prisma.SortOrder
 }
 
 export type SkillScalarRelationFilter = {
@@ -496,18 +496,6 @@ export type skillUncheckedUpdateManyWithoutCreatedByNestedInput = {
   update?: Prisma.skillUpdateWithWhereUniqueWithoutCreatedByInput | Prisma.skillUpdateWithWhereUniqueWithoutCreatedByInput[]
   updateMany?: Prisma.skillUpdateManyWithWhereWithoutCreatedByInput | Prisma.skillUpdateManyWithWhereWithoutCreatedByInput[]
   deleteMany?: Prisma.skillScalarWhereInput | Prisma.skillScalarWhereInput[]
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type skillCreateNestedOneWithoutStudenttesthasskillInput = {
@@ -598,7 +586,7 @@ export type skillScalarWhereInput = {
   isArchived?: Prisma.BoolFilter<"skill"> | boolean
   createdAt?: Prisma.DateTimeFilter<"skill"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"skill"> | Date | string | null
-  userId?: Prisma.IntNullableFilter<"skill"> | number | null
+  teacherId?: Prisma.IntNullableFilter<"skill"> | number | null
 }
 
 export type skillCreateWithoutStudenttesthasskillInput = {
@@ -609,7 +597,7 @@ export type skillCreateWithoutStudenttesthasskillInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   tests?: Prisma.testhasskillCreateNestedManyWithoutSkillInput
-  createdBy?: Prisma.userCreateNestedOneWithoutCreatedSkillsInput
+  createdBy?: Prisma.teacherCreateNestedOneWithoutCreatedSkillsInput
 }
 
 export type skillUncheckedCreateWithoutStudenttesthasskillInput = {
@@ -620,7 +608,7 @@ export type skillUncheckedCreateWithoutStudenttesthasskillInput = {
   isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  userId?: number | null
+  teacherId?: number | null
   tests?: Prisma.testhasskillUncheckedCreateNestedManyWithoutSkillInput
 }
 
@@ -648,7 +636,7 @@ export type skillUpdateWithoutStudenttesthasskillInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tests?: Prisma.testhasskillUpdateManyWithoutSkillNestedInput
-  createdBy?: Prisma.userUpdateOneWithoutCreatedSkillsNestedInput
+  createdBy?: Prisma.teacherUpdateOneWithoutCreatedSkillsNestedInput
 }
 
 export type skillUncheckedUpdateWithoutStudenttesthasskillInput = {
@@ -659,7 +647,7 @@ export type skillUncheckedUpdateWithoutStudenttesthasskillInput = {
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teacherId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   tests?: Prisma.testhasskillUncheckedUpdateManyWithoutSkillNestedInput
 }
 
@@ -671,7 +659,7 @@ export type skillCreateWithoutTestsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   studenttesthasskill?: Prisma.studenttesthasskillCreateNestedManyWithoutSkillInput
-  createdBy?: Prisma.userCreateNestedOneWithoutCreatedSkillsInput
+  createdBy?: Prisma.teacherCreateNestedOneWithoutCreatedSkillsInput
 }
 
 export type skillUncheckedCreateWithoutTestsInput = {
@@ -682,7 +670,7 @@ export type skillUncheckedCreateWithoutTestsInput = {
   isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  userId?: number | null
+  teacherId?: number | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedCreateNestedManyWithoutSkillInput
 }
 
@@ -710,7 +698,7 @@ export type skillUpdateWithoutTestsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   studenttesthasskill?: Prisma.studenttesthasskillUpdateManyWithoutSkillNestedInput
-  createdBy?: Prisma.userUpdateOneWithoutCreatedSkillsNestedInput
+  createdBy?: Prisma.teacherUpdateOneWithoutCreatedSkillsNestedInput
 }
 
 export type skillUncheckedUpdateWithoutTestsInput = {
@@ -721,7 +709,7 @@ export type skillUncheckedUpdateWithoutTestsInput = {
   isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teacherId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   studenttesthasskill?: Prisma.studenttesthasskillUncheckedUpdateManyWithoutSkillNestedInput
 }
 
@@ -816,7 +804,7 @@ export type skillSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   isArchived?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  userId?: boolean
+  teacherId?: boolean
   studenttesthasskill?: boolean | Prisma.skill$studenttesthasskillArgs<ExtArgs>
   tests?: boolean | Prisma.skill$testsArgs<ExtArgs>
   createdBy?: boolean | Prisma.skill$createdByArgs<ExtArgs>
@@ -833,10 +821,10 @@ export type skillSelectScalar = {
   isArchived?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  userId?: boolean
+  teacherId?: boolean
 }
 
-export type skillOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "abbreviation" | "isArchived" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["skill"]>
+export type skillOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "abbreviation" | "isArchived" | "createdAt" | "updatedAt" | "teacherId", ExtArgs["result"]["skill"]>
 export type skillInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   studenttesthasskill?: boolean | Prisma.skill$studenttesthasskillArgs<ExtArgs>
   tests?: boolean | Prisma.skill$testsArgs<ExtArgs>
@@ -849,7 +837,7 @@ export type $skillPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     studenttesthasskill: Prisma.$studenttesthasskillPayload<ExtArgs>[]
     tests: Prisma.$testhasskillPayload<ExtArgs>[]
-    createdBy: Prisma.$userPayload<ExtArgs> | null
+    createdBy: Prisma.$teacherPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -859,7 +847,7 @@ export type $skillPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     isArchived: boolean
     createdAt: Date
     updatedAt: Date | null
-    userId: number | null
+    teacherId: number | null
   }, ExtArgs["result"]["skill"]>
   composites: {}
 }
@@ -1202,7 +1190,7 @@ export interface Prisma__skillClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   studenttesthasskill<T extends Prisma.skill$studenttesthasskillArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.skill$studenttesthasskillArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$studenttesthasskillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tests<T extends Prisma.skill$testsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.skill$testsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$testhasskillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  createdBy<T extends Prisma.skill$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.skill$createdByArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.skill$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.skill$createdByArgs<ExtArgs>>): Prisma.Prisma__teacherClient<runtime.Types.Result.GetResult<Prisma.$teacherPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1239,7 +1227,7 @@ export interface skillFieldRefs {
   readonly isArchived: Prisma.FieldRef<"skill", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"skill", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"skill", 'DateTime'>
-  readonly userId: Prisma.FieldRef<"skill", 'Int'>
+  readonly teacherId: Prisma.FieldRef<"skill", 'Int'>
 }
     
 
@@ -1635,18 +1623,18 @@ export type skill$testsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
  */
 export type skill$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the user
+   * Select specific fields to fetch from the teacher
    */
-  select?: Prisma.userSelect<ExtArgs> | null
+  select?: Prisma.teacherSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the user
+   * Omit specific fields from the teacher
    */
-  omit?: Prisma.userOmit<ExtArgs> | null
+  omit?: Prisma.teacherOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.userInclude<ExtArgs> | null
-  where?: Prisma.userWhereInput
+  include?: Prisma.teacherInclude<ExtArgs> | null
+  where?: Prisma.teacherWhereInput
 }
 
 /**

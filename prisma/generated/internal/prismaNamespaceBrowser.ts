@@ -52,13 +52,14 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   user: 'user',
+  teacher: 'teacher',
+  student: 'student',
+  school: 'school',
   notifications: 'notifications',
   userHasNotifications: 'userHasNotifications',
-  profile: 'profile',
   form: 'form',
   schoolclass: 'schoolclass',
   skill: 'skill',
-  student: 'student',
   comment: 'comment',
   report: 'report',
   studenttest: 'studenttest',
@@ -68,7 +69,7 @@ export const ModelName = {
   test: 'test',
   testTag: 'testTag',
   testhasskill: 'testhasskill',
-  UserHasSchoolClass: 'UserHasSchoolClass',
+  TeacherHasSchoolClass: 'TeacherHasSchoolClass',
   StudentHasSchoolClass: 'StudentHasSchoolClass',
   token: 'token'
 } as const
@@ -91,17 +92,54 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UserScalarFieldEnum = {
   id: 'id',
+  login: 'login',
   email: 'email',
   password: 'password',
-  is_validated: 'is_validated',
-  is_first_visit: 'is_first_visit',
   role: 'role',
-  current_trimester: 'current_trimester',
+  isValidated: 'isValidated',
+  isFirstVisit: 'isFirstVisit',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const TeacherScalarFieldEnum = {
+  userId: 'userId',
+  firstname: 'firstname',
+  lastname: 'lastname',
+  schoolId: 'schoolId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TeacherScalarFieldEnum = (typeof TeacherScalarFieldEnum)[keyof typeof TeacherScalarFieldEnum]
+
+
+export const StudentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  lastName: 'lastName',
+  firstName: 'firstName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
+
+
+export const SchoolScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  city: 'city',
+  country: 'country',
+  currentTrimester: 'currentTrimester',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolScalarFieldEnum = (typeof SchoolScalarFieldEnum)[keyof typeof SchoolScalarFieldEnum]
 
 
 export const NotificationsScalarFieldEnum = {
@@ -124,18 +162,6 @@ export const UserHasNotificationsScalarFieldEnum = {
 export type UserHasNotificationsScalarFieldEnum = (typeof UserHasNotificationsScalarFieldEnum)[keyof typeof UserHasNotificationsScalarFieldEnum]
 
 
-export const ProfileScalarFieldEnum = {
-  userId: 'userId',
-  firstname: 'firstname',
-  lastname: 'lastname',
-  school: 'school',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
-
-
 export const FormScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -152,6 +178,7 @@ export const SchoolclassScalarFieldEnum = {
   color: 'color',
   isArchived: 'isArchived',
   formId: 'formId',
+  schoolYear: 'schoolYear',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -167,21 +194,10 @@ export const SkillScalarFieldEnum = {
   isArchived: 'isArchived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userId: 'userId'
+  teacherId: 'teacherId'
 } as const
 
 export type SkillScalarFieldEnum = (typeof SkillScalarFieldEnum)[keyof typeof SkillScalarFieldEnum]
-
-
-export const StudentScalarFieldEnum = {
-  id: 'id',
-  lastName: 'lastName',
-  firstName: 'firstName',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
 
 
 export const CommentScalarFieldEnum = {
@@ -244,7 +260,7 @@ export const WeaknessScalarFieldEnum = {
   description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userId: 'userId'
+  teacherId: 'teacherId'
 } as const
 
 export type WeaknessScalarFieldEnum = (typeof WeaknessScalarFieldEnum)[keyof typeof WeaknessScalarFieldEnum]
@@ -287,12 +303,12 @@ export const TesthasskillScalarFieldEnum = {
 export type TesthasskillScalarFieldEnum = (typeof TesthasskillScalarFieldEnum)[keyof typeof TesthasskillScalarFieldEnum]
 
 
-export const UserHasSchoolClassScalarFieldEnum = {
-  userId: 'userId',
+export const TeacherHasSchoolClassScalarFieldEnum = {
+  teacherId: 'teacherId',
   schoolClassId: 'schoolClassId'
 } as const
 
-export type UserHasSchoolClassScalarFieldEnum = (typeof UserHasSchoolClassScalarFieldEnum)[keyof typeof UserHasSchoolClassScalarFieldEnum]
+export type TeacherHasSchoolClassScalarFieldEnum = (typeof TeacherHasSchoolClassScalarFieldEnum)[keyof typeof TeacherHasSchoolClassScalarFieldEnum]
 
 
 export const StudentHasSchoolClassScalarFieldEnum = {
@@ -332,11 +348,37 @@ export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 export const userOrderByRelevanceFieldEnum = {
+  login: 'login',
   email: 'email',
   password: 'password'
 } as const
 
 export type userOrderByRelevanceFieldEnum = (typeof userOrderByRelevanceFieldEnum)[keyof typeof userOrderByRelevanceFieldEnum]
+
+
+export const teacherOrderByRelevanceFieldEnum = {
+  firstname: 'firstname',
+  lastname: 'lastname'
+} as const
+
+export type teacherOrderByRelevanceFieldEnum = (typeof teacherOrderByRelevanceFieldEnum)[keyof typeof teacherOrderByRelevanceFieldEnum]
+
+
+export const studentOrderByRelevanceFieldEnum = {
+  lastName: 'lastName',
+  firstName: 'firstName'
+} as const
+
+export type studentOrderByRelevanceFieldEnum = (typeof studentOrderByRelevanceFieldEnum)[keyof typeof studentOrderByRelevanceFieldEnum]
+
+
+export const schoolOrderByRelevanceFieldEnum = {
+  name: 'name',
+  city: 'city',
+  country: 'country'
+} as const
+
+export type schoolOrderByRelevanceFieldEnum = (typeof schoolOrderByRelevanceFieldEnum)[keyof typeof schoolOrderByRelevanceFieldEnum]
 
 
 export const notificationsOrderByRelevanceFieldEnum = {
@@ -345,15 +387,6 @@ export const notificationsOrderByRelevanceFieldEnum = {
 } as const
 
 export type notificationsOrderByRelevanceFieldEnum = (typeof notificationsOrderByRelevanceFieldEnum)[keyof typeof notificationsOrderByRelevanceFieldEnum]
-
-
-export const profileOrderByRelevanceFieldEnum = {
-  firstname: 'firstname',
-  lastname: 'lastname',
-  school: 'school'
-} as const
-
-export type profileOrderByRelevanceFieldEnum = (typeof profileOrderByRelevanceFieldEnum)[keyof typeof profileOrderByRelevanceFieldEnum]
 
 
 export const formOrderByRelevanceFieldEnum = {
@@ -378,14 +411,6 @@ export const skillOrderByRelevanceFieldEnum = {
 } as const
 
 export type skillOrderByRelevanceFieldEnum = (typeof skillOrderByRelevanceFieldEnum)[keyof typeof skillOrderByRelevanceFieldEnum]
-
-
-export const studentOrderByRelevanceFieldEnum = {
-  lastName: 'lastName',
-  firstName: 'firstName'
-} as const
-
-export type studentOrderByRelevanceFieldEnum = (typeof studentOrderByRelevanceFieldEnum)[keyof typeof studentOrderByRelevanceFieldEnum]
 
 
 export const commentOrderByRelevanceFieldEnum = {

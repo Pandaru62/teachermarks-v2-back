@@ -32,7 +32,7 @@ export class AuthController {
     if (!userFound) throw new UnauthorizedException("Bad Credentials");
 
     // check user is validated
-    if (!userFound.is_validated) {
+    if (!userFound.isValidated) {
       throw new ConflictException("Please verify your email before signing in",);
     }
 
@@ -71,12 +71,12 @@ export class AuthController {
       access_token,
       user: {
         email: userFound.email,
-        firstname: userFound.profile.firstname,
-        lastname: userFound.profile.lastname,
-        school: userFound.profile.school,
+        firstname: userFound.teacher?.firstname ?? userFound.student?.firstName ?? '',
+        lastname: userFound.teacher?.lastname ?? userFound.student?.lastName ?? '',
+        school: userFound.teacher?.school?.name ?? null,
         id: userFound.id,
-        is_first_visit: userFound.is_first_visit,
-        current_trimester: userFound.current_trimester,
+        is_first_visit: userFound.isFirstVisit,
+        current_trimester: userFound.teacher?.school?.currentTrimester ?? null,
         lastNotif: lastNotif ? {
           title: lastNotif.title,
           message: lastNotif.message,

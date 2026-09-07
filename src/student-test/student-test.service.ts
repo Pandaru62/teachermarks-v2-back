@@ -50,7 +50,9 @@ export class StudentTestService {
               schoolClass: {
                 teachers: {
                   some: {
-                    userId
+                    teacher: {
+                      userId
+                    }
                   }
                 }
               }
@@ -103,7 +105,9 @@ export class StudentTestService {
               schoolClass: {
                 teachers: {
                   some: {
-                    userId: teacherId
+                    teacher: {
+                      userId: teacherId
+                    }
                   }
                 }
               }
@@ -160,7 +164,9 @@ export class StudentTestService {
                 schoolClass: {
                   teachers: {
                     some: {
-                      userId: teacherId
+                      teacher: {
+                        userId: teacherId
+                      }
                     }
                   }
                 }

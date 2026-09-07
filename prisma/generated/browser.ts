@@ -23,6 +23,21 @@ export * from './enums';
  */
 export type user = Prisma.userModel
 /**
+ * Model teacher
+ * 
+ */
+export type teacher = Prisma.teacherModel
+/**
+ * Model student
+ * 
+ */
+export type student = Prisma.studentModel
+/**
+ * Model school
+ * 
+ */
+export type school = Prisma.schoolModel
+/**
  * Model notifications
  * 
  */
@@ -32,11 +47,6 @@ export type notifications = Prisma.notificationsModel
  * 
  */
 export type userHasNotifications = Prisma.userHasNotificationsModel
-/**
- * Model profile
- * 
- */
-export type profile = Prisma.profileModel
 /**
  * Model form
  * 
@@ -52,11 +62,6 @@ export type schoolclass = Prisma.schoolclassModel
  * 
  */
 export type skill = Prisma.skillModel
-/**
- * Model student
- * 
- */
-export type student = Prisma.studentModel
 /**
  * Model comment
  * 
@@ -103,10 +108,10 @@ export type testTag = Prisma.testTagModel
  */
 export type testhasskill = Prisma.testhasskillModel
 /**
- * Model UserHasSchoolClass
+ * Model TeacherHasSchoolClass
  * 
  */
-export type UserHasSchoolClass = Prisma.UserHasSchoolClassModel
+export type TeacherHasSchoolClass = Prisma.TeacherHasSchoolClassModel
 /**
  * Model StudentHasSchoolClass
  * 

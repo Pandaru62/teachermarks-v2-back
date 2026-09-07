@@ -36,36 +36,36 @@ export type UserSumAggregateOutputType = {
 
 export type UserMinAggregateOutputType = {
   id: number | null
+  login: string | null
   email: string | null
   password: string | null
-  is_validated: boolean | null
-  is_first_visit: boolean | null
   role: $Enums.UserRoleEnum | null
-  current_trimester: $Enums.TrimesterEnum | null
+  isValidated: boolean | null
+  isFirstVisit: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: number | null
+  login: string | null
   email: string | null
   password: string | null
-  is_validated: boolean | null
-  is_first_visit: boolean | null
   role: $Enums.UserRoleEnum | null
-  current_trimester: $Enums.TrimesterEnum | null
+  isValidated: boolean | null
+  isFirstVisit: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
+  login: number
   email: number
   password: number
-  is_validated: number
-  is_first_visit: number
   role: number
-  current_trimester: number
+  isValidated: number
+  isFirstVisit: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -82,36 +82,36 @@ export type UserSumAggregateInputType = {
 
 export type UserMinAggregateInputType = {
   id?: true
+  login?: true
   email?: true
   password?: true
-  is_validated?: true
-  is_first_visit?: true
   role?: true
-  current_trimester?: true
+  isValidated?: true
+  isFirstVisit?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
+  login?: true
   email?: true
   password?: true
-  is_validated?: true
-  is_first_visit?: true
   role?: true
-  current_trimester?: true
+  isValidated?: true
+  isFirstVisit?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
+  login?: true
   email?: true
   password?: true
-  is_validated?: true
-  is_first_visit?: true
   role?: true
-  current_trimester?: true
+  isValidated?: true
+  isFirstVisit?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -205,12 +205,12 @@ export type userGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: number
-  email: string
+  login: string
+  email: string | null
   password: string
-  is_validated: boolean
-  is_first_visit: boolean
   role: $Enums.UserRoleEnum
-  current_trimester: $Enums.TrimesterEnum
+  isValidated: boolean
+  isFirstVisit: boolean
   createdAt: Date
   updatedAt: Date | null
   _count: UserCountAggregateOutputType | null
@@ -240,76 +240,64 @@ export type userWhereInput = {
   OR?: Prisma.userWhereInput[]
   NOT?: Prisma.userWhereInput | Prisma.userWhereInput[]
   id?: Prisma.IntFilter<"user"> | number
-  email?: Prisma.StringFilter<"user"> | string
+  login?: Prisma.StringFilter<"user"> | string
+  email?: Prisma.StringNullableFilter<"user"> | string | null
   password?: Prisma.StringFilter<"user"> | string
-  is_validated?: Prisma.BoolFilter<"user"> | boolean
-  is_first_visit?: Prisma.BoolFilter<"user"> | boolean
   role?: Prisma.EnumUserRoleEnumFilter<"user"> | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFilter<"user"> | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolFilter<"user"> | boolean
+  isFirstVisit?: Prisma.BoolFilter<"user"> | boolean
   createdAt?: Prisma.DateTimeFilter<"user"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
-  profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.profileWhereInput> | null
-  schoolClasses?: Prisma.UserHasSchoolClassListRelationFilter
-  createdSkills?: Prisma.SkillListRelationFilter
+  teacher?: Prisma.XOR<Prisma.TeacherNullableScalarRelationFilter, Prisma.teacherWhereInput> | null
+  student?: Prisma.XOR<Prisma.StudentNullableScalarRelationFilter, Prisma.studentWhereInput> | null
   tokens?: Prisma.TokenListRelationFilter
   notifications?: Prisma.UserHasNotificationsListRelationFilter
-  weaknesses?: Prisma.WeaknessListRelationFilter
-  comments?: Prisma.CommentListRelationFilter
-  testTags?: Prisma.TestTagListRelationFilter
 }
 
 export type userOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  login?: Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrder
-  is_validated?: Prisma.SortOrder
-  is_first_visit?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  current_trimester?: Prisma.SortOrder
+  isValidated?: Prisma.SortOrder
+  isFirstVisit?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  profile?: Prisma.profileOrderByWithRelationInput
-  schoolClasses?: Prisma.UserHasSchoolClassOrderByRelationAggregateInput
-  createdSkills?: Prisma.skillOrderByRelationAggregateInput
+  teacher?: Prisma.teacherOrderByWithRelationInput
+  student?: Prisma.studentOrderByWithRelationInput
   tokens?: Prisma.tokenOrderByRelationAggregateInput
   notifications?: Prisma.userHasNotificationsOrderByRelationAggregateInput
-  weaknesses?: Prisma.weaknessOrderByRelationAggregateInput
-  comments?: Prisma.commentOrderByRelationAggregateInput
-  testTags?: Prisma.testTagOrderByRelationAggregateInput
   _relevance?: Prisma.userOrderByRelevanceInput
 }
 
 export type userWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  email?: string
+  login?: string
   AND?: Prisma.userWhereInput | Prisma.userWhereInput[]
   OR?: Prisma.userWhereInput[]
   NOT?: Prisma.userWhereInput | Prisma.userWhereInput[]
+  email?: Prisma.StringNullableFilter<"user"> | string | null
   password?: Prisma.StringFilter<"user"> | string
-  is_validated?: Prisma.BoolFilter<"user"> | boolean
-  is_first_visit?: Prisma.BoolFilter<"user"> | boolean
   role?: Prisma.EnumUserRoleEnumFilter<"user"> | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFilter<"user"> | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolFilter<"user"> | boolean
+  isFirstVisit?: Prisma.BoolFilter<"user"> | boolean
   createdAt?: Prisma.DateTimeFilter<"user"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"user"> | Date | string | null
-  profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.profileWhereInput> | null
-  schoolClasses?: Prisma.UserHasSchoolClassListRelationFilter
-  createdSkills?: Prisma.SkillListRelationFilter
+  teacher?: Prisma.XOR<Prisma.TeacherNullableScalarRelationFilter, Prisma.teacherWhereInput> | null
+  student?: Prisma.XOR<Prisma.StudentNullableScalarRelationFilter, Prisma.studentWhereInput> | null
   tokens?: Prisma.TokenListRelationFilter
   notifications?: Prisma.UserHasNotificationsListRelationFilter
-  weaknesses?: Prisma.WeaknessListRelationFilter
-  comments?: Prisma.CommentListRelationFilter
-  testTags?: Prisma.TestTagListRelationFilter
-}, "id" | "email">
+}, "id" | "login">
 
 export type userOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  login?: Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrder
-  is_validated?: Prisma.SortOrder
-  is_first_visit?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  current_trimester?: Prisma.SortOrder
+  isValidated?: Prisma.SortOrder
+  isFirstVisit?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.userCountOrderByAggregateInput
@@ -324,125 +312,109 @@ export type userScalarWhereWithAggregatesInput = {
   OR?: Prisma.userScalarWhereWithAggregatesInput[]
   NOT?: Prisma.userScalarWhereWithAggregatesInput | Prisma.userScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"user"> | number
-  email?: Prisma.StringWithAggregatesFilter<"user"> | string
+  login?: Prisma.StringWithAggregatesFilter<"user"> | string
+  email?: Prisma.StringNullableWithAggregatesFilter<"user"> | string | null
   password?: Prisma.StringWithAggregatesFilter<"user"> | string
-  is_validated?: Prisma.BoolWithAggregatesFilter<"user"> | boolean
-  is_first_visit?: Prisma.BoolWithAggregatesFilter<"user"> | boolean
   role?: Prisma.EnumUserRoleEnumWithAggregatesFilter<"user"> | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumWithAggregatesFilter<"user"> | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolWithAggregatesFilter<"user"> | boolean
+  isFirstVisit?: Prisma.BoolWithAggregatesFilter<"user"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"user"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"user"> | Date | string | null
 }
 
 export type userCreateInput = {
-  email: string
+  login: string
+  email?: string | null
   password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
   role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  profile?: Prisma.profileCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
+  teacher?: Prisma.teacherCreateNestedOneWithoutUserInput
+  student?: Prisma.studentCreateNestedOneWithoutUserInput
   tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
   notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
 }
 
 export type userUncheckedCreateInput = {
   id?: number
-  email: string
+  login: string
+  email?: string | null
   password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
   role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
+  teacher?: Prisma.teacherUncheckedCreateNestedOneWithoutUserInput
+  student?: Prisma.studentUncheckedCreateNestedOneWithoutUserInput
   tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type userUpdateInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
+  teacher?: Prisma.teacherUpdateOneWithoutUserNestedInput
+  student?: Prisma.studentUpdateOneWithoutUserNestedInput
   tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
+  teacher?: Prisma.teacherUncheckedUpdateOneWithoutUserNestedInput
+  student?: Prisma.studentUncheckedUpdateOneWithoutUserNestedInput
   tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userCreateManyInput = {
   id?: number
-  email: string
+  login: string
+  email?: string | null
   password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
   role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
 }
 
 export type userUpdateManyMutationInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type userUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -455,12 +427,12 @@ export type userOrderByRelevanceInput = {
 
 export type userCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  login?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  is_validated?: Prisma.SortOrder
-  is_first_visit?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  current_trimester?: Prisma.SortOrder
+  isValidated?: Prisma.SortOrder
+  isFirstVisit?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -471,24 +443,24 @@ export type userAvgOrderByAggregateInput = {
 
 export type userMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  login?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  is_validated?: Prisma.SortOrder
-  is_first_visit?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  current_trimester?: Prisma.SortOrder
+  isValidated?: Prisma.SortOrder
+  isFirstVisit?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type userMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  login?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  is_validated?: Prisma.SortOrder
-  is_first_visit?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  current_trimester?: Prisma.SortOrder
+  isValidated?: Prisma.SortOrder
+  isFirstVisit?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -511,16 +483,16 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type EnumUserRoleEnumFieldUpdateOperationsInput = {
   set?: $Enums.UserRoleEnum
 }
 
-export type EnumTrimesterEnumFieldUpdateOperationsInput = {
-  set?: $Enums.TrimesterEnum
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -539,6 +511,36 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type userCreateNestedOneWithoutTeacherInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutTeacherInput, Prisma.userUncheckedCreateWithoutTeacherInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutTeacherInput
+  connect?: Prisma.userWhereUniqueInput
+}
+
+export type userUpdateOneRequiredWithoutTeacherNestedInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutTeacherInput, Prisma.userUncheckedCreateWithoutTeacherInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutTeacherInput
+  upsert?: Prisma.userUpsertWithoutTeacherInput
+  connect?: Prisma.userWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutTeacherInput, Prisma.userUpdateWithoutTeacherInput>, Prisma.userUncheckedUpdateWithoutTeacherInput>
+}
+
+export type userCreateNestedOneWithoutStudentInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutStudentInput, Prisma.userUncheckedCreateWithoutStudentInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutStudentInput
+  connect?: Prisma.userWhereUniqueInput
+}
+
+export type userUpdateOneWithoutStudentNestedInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutStudentInput, Prisma.userUncheckedCreateWithoutStudentInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutStudentInput
+  upsert?: Prisma.userUpsertWithoutStudentInput
+  disconnect?: Prisma.userWhereInput | boolean
+  delete?: Prisma.userWhereInput | boolean
+  connect?: Prisma.userWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutStudentInput, Prisma.userUpdateWithoutStudentInput>, Prisma.userUncheckedUpdateWithoutStudentInput>
+}
+
 export type userCreateNestedOneWithoutNotificationsInput = {
   create?: Prisma.XOR<Prisma.userCreateWithoutNotificationsInput, Prisma.userUncheckedCreateWithoutNotificationsInput>
   connectOrCreate?: Prisma.userCreateOrConnectWithoutNotificationsInput
@@ -551,94 +553,6 @@ export type userUpdateOneRequiredWithoutNotificationsNestedInput = {
   upsert?: Prisma.userUpsertWithoutNotificationsInput
   connect?: Prisma.userWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutNotificationsInput, Prisma.userUpdateWithoutNotificationsInput>, Prisma.userUncheckedUpdateWithoutNotificationsInput>
-}
-
-export type userCreateNestedOneWithoutProfileInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutProfileInput, Prisma.userUncheckedCreateWithoutProfileInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutProfileInput
-  connect?: Prisma.userWhereUniqueInput
-}
-
-export type userUpdateOneRequiredWithoutProfileNestedInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutProfileInput, Prisma.userUncheckedCreateWithoutProfileInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutProfileInput
-  upsert?: Prisma.userUpsertWithoutProfileInput
-  connect?: Prisma.userWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutProfileInput, Prisma.userUpdateWithoutProfileInput>, Prisma.userUncheckedUpdateWithoutProfileInput>
-}
-
-export type userCreateNestedOneWithoutCreatedSkillsInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutCreatedSkillsInput, Prisma.userUncheckedCreateWithoutCreatedSkillsInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutCreatedSkillsInput
-  connect?: Prisma.userWhereUniqueInput
-}
-
-export type userUpdateOneWithoutCreatedSkillsNestedInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutCreatedSkillsInput, Prisma.userUncheckedCreateWithoutCreatedSkillsInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutCreatedSkillsInput
-  upsert?: Prisma.userUpsertWithoutCreatedSkillsInput
-  disconnect?: Prisma.userWhereInput | boolean
-  delete?: Prisma.userWhereInput | boolean
-  connect?: Prisma.userWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutCreatedSkillsInput, Prisma.userUpdateWithoutCreatedSkillsInput>, Prisma.userUncheckedUpdateWithoutCreatedSkillsInput>
-}
-
-export type userCreateNestedOneWithoutCommentsInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutCommentsInput, Prisma.userUncheckedCreateWithoutCommentsInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutCommentsInput
-  connect?: Prisma.userWhereUniqueInput
-}
-
-export type userUpdateOneRequiredWithoutCommentsNestedInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutCommentsInput, Prisma.userUncheckedCreateWithoutCommentsInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutCommentsInput
-  upsert?: Prisma.userUpsertWithoutCommentsInput
-  connect?: Prisma.userWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutCommentsInput, Prisma.userUpdateWithoutCommentsInput>, Prisma.userUncheckedUpdateWithoutCommentsInput>
-}
-
-export type userCreateNestedOneWithoutWeaknessesInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutWeaknessesInput, Prisma.userUncheckedCreateWithoutWeaknessesInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutWeaknessesInput
-  connect?: Prisma.userWhereUniqueInput
-}
-
-export type userUpdateOneWithoutWeaknessesNestedInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutWeaknessesInput, Prisma.userUncheckedCreateWithoutWeaknessesInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutWeaknessesInput
-  upsert?: Prisma.userUpsertWithoutWeaknessesInput
-  disconnect?: Prisma.userWhereInput | boolean
-  delete?: Prisma.userWhereInput | boolean
-  connect?: Prisma.userWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutWeaknessesInput, Prisma.userUpdateWithoutWeaknessesInput>, Prisma.userUncheckedUpdateWithoutWeaknessesInput>
-}
-
-export type userCreateNestedOneWithoutTestTagsInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutTestTagsInput, Prisma.userUncheckedCreateWithoutTestTagsInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutTestTagsInput
-  connect?: Prisma.userWhereUniqueInput
-}
-
-export type userUpdateOneRequiredWithoutTestTagsNestedInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutTestTagsInput, Prisma.userUncheckedCreateWithoutTestTagsInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutTestTagsInput
-  upsert?: Prisma.userUpsertWithoutTestTagsInput
-  connect?: Prisma.userWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutTestTagsInput, Prisma.userUpdateWithoutTestTagsInput>, Prisma.userUncheckedUpdateWithoutTestTagsInput>
-}
-
-export type userCreateNestedOneWithoutSchoolClassesInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutSchoolClassesInput, Prisma.userUncheckedCreateWithoutSchoolClassesInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutSchoolClassesInput
-  connect?: Prisma.userWhereUniqueInput
-}
-
-export type userUpdateOneRequiredWithoutSchoolClassesNestedInput = {
-  create?: Prisma.XOR<Prisma.userCreateWithoutSchoolClassesInput, Prisma.userUncheckedCreateWithoutSchoolClassesInput>
-  connectOrCreate?: Prisma.userCreateOrConnectWithoutSchoolClassesInput
-  upsert?: Prisma.userUpsertWithoutSchoolClassesInput
-  connect?: Prisma.userWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutSchoolClassesInput, Prisma.userUpdateWithoutSchoolClassesInput>, Prisma.userUncheckedUpdateWithoutSchoolClassesInput>
 }
 
 export type userCreateNestedOneWithoutTokensInput = {
@@ -655,41 +569,181 @@ export type userUpdateOneRequiredWithoutTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutTokensInput, Prisma.userUpdateWithoutTokensInput>, Prisma.userUncheckedUpdateWithoutTokensInput>
 }
 
-export type userCreateWithoutNotificationsInput = {
-  email: string
+export type userCreateWithoutTeacherInput = {
+  login: string
+  email?: string | null
   password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
   role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  profile?: Prisma.profileCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
+  student?: Prisma.studentCreateNestedOneWithoutUserInput
   tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
+  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
+}
+
+export type userUncheckedCreateWithoutTeacherInput = {
+  id?: number
+  login: string
+  email?: string | null
+  password: string
+  role: $Enums.UserRoleEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  student?: Prisma.studentUncheckedCreateNestedOneWithoutUserInput
+  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type userCreateOrConnectWithoutTeacherInput = {
+  where: Prisma.userWhereUniqueInput
+  create: Prisma.XOR<Prisma.userCreateWithoutTeacherInput, Prisma.userUncheckedCreateWithoutTeacherInput>
+}
+
+export type userUpsertWithoutTeacherInput = {
+  update: Prisma.XOR<Prisma.userUpdateWithoutTeacherInput, Prisma.userUncheckedUpdateWithoutTeacherInput>
+  create: Prisma.XOR<Prisma.userCreateWithoutTeacherInput, Prisma.userUncheckedCreateWithoutTeacherInput>
+  where?: Prisma.userWhereInput
+}
+
+export type userUpdateToOneWithWhereWithoutTeacherInput = {
+  where?: Prisma.userWhereInput
+  data: Prisma.XOR<Prisma.userUpdateWithoutTeacherInput, Prisma.userUncheckedUpdateWithoutTeacherInput>
+}
+
+export type userUpdateWithoutTeacherInput = {
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  student?: Prisma.studentUpdateOneWithoutUserNestedInput
+  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
+}
+
+export type userUncheckedUpdateWithoutTeacherInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  student?: Prisma.studentUncheckedUpdateOneWithoutUserNestedInput
+  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type userCreateWithoutStudentInput = {
+  login: string
+  email?: string | null
+  password: string
+  role: $Enums.UserRoleEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  teacher?: Prisma.teacherCreateNestedOneWithoutUserInput
+  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
+  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
+}
+
+export type userUncheckedCreateWithoutStudentInput = {
+  id?: number
+  login: string
+  email?: string | null
+  password: string
+  role: $Enums.UserRoleEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  teacher?: Prisma.teacherUncheckedCreateNestedOneWithoutUserInput
+  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type userCreateOrConnectWithoutStudentInput = {
+  where: Prisma.userWhereUniqueInput
+  create: Prisma.XOR<Prisma.userCreateWithoutStudentInput, Prisma.userUncheckedCreateWithoutStudentInput>
+}
+
+export type userUpsertWithoutStudentInput = {
+  update: Prisma.XOR<Prisma.userUpdateWithoutStudentInput, Prisma.userUncheckedUpdateWithoutStudentInput>
+  create: Prisma.XOR<Prisma.userCreateWithoutStudentInput, Prisma.userUncheckedCreateWithoutStudentInput>
+  where?: Prisma.userWhereInput
+}
+
+export type userUpdateToOneWithWhereWithoutStudentInput = {
+  where?: Prisma.userWhereInput
+  data: Prisma.XOR<Prisma.userUpdateWithoutStudentInput, Prisma.userUncheckedUpdateWithoutStudentInput>
+}
+
+export type userUpdateWithoutStudentInput = {
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teacher?: Prisma.teacherUpdateOneWithoutUserNestedInput
+  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
+}
+
+export type userUncheckedUpdateWithoutStudentInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  teacher?: Prisma.teacherUncheckedUpdateOneWithoutUserNestedInput
+  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type userCreateWithoutNotificationsInput = {
+  login: string
+  email?: string | null
+  password: string
+  role: $Enums.UserRoleEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  teacher?: Prisma.teacherCreateNestedOneWithoutUserInput
+  student?: Prisma.studentCreateNestedOneWithoutUserInput
+  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
 }
 
 export type userUncheckedCreateWithoutNotificationsInput = {
   id?: number
-  email: string
+  login: string
+  email?: string | null
   password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
   role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
+  teacher?: Prisma.teacherUncheckedCreateNestedOneWithoutUserInput
+  student?: Prisma.studentUncheckedCreateNestedOneWithoutUserInput
   tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type userCreateOrConnectWithoutNotificationsInput = {
@@ -709,617 +763,61 @@ export type userUpdateToOneWithWhereWithoutNotificationsInput = {
 }
 
 export type userUpdateWithoutNotificationsInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
+  teacher?: Prisma.teacherUpdateOneWithoutUserNestedInput
+  student?: Prisma.studentUpdateOneWithoutUserNestedInput
   tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
+  teacher?: Prisma.teacherUncheckedUpdateOneWithoutUserNestedInput
+  student?: Prisma.studentUncheckedUpdateOneWithoutUserNestedInput
   tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userCreateWithoutProfileInput = {
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
-  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
-}
-
-export type userUncheckedCreateWithoutProfileInput = {
-  id?: number
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
-  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
-}
-
-export type userCreateOrConnectWithoutProfileInput = {
-  where: Prisma.userWhereUniqueInput
-  create: Prisma.XOR<Prisma.userCreateWithoutProfileInput, Prisma.userUncheckedCreateWithoutProfileInput>
-}
-
-export type userUpsertWithoutProfileInput = {
-  update: Prisma.XOR<Prisma.userUpdateWithoutProfileInput, Prisma.userUncheckedUpdateWithoutProfileInput>
-  create: Prisma.XOR<Prisma.userCreateWithoutProfileInput, Prisma.userUncheckedCreateWithoutProfileInput>
-  where?: Prisma.userWhereInput
-}
-
-export type userUpdateToOneWithWhereWithoutProfileInput = {
-  where?: Prisma.userWhereInput
-  data: Prisma.XOR<Prisma.userUpdateWithoutProfileInput, Prisma.userUncheckedUpdateWithoutProfileInput>
-}
-
-export type userUpdateWithoutProfileInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
-  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userUncheckedUpdateWithoutProfileInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
-  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userCreateWithoutCreatedSkillsInput = {
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  profile?: Prisma.profileCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
-  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
-}
-
-export type userUncheckedCreateWithoutCreatedSkillsInput = {
-  id?: number
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
-  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
-}
-
-export type userCreateOrConnectWithoutCreatedSkillsInput = {
-  where: Prisma.userWhereUniqueInput
-  create: Prisma.XOR<Prisma.userCreateWithoutCreatedSkillsInput, Prisma.userUncheckedCreateWithoutCreatedSkillsInput>
-}
-
-export type userUpsertWithoutCreatedSkillsInput = {
-  update: Prisma.XOR<Prisma.userUpdateWithoutCreatedSkillsInput, Prisma.userUncheckedUpdateWithoutCreatedSkillsInput>
-  create: Prisma.XOR<Prisma.userCreateWithoutCreatedSkillsInput, Prisma.userUncheckedCreateWithoutCreatedSkillsInput>
-  where?: Prisma.userWhereInput
-}
-
-export type userUpdateToOneWithWhereWithoutCreatedSkillsInput = {
-  where?: Prisma.userWhereInput
-  data: Prisma.XOR<Prisma.userUpdateWithoutCreatedSkillsInput, Prisma.userUncheckedUpdateWithoutCreatedSkillsInput>
-}
-
-export type userUpdateWithoutCreatedSkillsInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
-  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userUncheckedUpdateWithoutCreatedSkillsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
-  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userCreateWithoutCommentsInput = {
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  profile?: Prisma.profileCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
-  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
-}
-
-export type userUncheckedCreateWithoutCommentsInput = {
-  id?: number
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
-  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
-}
-
-export type userCreateOrConnectWithoutCommentsInput = {
-  where: Prisma.userWhereUniqueInput
-  create: Prisma.XOR<Prisma.userCreateWithoutCommentsInput, Prisma.userUncheckedCreateWithoutCommentsInput>
-}
-
-export type userUpsertWithoutCommentsInput = {
-  update: Prisma.XOR<Prisma.userUpdateWithoutCommentsInput, Prisma.userUncheckedUpdateWithoutCommentsInput>
-  create: Prisma.XOR<Prisma.userCreateWithoutCommentsInput, Prisma.userUncheckedCreateWithoutCommentsInput>
-  where?: Prisma.userWhereInput
-}
-
-export type userUpdateToOneWithWhereWithoutCommentsInput = {
-  where?: Prisma.userWhereInput
-  data: Prisma.XOR<Prisma.userUpdateWithoutCommentsInput, Prisma.userUncheckedUpdateWithoutCommentsInput>
-}
-
-export type userUpdateWithoutCommentsInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
-  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userUncheckedUpdateWithoutCommentsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
-  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userCreateWithoutWeaknessesInput = {
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  profile?: Prisma.profileCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
-  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
-  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
-}
-
-export type userUncheckedCreateWithoutWeaknessesInput = {
-  id?: number
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
-  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
-  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
-}
-
-export type userCreateOrConnectWithoutWeaknessesInput = {
-  where: Prisma.userWhereUniqueInput
-  create: Prisma.XOR<Prisma.userCreateWithoutWeaknessesInput, Prisma.userUncheckedCreateWithoutWeaknessesInput>
-}
-
-export type userUpsertWithoutWeaknessesInput = {
-  update: Prisma.XOR<Prisma.userUpdateWithoutWeaknessesInput, Prisma.userUncheckedUpdateWithoutWeaknessesInput>
-  create: Prisma.XOR<Prisma.userCreateWithoutWeaknessesInput, Prisma.userUncheckedCreateWithoutWeaknessesInput>
-  where?: Prisma.userWhereInput
-}
-
-export type userUpdateToOneWithWhereWithoutWeaknessesInput = {
-  where?: Prisma.userWhereInput
-  data: Prisma.XOR<Prisma.userUpdateWithoutWeaknessesInput, Prisma.userUncheckedUpdateWithoutWeaknessesInput>
-}
-
-export type userUpdateWithoutWeaknessesInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
-  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
-  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userUncheckedUpdateWithoutWeaknessesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
-  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
-  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userCreateWithoutTestTagsInput = {
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  profile?: Prisma.profileCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
-  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
-}
-
-export type userUncheckedCreateWithoutTestTagsInput = {
-  id?: number
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
-  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
-}
-
-export type userCreateOrConnectWithoutTestTagsInput = {
-  where: Prisma.userWhereUniqueInput
-  create: Prisma.XOR<Prisma.userCreateWithoutTestTagsInput, Prisma.userUncheckedCreateWithoutTestTagsInput>
-}
-
-export type userUpsertWithoutTestTagsInput = {
-  update: Prisma.XOR<Prisma.userUpdateWithoutTestTagsInput, Prisma.userUncheckedUpdateWithoutTestTagsInput>
-  create: Prisma.XOR<Prisma.userCreateWithoutTestTagsInput, Prisma.userUncheckedCreateWithoutTestTagsInput>
-  where?: Prisma.userWhereInput
-}
-
-export type userUpdateToOneWithWhereWithoutTestTagsInput = {
-  where?: Prisma.userWhereInput
-  data: Prisma.XOR<Prisma.userUpdateWithoutTestTagsInput, Prisma.userUncheckedUpdateWithoutTestTagsInput>
-}
-
-export type userUpdateWithoutTestTagsInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
-  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userUncheckedUpdateWithoutTestTagsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
-  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userCreateWithoutSchoolClassesInput = {
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  profile?: Prisma.profileCreateNestedOneWithoutUserInput
-  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
-  tokens?: Prisma.tokenCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
-}
-
-export type userUncheckedCreateWithoutSchoolClassesInput = {
-  id?: number
-  email: string
-  password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
-  role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
-  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
-  tokens?: Prisma.tokenUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
-}
-
-export type userCreateOrConnectWithoutSchoolClassesInput = {
-  where: Prisma.userWhereUniqueInput
-  create: Prisma.XOR<Prisma.userCreateWithoutSchoolClassesInput, Prisma.userUncheckedCreateWithoutSchoolClassesInput>
-}
-
-export type userUpsertWithoutSchoolClassesInput = {
-  update: Prisma.XOR<Prisma.userUpdateWithoutSchoolClassesInput, Prisma.userUncheckedUpdateWithoutSchoolClassesInput>
-  create: Prisma.XOR<Prisma.userCreateWithoutSchoolClassesInput, Prisma.userUncheckedCreateWithoutSchoolClassesInput>
-  where?: Prisma.userWhereInput
-}
-
-export type userUpdateToOneWithWhereWithoutSchoolClassesInput = {
-  where?: Prisma.userWhereInput
-  data: Prisma.XOR<Prisma.userUpdateWithoutSchoolClassesInput, Prisma.userUncheckedUpdateWithoutSchoolClassesInput>
-}
-
-export type userUpdateWithoutSchoolClassesInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
-  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
-  tokens?: Prisma.tokenUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
-}
-
-export type userUncheckedUpdateWithoutSchoolClassesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
-  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
-  tokens?: Prisma.tokenUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userCreateWithoutTokensInput = {
-  email: string
+  login: string
+  email?: string | null
   password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
   role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  profile?: Prisma.profileCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillCreateNestedManyWithoutCreatedByInput
+  teacher?: Prisma.teacherCreateNestedOneWithoutUserInput
+  student?: Prisma.studentCreateNestedOneWithoutUserInput
   notifications?: Prisma.userHasNotificationsCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagCreateNestedManyWithoutCreatedByInput
 }
 
 export type userUncheckedCreateWithoutTokensInput = {
   id?: number
-  email: string
+  login: string
+  email?: string | null
   password: string
-  is_validated?: boolean
-  is_first_visit?: boolean
   role: $Enums.UserRoleEnum
-  current_trimester?: $Enums.TrimesterEnum
+  isValidated?: boolean
+  isFirstVisit?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  profile?: Prisma.profileUncheckedCreateNestedOneWithoutUserInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedCreateNestedManyWithoutUserInput
-  createdSkills?: Prisma.skillUncheckedCreateNestedManyWithoutCreatedByInput
+  teacher?: Prisma.teacherUncheckedCreateNestedOneWithoutUserInput
+  student?: Prisma.studentUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.userHasNotificationsUncheckedCreateNestedManyWithoutUserInput
-  weaknesses?: Prisma.weaknessUncheckedCreateNestedManyWithoutCreatedByInput
-  comments?: Prisma.commentUncheckedCreateNestedManyWithoutCreatedByInput
-  testTags?: Prisma.testTagUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
 export type userCreateOrConnectWithoutTokensInput = {
@@ -1339,40 +837,32 @@ export type userUpdateToOneWithWhereWithoutTokensInput = {
 }
 
 export type userUpdateWithoutTokensInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUpdateManyWithoutCreatedByNestedInput
+  teacher?: Prisma.teacherUpdateOneWithoutUserNestedInput
+  student?: Prisma.studentUpdateOneWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUpdateManyWithoutCreatedByNestedInput
 }
 
 export type userUncheckedUpdateWithoutTokensInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  login?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  is_validated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  is_first_visit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   role?: Prisma.EnumUserRoleEnumFieldUpdateOperationsInput | $Enums.UserRoleEnum
-  current_trimester?: Prisma.EnumTrimesterEnumFieldUpdateOperationsInput | $Enums.TrimesterEnum
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFirstVisit?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  profile?: Prisma.profileUncheckedUpdateOneWithoutUserNestedInput
-  schoolClasses?: Prisma.UserHasSchoolClassUncheckedUpdateManyWithoutUserNestedInput
-  createdSkills?: Prisma.skillUncheckedUpdateManyWithoutCreatedByNestedInput
+  teacher?: Prisma.teacherUncheckedUpdateOneWithoutUserNestedInput
+  student?: Prisma.studentUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.userHasNotificationsUncheckedUpdateManyWithoutUserNestedInput
-  weaknesses?: Prisma.weaknessUncheckedUpdateManyWithoutCreatedByNestedInput
-  comments?: Prisma.commentUncheckedUpdateManyWithoutCreatedByNestedInput
-  testTags?: Prisma.testTagUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 
@@ -1381,23 +871,13 @@ export type userUncheckedUpdateWithoutTokensInput = {
  */
 
 export type UserCountOutputType = {
-  schoolClasses: number
-  createdSkills: number
   tokens: number
   notifications: number
-  weaknesses: number
-  comments: number
-  testTags: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  schoolClasses?: boolean | UserCountOutputTypeCountSchoolClassesArgs
-  createdSkills?: boolean | UserCountOutputTypeCountCreatedSkillsArgs
   tokens?: boolean | UserCountOutputTypeCountTokensArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
-  weaknesses?: boolean | UserCountOutputTypeCountWeaknessesArgs
-  comments?: boolean | UserCountOutputTypeCountCommentsArgs
-  testTags?: boolean | UserCountOutputTypeCountTestTagsArgs
 }
 
 /**
@@ -1408,20 +888,6 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountSchoolClassesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserHasSchoolClassWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountCreatedSkillsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.skillWhereInput
 }
 
 /**
@@ -1438,46 +904,21 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.userHasNotificationsWhereInput
 }
 
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountWeaknessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.weaknessWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.commentWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountTestTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.testTagWhereInput
-}
-
 
 export type userSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  login?: boolean
   email?: boolean
   password?: boolean
-  is_validated?: boolean
-  is_first_visit?: boolean
   role?: boolean
-  current_trimester?: boolean
+  isValidated?: boolean
+  isFirstVisit?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  profile?: boolean | Prisma.user$profileArgs<ExtArgs>
-  schoolClasses?: boolean | Prisma.user$schoolClassesArgs<ExtArgs>
-  createdSkills?: boolean | Prisma.user$createdSkillsArgs<ExtArgs>
+  teacher?: boolean | Prisma.user$teacherArgs<ExtArgs>
+  student?: boolean | Prisma.user$studentArgs<ExtArgs>
   tokens?: boolean | Prisma.user$tokensArgs<ExtArgs>
   notifications?: boolean | Prisma.user$notificationsArgs<ExtArgs>
-  weaknesses?: boolean | Prisma.user$weaknessesArgs<ExtArgs>
-  comments?: boolean | Prisma.user$commentsArgs<ExtArgs>
-  testTags?: boolean | Prisma.user$testTagsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1485,49 +926,41 @@ export type userSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 
 export type userSelectScalar = {
   id?: boolean
+  login?: boolean
   email?: boolean
   password?: boolean
-  is_validated?: boolean
-  is_first_visit?: boolean
   role?: boolean
-  current_trimester?: boolean
+  isValidated?: boolean
+  isFirstVisit?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type userOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "is_validated" | "is_first_visit" | "role" | "current_trimester" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type userOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "login" | "email" | "password" | "role" | "isValidated" | "isFirstVisit" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type userInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  profile?: boolean | Prisma.user$profileArgs<ExtArgs>
-  schoolClasses?: boolean | Prisma.user$schoolClassesArgs<ExtArgs>
-  createdSkills?: boolean | Prisma.user$createdSkillsArgs<ExtArgs>
+  teacher?: boolean | Prisma.user$teacherArgs<ExtArgs>
+  student?: boolean | Prisma.user$studentArgs<ExtArgs>
   tokens?: boolean | Prisma.user$tokensArgs<ExtArgs>
   notifications?: boolean | Prisma.user$notificationsArgs<ExtArgs>
-  weaknesses?: boolean | Prisma.user$weaknessesArgs<ExtArgs>
-  comments?: boolean | Prisma.user$commentsArgs<ExtArgs>
-  testTags?: boolean | Prisma.user$testTagsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $userPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "user"
   objects: {
-    profile: Prisma.$profilePayload<ExtArgs> | null
-    schoolClasses: Prisma.$UserHasSchoolClassPayload<ExtArgs>[]
-    createdSkills: Prisma.$skillPayload<ExtArgs>[]
+    teacher: Prisma.$teacherPayload<ExtArgs> | null
+    student: Prisma.$studentPayload<ExtArgs> | null
     tokens: Prisma.$tokenPayload<ExtArgs>[]
     notifications: Prisma.$userHasNotificationsPayload<ExtArgs>[]
-    weaknesses: Prisma.$weaknessPayload<ExtArgs>[]
-    comments: Prisma.$commentPayload<ExtArgs>[]
-    testTags: Prisma.$testTagPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    email: string
+    login: string
+    email: string | null
     password: string
-    is_validated: boolean
-    is_first_visit: boolean
     role: $Enums.UserRoleEnum
-    current_trimester: $Enums.TrimesterEnum
+    isValidated: boolean
+    isFirstVisit: boolean
     createdAt: Date
     updatedAt: Date | null
   }, ExtArgs["result"]["user"]>
@@ -1870,14 +1303,10 @@ readonly fields: userFieldRefs;
  */
 export interface Prisma__userClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  profile<T extends Prisma.user$profileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$profileArgs<ExtArgs>>): Prisma.Prisma__profileClient<runtime.Types.Result.GetResult<Prisma.$profilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  schoolClasses<T extends Prisma.user$schoolClassesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$schoolClassesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserHasSchoolClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  createdSkills<T extends Prisma.user$createdSkillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$createdSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$skillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  teacher<T extends Prisma.user$teacherArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$teacherArgs<ExtArgs>>): Prisma.Prisma__teacherClient<runtime.Types.Result.GetResult<Prisma.$teacherPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  student<T extends Prisma.user$studentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$studentArgs<ExtArgs>>): Prisma.Prisma__studentClient<runtime.Types.Result.GetResult<Prisma.$studentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   tokens<T extends Prisma.user$tokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$tokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.user$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$userHasNotificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  weaknesses<T extends Prisma.user$weaknessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$weaknessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$weaknessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  comments<T extends Prisma.user$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$commentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  testTags<T extends Prisma.user$testTagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$testTagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$testTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1908,12 +1337,12 @@ export interface Prisma__userClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface userFieldRefs {
   readonly id: Prisma.FieldRef<"user", 'Int'>
+  readonly login: Prisma.FieldRef<"user", 'String'>
   readonly email: Prisma.FieldRef<"user", 'String'>
   readonly password: Prisma.FieldRef<"user", 'String'>
-  readonly is_validated: Prisma.FieldRef<"user", 'Boolean'>
-  readonly is_first_visit: Prisma.FieldRef<"user", 'Boolean'>
   readonly role: Prisma.FieldRef<"user", 'UserRoleEnum'>
-  readonly current_trimester: Prisma.FieldRef<"user", 'TrimesterEnum'>
+  readonly isValidated: Prisma.FieldRef<"user", 'Boolean'>
+  readonly isFirstVisit: Prisma.FieldRef<"user", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"user", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"user", 'DateTime'>
 }
@@ -2259,70 +1688,41 @@ export type userDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * user.profile
+ * user.teacher
  */
-export type user$profileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type user$teacherArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the profile
+   * Select specific fields to fetch from the teacher
    */
-  select?: Prisma.profileSelect<ExtArgs> | null
+  select?: Prisma.teacherSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the profile
+   * Omit specific fields from the teacher
    */
-  omit?: Prisma.profileOmit<ExtArgs> | null
+  omit?: Prisma.teacherOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.profileInclude<ExtArgs> | null
-  where?: Prisma.profileWhereInput
+  include?: Prisma.teacherInclude<ExtArgs> | null
+  where?: Prisma.teacherWhereInput
 }
 
 /**
- * user.schoolClasses
+ * user.student
  */
-export type user$schoolClassesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type user$studentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the UserHasSchoolClass
+   * Select specific fields to fetch from the student
    */
-  select?: Prisma.UserHasSchoolClassSelect<ExtArgs> | null
+  select?: Prisma.studentSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the UserHasSchoolClass
+   * Omit specific fields from the student
    */
-  omit?: Prisma.UserHasSchoolClassOmit<ExtArgs> | null
+  omit?: Prisma.studentOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserHasSchoolClassInclude<ExtArgs> | null
-  where?: Prisma.UserHasSchoolClassWhereInput
-  orderBy?: Prisma.UserHasSchoolClassOrderByWithRelationInput | Prisma.UserHasSchoolClassOrderByWithRelationInput[]
-  cursor?: Prisma.UserHasSchoolClassWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UserHasSchoolClassScalarFieldEnum | Prisma.UserHasSchoolClassScalarFieldEnum[]
-}
-
-/**
- * user.createdSkills
- */
-export type user$createdSkillsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the skill
-   */
-  select?: Prisma.skillSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the skill
-   */
-  omit?: Prisma.skillOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.skillInclude<ExtArgs> | null
-  where?: Prisma.skillWhereInput
-  orderBy?: Prisma.skillOrderByWithRelationInput | Prisma.skillOrderByWithRelationInput[]
-  cursor?: Prisma.skillWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SkillScalarFieldEnum | Prisma.SkillScalarFieldEnum[]
+  include?: Prisma.studentInclude<ExtArgs> | null
+  where?: Prisma.studentWhereInput
 }
 
 /**
@@ -2371,78 +1771,6 @@ export type user$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.UserHasNotificationsScalarFieldEnum | Prisma.UserHasNotificationsScalarFieldEnum[]
-}
-
-/**
- * user.weaknesses
- */
-export type user$weaknessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the weakness
-   */
-  select?: Prisma.weaknessSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the weakness
-   */
-  omit?: Prisma.weaknessOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.weaknessInclude<ExtArgs> | null
-  where?: Prisma.weaknessWhereInput
-  orderBy?: Prisma.weaknessOrderByWithRelationInput | Prisma.weaknessOrderByWithRelationInput[]
-  cursor?: Prisma.weaknessWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.WeaknessScalarFieldEnum | Prisma.WeaknessScalarFieldEnum[]
-}
-
-/**
- * user.comments
- */
-export type user$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the comment
-   */
-  select?: Prisma.commentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the comment
-   */
-  omit?: Prisma.commentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.commentInclude<ExtArgs> | null
-  where?: Prisma.commentWhereInput
-  orderBy?: Prisma.commentOrderByWithRelationInput | Prisma.commentOrderByWithRelationInput[]
-  cursor?: Prisma.commentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CommentScalarFieldEnum | Prisma.CommentScalarFieldEnum[]
-}
-
-/**
- * user.testTags
- */
-export type user$testTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the testTag
-   */
-  select?: Prisma.testTagSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the testTag
-   */
-  omit?: Prisma.testTagOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.testTagInclude<ExtArgs> | null
-  where?: Prisma.testTagWhereInput
-  orderBy?: Prisma.testTagOrderByWithRelationInput | Prisma.testTagOrderByWithRelationInput[]
-  cursor?: Prisma.testTagWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TestTagScalarFieldEnum | Prisma.TestTagScalarFieldEnum[]
 }
 
 /**

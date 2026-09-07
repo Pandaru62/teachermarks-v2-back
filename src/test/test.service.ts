@@ -43,7 +43,9 @@ export class TestService {
             schoolclass: {
               teachers: {
                 every: {
-                  userId
+                  teacher: {
+                    userId
+                  }
                 }
               }
             }
@@ -85,7 +87,9 @@ export class TestService {
           schoolclass: {
             teachers: {
               every: {
-                userId
+                teacher: {
+                  userId
+                }
               }
             }
           },

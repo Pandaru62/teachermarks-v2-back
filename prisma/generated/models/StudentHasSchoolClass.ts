@@ -310,48 +310,6 @@ export type StudentHasSchoolClassSumOrderByAggregateInput = {
   schoolClassId?: Prisma.SortOrder
 }
 
-export type StudentHasSchoolClassCreateNestedManyWithoutSchoolClassInput = {
-  create?: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput> | Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput[] | Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput[]
-  connectOrCreate?: Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput | Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput[]
-  createMany?: Prisma.StudentHasSchoolClassCreateManySchoolClassInputEnvelope
-  connect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
-}
-
-export type StudentHasSchoolClassUncheckedCreateNestedManyWithoutSchoolClassInput = {
-  create?: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput> | Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput[] | Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput[]
-  connectOrCreate?: Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput | Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput[]
-  createMany?: Prisma.StudentHasSchoolClassCreateManySchoolClassInputEnvelope
-  connect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
-}
-
-export type StudentHasSchoolClassUpdateManyWithoutSchoolClassNestedInput = {
-  create?: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput> | Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput[] | Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput[]
-  connectOrCreate?: Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput | Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput[]
-  upsert?: Prisma.StudentHasSchoolClassUpsertWithWhereUniqueWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpsertWithWhereUniqueWithoutSchoolClassInput[]
-  createMany?: Prisma.StudentHasSchoolClassCreateManySchoolClassInputEnvelope
-  set?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
-  disconnect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
-  delete?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
-  connect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
-  update?: Prisma.StudentHasSchoolClassUpdateWithWhereUniqueWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpdateWithWhereUniqueWithoutSchoolClassInput[]
-  updateMany?: Prisma.StudentHasSchoolClassUpdateManyWithWhereWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpdateManyWithWhereWithoutSchoolClassInput[]
-  deleteMany?: Prisma.StudentHasSchoolClassScalarWhereInput | Prisma.StudentHasSchoolClassScalarWhereInput[]
-}
-
-export type StudentHasSchoolClassUncheckedUpdateManyWithoutSchoolClassNestedInput = {
-  create?: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput> | Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput[] | Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput[]
-  connectOrCreate?: Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput | Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput[]
-  upsert?: Prisma.StudentHasSchoolClassUpsertWithWhereUniqueWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpsertWithWhereUniqueWithoutSchoolClassInput[]
-  createMany?: Prisma.StudentHasSchoolClassCreateManySchoolClassInputEnvelope
-  set?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
-  disconnect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
-  delete?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
-  connect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
-  update?: Prisma.StudentHasSchoolClassUpdateWithWhereUniqueWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpdateWithWhereUniqueWithoutSchoolClassInput[]
-  updateMany?: Prisma.StudentHasSchoolClassUpdateManyWithWhereWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpdateManyWithWhereWithoutSchoolClassInput[]
-  deleteMany?: Prisma.StudentHasSchoolClassScalarWhereInput | Prisma.StudentHasSchoolClassScalarWhereInput[]
-}
-
 export type StudentHasSchoolClassCreateNestedManyWithoutStudentInput = {
   create?: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutStudentInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutStudentInput> | Prisma.StudentHasSchoolClassCreateWithoutStudentInput[] | Prisma.StudentHasSchoolClassUncheckedCreateWithoutStudentInput[]
   connectOrCreate?: Prisma.StudentHasSchoolClassCreateOrConnectWithoutStudentInput | Prisma.StudentHasSchoolClassCreateOrConnectWithoutStudentInput[]
@@ -394,46 +352,46 @@ export type StudentHasSchoolClassUncheckedUpdateManyWithoutStudentNestedInput = 
   deleteMany?: Prisma.StudentHasSchoolClassScalarWhereInput | Prisma.StudentHasSchoolClassScalarWhereInput[]
 }
 
-export type StudentHasSchoolClassCreateWithoutSchoolClassInput = {
-  student: Prisma.studentCreateNestedOneWithoutSchoolClassesInput
+export type StudentHasSchoolClassCreateNestedManyWithoutSchoolClassInput = {
+  create?: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput> | Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput[] | Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput[]
+  connectOrCreate?: Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput | Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput[]
+  createMany?: Prisma.StudentHasSchoolClassCreateManySchoolClassInputEnvelope
+  connect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
 }
 
-export type StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput = {
-  studentId: number
+export type StudentHasSchoolClassUncheckedCreateNestedManyWithoutSchoolClassInput = {
+  create?: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput> | Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput[] | Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput[]
+  connectOrCreate?: Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput | Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput[]
+  createMany?: Prisma.StudentHasSchoolClassCreateManySchoolClassInputEnvelope
+  connect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
 }
 
-export type StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput = {
-  where: Prisma.StudentHasSchoolClassWhereUniqueInput
-  create: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput>
+export type StudentHasSchoolClassUpdateManyWithoutSchoolClassNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput> | Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput[] | Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput[]
+  connectOrCreate?: Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput | Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput[]
+  upsert?: Prisma.StudentHasSchoolClassUpsertWithWhereUniqueWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpsertWithWhereUniqueWithoutSchoolClassInput[]
+  createMany?: Prisma.StudentHasSchoolClassCreateManySchoolClassInputEnvelope
+  set?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
+  disconnect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
+  delete?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
+  connect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
+  update?: Prisma.StudentHasSchoolClassUpdateWithWhereUniqueWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpdateWithWhereUniqueWithoutSchoolClassInput[]
+  updateMany?: Prisma.StudentHasSchoolClassUpdateManyWithWhereWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpdateManyWithWhereWithoutSchoolClassInput[]
+  deleteMany?: Prisma.StudentHasSchoolClassScalarWhereInput | Prisma.StudentHasSchoolClassScalarWhereInput[]
 }
 
-export type StudentHasSchoolClassCreateManySchoolClassInputEnvelope = {
-  data: Prisma.StudentHasSchoolClassCreateManySchoolClassInput | Prisma.StudentHasSchoolClassCreateManySchoolClassInput[]
-  skipDuplicates?: boolean
-}
-
-export type StudentHasSchoolClassUpsertWithWhereUniqueWithoutSchoolClassInput = {
-  where: Prisma.StudentHasSchoolClassWhereUniqueInput
-  update: Prisma.XOR<Prisma.StudentHasSchoolClassUpdateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedUpdateWithoutSchoolClassInput>
-  create: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput>
-}
-
-export type StudentHasSchoolClassUpdateWithWhereUniqueWithoutSchoolClassInput = {
-  where: Prisma.StudentHasSchoolClassWhereUniqueInput
-  data: Prisma.XOR<Prisma.StudentHasSchoolClassUpdateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedUpdateWithoutSchoolClassInput>
-}
-
-export type StudentHasSchoolClassUpdateManyWithWhereWithoutSchoolClassInput = {
-  where: Prisma.StudentHasSchoolClassScalarWhereInput
-  data: Prisma.XOR<Prisma.StudentHasSchoolClassUpdateManyMutationInput, Prisma.StudentHasSchoolClassUncheckedUpdateManyWithoutSchoolClassInput>
-}
-
-export type StudentHasSchoolClassScalarWhereInput = {
-  AND?: Prisma.StudentHasSchoolClassScalarWhereInput | Prisma.StudentHasSchoolClassScalarWhereInput[]
-  OR?: Prisma.StudentHasSchoolClassScalarWhereInput[]
-  NOT?: Prisma.StudentHasSchoolClassScalarWhereInput | Prisma.StudentHasSchoolClassScalarWhereInput[]
-  studentId?: Prisma.IntFilter<"StudentHasSchoolClass"> | number
-  schoolClassId?: Prisma.IntFilter<"StudentHasSchoolClass"> | number
+export type StudentHasSchoolClassUncheckedUpdateManyWithoutSchoolClassNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput> | Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput[] | Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput[]
+  connectOrCreate?: Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput | Prisma.StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput[]
+  upsert?: Prisma.StudentHasSchoolClassUpsertWithWhereUniqueWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpsertWithWhereUniqueWithoutSchoolClassInput[]
+  createMany?: Prisma.StudentHasSchoolClassCreateManySchoolClassInputEnvelope
+  set?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
+  disconnect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
+  delete?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
+  connect?: Prisma.StudentHasSchoolClassWhereUniqueInput | Prisma.StudentHasSchoolClassWhereUniqueInput[]
+  update?: Prisma.StudentHasSchoolClassUpdateWithWhereUniqueWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpdateWithWhereUniqueWithoutSchoolClassInput[]
+  updateMany?: Prisma.StudentHasSchoolClassUpdateManyWithWhereWithoutSchoolClassInput | Prisma.StudentHasSchoolClassUpdateManyWithWhereWithoutSchoolClassInput[]
+  deleteMany?: Prisma.StudentHasSchoolClassScalarWhereInput | Prisma.StudentHasSchoolClassScalarWhereInput[]
 }
 
 export type StudentHasSchoolClassCreateWithoutStudentInput = {
@@ -470,20 +428,46 @@ export type StudentHasSchoolClassUpdateManyWithWhereWithoutStudentInput = {
   data: Prisma.XOR<Prisma.StudentHasSchoolClassUpdateManyMutationInput, Prisma.StudentHasSchoolClassUncheckedUpdateManyWithoutStudentInput>
 }
 
-export type StudentHasSchoolClassCreateManySchoolClassInput = {
+export type StudentHasSchoolClassScalarWhereInput = {
+  AND?: Prisma.StudentHasSchoolClassScalarWhereInput | Prisma.StudentHasSchoolClassScalarWhereInput[]
+  OR?: Prisma.StudentHasSchoolClassScalarWhereInput[]
+  NOT?: Prisma.StudentHasSchoolClassScalarWhereInput | Prisma.StudentHasSchoolClassScalarWhereInput[]
+  studentId?: Prisma.IntFilter<"StudentHasSchoolClass"> | number
+  schoolClassId?: Prisma.IntFilter<"StudentHasSchoolClass"> | number
+}
+
+export type StudentHasSchoolClassCreateWithoutSchoolClassInput = {
+  student: Prisma.studentCreateNestedOneWithoutSchoolClassesInput
+}
+
+export type StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput = {
   studentId: number
 }
 
-export type StudentHasSchoolClassUpdateWithoutSchoolClassInput = {
-  student?: Prisma.studentUpdateOneRequiredWithoutSchoolClassesNestedInput
+export type StudentHasSchoolClassCreateOrConnectWithoutSchoolClassInput = {
+  where: Prisma.StudentHasSchoolClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput>
 }
 
-export type StudentHasSchoolClassUncheckedUpdateWithoutSchoolClassInput = {
-  studentId?: Prisma.IntFieldUpdateOperationsInput | number
+export type StudentHasSchoolClassCreateManySchoolClassInputEnvelope = {
+  data: Prisma.StudentHasSchoolClassCreateManySchoolClassInput | Prisma.StudentHasSchoolClassCreateManySchoolClassInput[]
+  skipDuplicates?: boolean
 }
 
-export type StudentHasSchoolClassUncheckedUpdateManyWithoutSchoolClassInput = {
-  studentId?: Prisma.IntFieldUpdateOperationsInput | number
+export type StudentHasSchoolClassUpsertWithWhereUniqueWithoutSchoolClassInput = {
+  where: Prisma.StudentHasSchoolClassWhereUniqueInput
+  update: Prisma.XOR<Prisma.StudentHasSchoolClassUpdateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedUpdateWithoutSchoolClassInput>
+  create: Prisma.XOR<Prisma.StudentHasSchoolClassCreateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedCreateWithoutSchoolClassInput>
+}
+
+export type StudentHasSchoolClassUpdateWithWhereUniqueWithoutSchoolClassInput = {
+  where: Prisma.StudentHasSchoolClassWhereUniqueInput
+  data: Prisma.XOR<Prisma.StudentHasSchoolClassUpdateWithoutSchoolClassInput, Prisma.StudentHasSchoolClassUncheckedUpdateWithoutSchoolClassInput>
+}
+
+export type StudentHasSchoolClassUpdateManyWithWhereWithoutSchoolClassInput = {
+  where: Prisma.StudentHasSchoolClassScalarWhereInput
+  data: Prisma.XOR<Prisma.StudentHasSchoolClassUpdateManyMutationInput, Prisma.StudentHasSchoolClassUncheckedUpdateManyWithoutSchoolClassInput>
 }
 
 export type StudentHasSchoolClassCreateManyStudentInput = {
@@ -500,6 +484,22 @@ export type StudentHasSchoolClassUncheckedUpdateWithoutStudentInput = {
 
 export type StudentHasSchoolClassUncheckedUpdateManyWithoutStudentInput = {
   schoolClassId?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type StudentHasSchoolClassCreateManySchoolClassInput = {
+  studentId: number
+}
+
+export type StudentHasSchoolClassUpdateWithoutSchoolClassInput = {
+  student?: Prisma.studentUpdateOneRequiredWithoutSchoolClassesNestedInput
+}
+
+export type StudentHasSchoolClassUncheckedUpdateWithoutSchoolClassInput = {
+  studentId?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type StudentHasSchoolClassUncheckedUpdateManyWithoutSchoolClassInput = {
+  studentId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 

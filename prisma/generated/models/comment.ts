@@ -233,7 +233,7 @@ export type commentWhereInput = {
   updatedAt?: Prisma.DateTimeNullableFilter<"comment"> | Date | string | null
   createdById?: Prisma.IntFilter<"comment"> | number
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.studentWhereInput>
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
+  createdBy?: Prisma.XOR<Prisma.TeacherScalarRelationFilter, Prisma.teacherWhereInput>
 }
 
 export type commentOrderByWithRelationInput = {
@@ -244,7 +244,7 @@ export type commentOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   student?: Prisma.studentOrderByWithRelationInput
-  createdBy?: Prisma.userOrderByWithRelationInput
+  createdBy?: Prisma.teacherOrderByWithRelationInput
   _relevance?: Prisma.commentOrderByRelevanceInput
 }
 
@@ -259,7 +259,7 @@ export type commentWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeNullableFilter<"comment"> | Date | string | null
   createdById?: Prisma.IntFilter<"comment"> | number
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.studentWhereInput>
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
+  createdBy?: Prisma.XOR<Prisma.TeacherScalarRelationFilter, Prisma.teacherWhereInput>
 }, "id">
 
 export type commentOrderByWithAggregationInput = {
@@ -293,7 +293,7 @@ export type commentCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   student: Prisma.studentCreateNestedOneWithoutCommentsInput
-  createdBy: Prisma.userCreateNestedOneWithoutCommentsInput
+  createdBy: Prisma.teacherCreateNestedOneWithoutCommentsInput
 }
 
 export type commentUncheckedCreateInput = {
@@ -310,7 +310,7 @@ export type commentUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   student?: Prisma.studentUpdateOneRequiredWithoutCommentsNestedInput
-  createdBy?: Prisma.userUpdateOneRequiredWithoutCommentsNestedInput
+  createdBy?: Prisma.teacherUpdateOneRequiredWithoutCommentsNestedInput
 }
 
 export type commentUncheckedUpdateInput = {
@@ -542,7 +542,7 @@ export type commentCreateWithoutStudentInput = {
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  createdBy: Prisma.userCreateNestedOneWithoutCommentsInput
+  createdBy: Prisma.teacherCreateNestedOneWithoutCommentsInput
 }
 
 export type commentUncheckedCreateWithoutStudentInput = {
@@ -622,7 +622,7 @@ export type commentUpdateWithoutStudentInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.userUpdateOneRequiredWithoutCommentsNestedInput
+  createdBy?: Prisma.teacherUpdateOneRequiredWithoutCommentsNestedInput
 }
 
 export type commentUncheckedUpdateWithoutStudentInput = {
@@ -651,7 +651,7 @@ export type commentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updatedAt?: boolean
   createdById?: boolean
   student?: boolean | Prisma.studentDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.teacherDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["comment"]>
 
 
@@ -668,14 +668,14 @@ export type commentSelectScalar = {
 export type commentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "content" | "createdAt" | "updatedAt" | "createdById", ExtArgs["result"]["comment"]>
 export type commentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.studentDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.teacherDefaultArgs<ExtArgs>
 }
 
 export type $commentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "comment"
   objects: {
     student: Prisma.$studentPayload<ExtArgs>
-    createdBy: Prisma.$userPayload<ExtArgs>
+    createdBy: Prisma.$teacherPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1025,7 +1025,7 @@ readonly fields: commentFieldRefs;
 export interface Prisma__commentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   student<T extends Prisma.studentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.studentDefaultArgs<ExtArgs>>): Prisma.Prisma__studentClient<runtime.Types.Result.GetResult<Prisma.$studentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  createdBy<T extends Prisma.userDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.userDefaultArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.teacherDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.teacherDefaultArgs<ExtArgs>>): Prisma.Prisma__teacherClient<runtime.Types.Result.GetResult<Prisma.$teacherPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

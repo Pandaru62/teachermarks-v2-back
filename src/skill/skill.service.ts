@@ -15,7 +15,7 @@ export class SkillService {
                 name: data.name,
                 description: data.description,
                 abbreviation: data.abbreviation,
-                userId
+                teacherId: userId
             }
         })
     }
@@ -25,7 +25,7 @@ export class SkillService {
     }
 
     async getAllByUser(userId: number): Promise<skill[]> {
-        return this.prismaService.skill.findMany({where: {userId}})
+        return this.prismaService.skill.findMany({where: {teacherId: userId}})
     }
 
     async getById(id: number): Promise<skill> {
@@ -36,14 +36,14 @@ export class SkillService {
 
     async update(id: number, data: UpdateSkillDto, userId: number):Promise<skill> {
         return this.prismaService.skill.update({
-            where: {id, userId},
+            where: {id, teacherId: userId},
             data
         })
     }
 
     async archive(id: number, userId: number):Promise<skill> {
         return this.prismaService.skill.update({
-            where: {id, userId},
+            where: {id, teacherId: userId},
             data: {
                 isArchived: true
             }
@@ -52,7 +52,7 @@ export class SkillService {
 
     async unArchive(id: number, userId: number):Promise<skill> {
         return this.prismaService.skill.update({
-            where: {id, userId},
+            where: {id, teacherId: userId},
             data: {
                 isArchived: false
             }
@@ -61,7 +61,7 @@ export class SkillService {
 
     async remove(id: number, userId: number): Promise<skill> {
             return this.prismaService.skill.delete({
-            where: {id, userId}
+            where: {id, teacherId: userId}
             })
         }
   

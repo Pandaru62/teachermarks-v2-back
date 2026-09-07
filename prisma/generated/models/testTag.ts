@@ -228,7 +228,7 @@ export type testTagWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"testTag"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"testTag"> | Date | string | null
   createdById?: Prisma.IntFilter<"testTag"> | number
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
+  createdBy?: Prisma.XOR<Prisma.TeacherScalarRelationFilter, Prisma.teacherWhereInput>
   tests?: Prisma.TestListRelationFilter
 }
 
@@ -239,7 +239,7 @@ export type testTagOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
-  createdBy?: Prisma.userOrderByWithRelationInput
+  createdBy?: Prisma.teacherOrderByWithRelationInput
   tests?: Prisma.testOrderByRelationAggregateInput
   _relevance?: Prisma.testTagOrderByRelevanceInput
 }
@@ -254,7 +254,7 @@ export type testTagWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"testTag"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"testTag"> | Date | string | null
   createdById?: Prisma.IntFilter<"testTag"> | number
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
+  createdBy?: Prisma.XOR<Prisma.TeacherScalarRelationFilter, Prisma.teacherWhereInput>
   tests?: Prisma.TestListRelationFilter
 }, "id">
 
@@ -289,7 +289,7 @@ export type testTagCreateInput = {
   color: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  createdBy: Prisma.userCreateNestedOneWithoutTestTagsInput
+  createdBy: Prisma.teacherCreateNestedOneWithoutTestTagsInput
   tests?: Prisma.testCreateNestedManyWithoutTestTagInput
 }
 
@@ -308,7 +308,7 @@ export type testTagUpdateInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.userUpdateOneRequiredWithoutTestTagsNestedInput
+  createdBy?: Prisma.teacherUpdateOneRequiredWithoutTestTagsNestedInput
   tests?: Prisma.testUpdateManyWithoutTestTagNestedInput
 }
 
@@ -523,7 +523,7 @@ export type testTagCreateWithoutTestsInput = {
   color: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  createdBy: Prisma.userCreateNestedOneWithoutTestTagsInput
+  createdBy: Prisma.teacherCreateNestedOneWithoutTestTagsInput
 }
 
 export type testTagUncheckedCreateWithoutTestsInput = {
@@ -556,7 +556,7 @@ export type testTagUpdateWithoutTestsInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.userUpdateOneRequiredWithoutTestTagsNestedInput
+  createdBy?: Prisma.teacherUpdateOneRequiredWithoutTestTagsNestedInput
 }
 
 export type testTagUncheckedUpdateWithoutTestsInput = {
@@ -639,7 +639,7 @@ export type testTagSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   createdById?: boolean
-  createdBy?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.teacherDefaultArgs<ExtArgs>
   tests?: boolean | Prisma.testTag$testsArgs<ExtArgs>
   _count?: boolean | Prisma.TestTagCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["testTag"]>
@@ -657,7 +657,7 @@ export type testTagSelectScalar = {
 
 export type testTagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "color" | "createdAt" | "updatedAt" | "createdById", ExtArgs["result"]["testTag"]>
 export type testTagInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  createdBy?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.teacherDefaultArgs<ExtArgs>
   tests?: boolean | Prisma.testTag$testsArgs<ExtArgs>
   _count?: boolean | Prisma.TestTagCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -665,7 +665,7 @@ export type testTagInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type $testTagPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "testTag"
   objects: {
-    createdBy: Prisma.$userPayload<ExtArgs>
+    createdBy: Prisma.$teacherPayload<ExtArgs>
     tests: Prisma.$testPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1015,7 +1015,7 @@ readonly fields: testTagFieldRefs;
  */
 export interface Prisma__testTagClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  createdBy<T extends Prisma.userDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.userDefaultArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.teacherDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.teacherDefaultArgs<ExtArgs>>): Prisma.Prisma__teacherClient<runtime.Types.Result.GetResult<Prisma.$teacherPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tests<T extends Prisma.testTag$testsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.testTag$testsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$testPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

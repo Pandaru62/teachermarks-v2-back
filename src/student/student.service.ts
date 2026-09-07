@@ -17,7 +17,9 @@ export class StudentService {
                         schoolClass: {
                             teachers: {
                                 some: {
-                                    userId
+                                    teacher: {
+                                        userId
+                                    }
                                 }
                             }
                         }

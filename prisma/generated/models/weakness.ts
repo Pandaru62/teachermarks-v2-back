@@ -28,12 +28,12 @@ export type AggregateWeakness = {
 
 export type WeaknessAvgAggregateOutputType = {
   id: number | null
-  userId: number | null
+  teacherId: number | null
 }
 
 export type WeaknessSumAggregateOutputType = {
   id: number | null
-  userId: number | null
+  teacherId: number | null
 }
 
 export type WeaknessMinAggregateOutputType = {
@@ -41,7 +41,7 @@ export type WeaknessMinAggregateOutputType = {
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  userId: number | null
+  teacherId: number | null
 }
 
 export type WeaknessMaxAggregateOutputType = {
@@ -49,7 +49,7 @@ export type WeaknessMaxAggregateOutputType = {
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
-  userId: number | null
+  teacherId: number | null
 }
 
 export type WeaknessCountAggregateOutputType = {
@@ -57,19 +57,19 @@ export type WeaknessCountAggregateOutputType = {
   description: number
   createdAt: number
   updatedAt: number
-  userId: number
+  teacherId: number
   _all: number
 }
 
 
 export type WeaknessAvgAggregateInputType = {
   id?: true
-  userId?: true
+  teacherId?: true
 }
 
 export type WeaknessSumAggregateInputType = {
   id?: true
-  userId?: true
+  teacherId?: true
 }
 
 export type WeaknessMinAggregateInputType = {
@@ -77,7 +77,7 @@ export type WeaknessMinAggregateInputType = {
   description?: true
   createdAt?: true
   updatedAt?: true
-  userId?: true
+  teacherId?: true
 }
 
 export type WeaknessMaxAggregateInputType = {
@@ -85,7 +85,7 @@ export type WeaknessMaxAggregateInputType = {
   description?: true
   createdAt?: true
   updatedAt?: true
-  userId?: true
+  teacherId?: true
 }
 
 export type WeaknessCountAggregateInputType = {
@@ -93,7 +93,7 @@ export type WeaknessCountAggregateInputType = {
   description?: true
   createdAt?: true
   updatedAt?: true
-  userId?: true
+  teacherId?: true
   _all?: true
 }
 
@@ -188,7 +188,7 @@ export type WeaknessGroupByOutputType = {
   description: string
   createdAt: Date
   updatedAt: Date | null
-  userId: number | null
+  teacherId: number | null
   _count: WeaknessCountAggregateOutputType | null
   _avg: WeaknessAvgAggregateOutputType | null
   _sum: WeaknessSumAggregateOutputType | null
@@ -219,9 +219,9 @@ export type weaknessWhereInput = {
   description?: Prisma.StringFilter<"weakness"> | string
   createdAt?: Prisma.DateTimeFilter<"weakness"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"weakness"> | Date | string | null
-  userId?: Prisma.IntNullableFilter<"weakness"> | number | null
+  teacherId?: Prisma.IntNullableFilter<"weakness"> | number | null
   studenttesthasweaknesses?: Prisma.StudenttesthasweaknessesListRelationFilter
-  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.userWhereInput> | null
+  createdBy?: Prisma.XOR<Prisma.TeacherNullableScalarRelationFilter, Prisma.teacherWhereInput> | null
 }
 
 export type weaknessOrderByWithRelationInput = {
@@ -229,9 +229,9 @@ export type weaknessOrderByWithRelationInput = {
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  teacherId?: Prisma.SortOrderInput | Prisma.SortOrder
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesOrderByRelationAggregateInput
-  createdBy?: Prisma.userOrderByWithRelationInput
+  createdBy?: Prisma.teacherOrderByWithRelationInput
   _relevance?: Prisma.weaknessOrderByRelevanceInput
 }
 
@@ -243,9 +243,9 @@ export type weaknessWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringFilter<"weakness"> | string
   createdAt?: Prisma.DateTimeFilter<"weakness"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"weakness"> | Date | string | null
-  userId?: Prisma.IntNullableFilter<"weakness"> | number | null
+  teacherId?: Prisma.IntNullableFilter<"weakness"> | number | null
   studenttesthasweaknesses?: Prisma.StudenttesthasweaknessesListRelationFilter
-  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.userWhereInput> | null
+  createdBy?: Prisma.XOR<Prisma.TeacherNullableScalarRelationFilter, Prisma.teacherWhereInput> | null
 }, "id">
 
 export type weaknessOrderByWithAggregationInput = {
@@ -253,7 +253,7 @@ export type weaknessOrderByWithAggregationInput = {
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  teacherId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.weaknessCountOrderByAggregateInput
   _avg?: Prisma.weaknessAvgOrderByAggregateInput
   _max?: Prisma.weaknessMaxOrderByAggregateInput
@@ -269,7 +269,7 @@ export type weaknessScalarWhereWithAggregatesInput = {
   description?: Prisma.StringWithAggregatesFilter<"weakness"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"weakness"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"weakness"> | Date | string | null
-  userId?: Prisma.IntNullableWithAggregatesFilter<"weakness"> | number | null
+  teacherId?: Prisma.IntNullableWithAggregatesFilter<"weakness"> | number | null
 }
 
 export type weaknessCreateInput = {
@@ -277,7 +277,7 @@ export type weaknessCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesCreateNestedManyWithoutWeaknessInput
-  createdBy?: Prisma.userCreateNestedOneWithoutWeaknessesInput
+  createdBy?: Prisma.teacherCreateNestedOneWithoutWeaknessesInput
 }
 
 export type weaknessUncheckedCreateInput = {
@@ -285,7 +285,7 @@ export type weaknessUncheckedCreateInput = {
   description: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  userId?: number | null
+  teacherId?: number | null
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedCreateNestedManyWithoutWeaknessInput
 }
 
@@ -294,7 +294,7 @@ export type weaknessUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUpdateManyWithoutWeaknessNestedInput
-  createdBy?: Prisma.userUpdateOneWithoutWeaknessesNestedInput
+  createdBy?: Prisma.teacherUpdateOneWithoutWeaknessesNestedInput
 }
 
 export type weaknessUncheckedUpdateInput = {
@@ -302,7 +302,7 @@ export type weaknessUncheckedUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teacherId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   studenttesthasweaknesses?: Prisma.studenttesthasweaknessesUncheckedUpdateManyWithoutWeaknessNestedInput
 }
 
@@ -311,7 +311,7 @@ export type weaknessCreateManyInput = {
   description: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  userId?: number | null
+  teacherId?: number | null
 }
 
 export type weaknessUpdateManyMutationInput = {
@@ -325,7 +325,7 @@ export type weaknessUncheckedUpdateManyInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teacherId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type WeaknessListRelationFilter = {
@@ -354,12 +354,12 @@ export type weaknessCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  teacherId?: Prisma.SortOrder
 }
 
 export type weaknessAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  teacherId?: Prisma.SortOrder
 }
 
 export type weaknessMaxOrderByAggregateInput = {
@@ -367,7 +367,7 @@ export type weaknessMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  teacherId?: Prisma.SortOrder
 }
 
 export type weaknessMinOrderByAggregateInput = {
@@ -375,12 +375,12 @@ export type weaknessMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  teacherId?: Prisma.SortOrder
 }
 
 export type weaknessSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  teacherId?: Prisma.SortOrder
 }
 
 export type weaknessCreateNestedManyWithoutCreatedByInput = {
@@ -488,14 +488,14 @@ export type weaknessScalarWhereInput = {
   description?: Prisma.StringFilter<"weakness"> | string
   createdAt?: Prisma.DateTimeFilter<"weakness"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"weakness"> | Date | string | null
-  userId?: Prisma.IntNullableFilter<"weakness"> | number | null
+  teacherId?: Prisma.IntNullableFilter<"weakness"> | number | null
 }
 
 export type weaknessCreateWithoutStudenttesthasweaknessesInput = {
   description: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  createdBy?: Prisma.userCreateNestedOneWithoutWeaknessesInput
+  createdBy?: Prisma.teacherCreateNestedOneWithoutWeaknessesInput
 }
 
 export type weaknessUncheckedCreateWithoutStudenttesthasweaknessesInput = {
@@ -503,7 +503,7 @@ export type weaknessUncheckedCreateWithoutStudenttesthasweaknessesInput = {
   description: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
-  userId?: number | null
+  teacherId?: number | null
 }
 
 export type weaknessCreateOrConnectWithoutStudenttesthasweaknessesInput = {
@@ -526,7 +526,7 @@ export type weaknessUpdateWithoutStudenttesthasweaknessesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdBy?: Prisma.userUpdateOneWithoutWeaknessesNestedInput
+  createdBy?: Prisma.teacherUpdateOneWithoutWeaknessesNestedInput
 }
 
 export type weaknessUncheckedUpdateWithoutStudenttesthasweaknessesInput = {
@@ -534,7 +534,7 @@ export type weaknessUncheckedUpdateWithoutStudenttesthasweaknessesInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teacherId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type weaknessCreateManyCreatedByInput = {
@@ -602,7 +602,7 @@ export type weaknessSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  userId?: boolean
+  teacherId?: boolean
   studenttesthasweaknesses?: boolean | Prisma.weakness$studenttesthasweaknessesArgs<ExtArgs>
   createdBy?: boolean | Prisma.weakness$createdByArgs<ExtArgs>
   _count?: boolean | Prisma.WeaknessCountOutputTypeDefaultArgs<ExtArgs>
@@ -615,10 +615,10 @@ export type weaknessSelectScalar = {
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  userId?: boolean
+  teacherId?: boolean
 }
 
-export type weaknessOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["weakness"]>
+export type weaknessOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "createdAt" | "updatedAt" | "teacherId", ExtArgs["result"]["weakness"]>
 export type weaknessInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   studenttesthasweaknesses?: boolean | Prisma.weakness$studenttesthasweaknessesArgs<ExtArgs>
   createdBy?: boolean | Prisma.weakness$createdByArgs<ExtArgs>
@@ -629,14 +629,14 @@ export type $weaknessPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "weakness"
   objects: {
     studenttesthasweaknesses: Prisma.$studenttesthasweaknessesPayload<ExtArgs>[]
-    createdBy: Prisma.$userPayload<ExtArgs> | null
+    createdBy: Prisma.$teacherPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     description: string
     createdAt: Date
     updatedAt: Date | null
-    userId: number | null
+    teacherId: number | null
   }, ExtArgs["result"]["weakness"]>
   composites: {}
 }
@@ -978,7 +978,7 @@ readonly fields: weaknessFieldRefs;
 export interface Prisma__weaknessClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   studenttesthasweaknesses<T extends Prisma.weakness$studenttesthasweaknessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.weakness$studenttesthasweaknessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$studenttesthasweaknessesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  createdBy<T extends Prisma.weakness$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.weakness$createdByArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.weakness$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.weakness$createdByArgs<ExtArgs>>): Prisma.Prisma__teacherClient<runtime.Types.Result.GetResult<Prisma.$teacherPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1012,7 +1012,7 @@ export interface weaknessFieldRefs {
   readonly description: Prisma.FieldRef<"weakness", 'String'>
   readonly createdAt: Prisma.FieldRef<"weakness", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"weakness", 'DateTime'>
-  readonly userId: Prisma.FieldRef<"weakness", 'Int'>
+  readonly teacherId: Prisma.FieldRef<"weakness", 'Int'>
 }
     
 
@@ -1384,18 +1384,18 @@ export type weakness$studenttesthasweaknessesArgs<ExtArgs extends runtime.Types.
  */
 export type weakness$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the user
+   * Select specific fields to fetch from the teacher
    */
-  select?: Prisma.userSelect<ExtArgs> | null
+  select?: Prisma.teacherSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the user
+   * Omit specific fields from the teacher
    */
-  omit?: Prisma.userOmit<ExtArgs> | null
+  omit?: Prisma.teacherOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.userInclude<ExtArgs> | null
-  where?: Prisma.userWhereInput
+  include?: Prisma.teacherInclude<ExtArgs> | null
+  where?: Prisma.teacherWhereInput
 }
 
 /**

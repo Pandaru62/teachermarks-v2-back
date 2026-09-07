@@ -20,10 +20,19 @@ export type TypeTokenEnum = (typeof TypeTokenEnum)[keyof typeof TypeTokenEnum]
 
 export const UserRoleEnum = {
   ADMIN: 'ADMIN',
-  TEACHER: 'TEACHER'
+  TEACHER: 'TEACHER',
+  STUDENT: 'STUDENT'
 } as const
 
 export type UserRoleEnum = (typeof UserRoleEnum)[keyof typeof UserRoleEnum]
+
+
+export const SchoolYearEnum = {
+  Y2025_2026: 'Y2025_2026',
+  Y2026_2027: 'Y2026_2027'
+} as const
+
+export type SchoolYearEnum = (typeof SchoolYearEnum)[keyof typeof SchoolYearEnum]
 
 
 export const TrimesterEnum = {

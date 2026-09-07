@@ -24,7 +24,9 @@ export class TestTagService {
         return this.prismaService.testTag.findMany({
           where: {
             createdBy: {
-                id: userId
+                user: {
+                    id: userId
+                }
             }
           },
           select: testTagSelect

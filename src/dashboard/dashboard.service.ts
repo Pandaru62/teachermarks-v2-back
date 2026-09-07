@@ -13,7 +13,7 @@ export class DashboardService {
         schoolclass: {
           teachers: {
             some: {
-              userId
+              teacherId: userId
             }
           }
         }
