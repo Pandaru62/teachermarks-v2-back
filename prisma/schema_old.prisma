@@ -1,0 +1,298 @@
+// generator client {
+//   provider = "prisma-client"
+//   output   = "./generated"
+// }
+
+// datasource db {
+//   provider = "mysql"
+// }
+
+// model user {
+//   id            Int            @id @default(autoincrement())
+//   email         String         @unique
+//   password      String
+//   is_validated  Boolean        @default(false)
+//   is_first_visit  Boolean      @default(true)
+//   role          UserRoleEnum
+//   current_trimester TrimesterEnum @default(TR1)
+//   createdAt     DateTime       @default(now())
+//   updatedAt     DateTime?      @updatedAt()
+//   profile       profile?
+//   schoolClasses UserHasSchoolClass[]
+//   createdSkills skill[]
+//   tokens        token[]
+//   notifications userHasNotifications[]
+//   weaknesses weakness[]
+//   comments comment[]
+
+//   @@index([id])
+//   testTags testTag[]
+// }
+
+// model notifications {
+//   id            Int            @id @default(autoincrement())
+//   title         String
+//   message       String
+//   createdAt     DateTime       @default(now())
+//   updatedAt     DateTime?      @updatedAt()
+//   users         userHasNotifications[]
+
+//   @@index([id])
+// }
+
+// model userHasNotifications {
+//   userId         Int
+//   notificationId Int
+//   isRead         Boolean        @default(false)
+//   user           user           @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   notification   notifications  @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+//   @@id([userId, notificationId])
+//   @@index([notificationId])
+// }
+
+// model profile {
+//   userId        Int            @unique
+//   firstname     String
+//   lastname      String
+//   school        String
+//   createdAt     DateTime       @default(now())
+//   updatedAt     DateTime?      @updatedAt()
+//   user          user           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//   @@index([userId])
+// }
+
+// model form {
+//   id            Int                             @id @default(autoincrement())
+//   name          String
+//   createdAt     DateTime                        @default(now())
+//   updatedAt     DateTime?                       @updatedAt()
+//   schoolclass   schoolclass[]
+// }
+
+// model schoolclass {
+//   id                    Int                     @id @default(autoincrement())
+//   name                  String
+//   color                 String
+//   isArchived            Boolean                 @default(false)
+//   formId                Int
+//   createdAt             DateTime                @default(now())
+//   updatedAt             DateTime?               @updatedAt()
+//   form                  form                    @relation(fields: [formId], references: [id], onDelete: Cascade)
+//   students              StudentHasSchoolClass[]
+//   test                  test[]
+//   teachers              UserHasSchoolClass[]
+
+//   @@index([formId])
+// }
+
+// model skill {
+//   id                  Int                      @id @default(autoincrement())
+//   name                String
+//   description         String?
+//   abbreviation        String?
+//   isArchived          Boolean                  @default(false)
+//   studenttesthasskill studenttesthasskill[]
+//   tests               testhasskill[]
+//   createdAt           DateTime                 @default(now())
+//   updatedAt           DateTime?                @updatedAt()
+//   userId              Int?
+//   createdBy           user?                    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+//   @@index([userId])
+// }
+
+// model student {
+//   id                    Int                     @id @default(autoincrement())
+//   lastName              String
+//   firstName             String
+//   createdAt             DateTime                @default(now())
+//   updatedAt             DateTime?               @updatedAt()
+//   schoolClasses         StudentHasSchoolClass[]
+//   studenttest           studenttest[]
+//   reports               report[]
+//   comments              comment[]
+// }
+
+// model comment {
+//   id                    Int                     @id @default(autoincrement())
+//   studentId             Int
+//   content               String
+//   createdAt             DateTime                @default(now())
+//   updatedAt             DateTime?               @updatedAt()
+//   student               student                 @relation(fields: [studentId], references: [id], onDelete: Cascade)
+//   createdById          Int
+//   createdBy            user                    @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+//   @@index([studentId])
+// }
+
+// model report {
+//   id                    Int                     @id @default(autoincrement())
+//   studentId             Int
+//   trimester             TrimesterEnum
+//   description           String
+//   student               student                 @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+//   @@unique([studentId, trimester])
+// }
+
+// model studenttest {
+//   id                  Int                        @id @default(autoincrement())
+//   studentId           Int
+//   testId              Int                 
+//   mark                Decimal
+//   isAbsent            Boolean                   @default(false)
+//   isUnmarked          Boolean                   @default(false)
+//   createdAt           DateTime                  @default(now())
+//   updatedAt           DateTime?                 @updatedAt()
+//   comment            String?                   @default("")
+//   student             student                   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+//   test                test                      @relation(fields: [testId], references: [id], onDelete: Cascade)
+//   studenttesthasskill studenttesthasskill[]
+//   studenttesthasweaknesses studenttesthasweaknesses[]
+
+//   @@unique(name: "studentTestId", [studentId, testId])
+//   @@index([studentId])
+//   @@index([testId])
+// }
+
+// model studenttesthasskill {
+//   studentTestId Int
+//   skillId       Int
+//   level         LevelEnum
+//   skill         skill                           @relation(fields: [skillId], references: [id], onDelete: Cascade)
+//   studenttest   studenttest                     @relation(fields: [studentTestId], references: [id], onDelete: Cascade)
+
+//   @@id(name: "studentTestSkillId", [studentTestId, skillId])
+//   @@index([skillId])
+//   @@index([studentTestId])
+// }
+
+// model studenttesthasweaknesses {
+//   studentTestId    Int
+//   weaknessId       Int
+//   description      String
+//   weakness         weakness                     @relation(fields: [weaknessId], references: [id], onDelete: Cascade)
+//   studenttest      studenttest                  @relation(fields: [studentTestId], references: [id], onDelete: Cascade)
+
+//   @@id(name: "studentTestWeaknessId", [studentTestId, weaknessId])
+//   @@index([weaknessId])
+//   @@index([studentTestId])
+// }
+
+// model weakness {
+//   id                  Int                      @id @default(autoincrement())
+//   description         String
+//   studenttesthasweaknesses studenttesthasweaknesses[]
+//   createdAt           DateTime                 @default(now())
+//   updatedAt           DateTime?                @updatedAt()
+//   userId              Int?
+//   createdBy           user?                    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+//   @@index([userId])
+// }
+
+// model test {
+//   id            Int             @id @default(autoincrement())
+//   name          String
+//   description   String?
+//   schoolClassId Int
+//   date          DateTime
+//   trimester     TrimesterEnum
+//   scale         Int
+//   coefficient Decimal           @db.Decimal(5, 2)
+//   createdAt     DateTime       @default(now())
+//   updatedAt     DateTime?      @updatedAt()
+//   studenttest   studenttest[]
+//   schoolclass   schoolclass    @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
+//   skills        testhasskill[]
+//   testTagId      Int?
+//   testTag        testTag?          @relation(fields: [testTagId], references: [id], onDelete: SetNull)
+
+//   @@index([schoolClassId])
+// }
+
+// model testTag {
+//   id          Int             @id @default(autoincrement())
+//   name        String
+//   color       String
+//   createdAt   DateTime        @default(now())
+//   updatedAt   DateTime?       @updatedAt()
+//   createdById Int
+//   createdBy   user            @relation(fields: [createdById], references: [id], onDelete: Cascade)
+//   tests       test[]
+
+//   @@index([id])
+// }
+
+// model testhasskill {
+//   testId       Int
+//   skillId      Int
+//   test         test     @relation(fields: [testId], references: [id], onDelete: Cascade)
+//   skill        skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+//   @@id([testId, skillId])
+// }
+
+// model UserHasSchoolClass {
+//   userId       Int
+//   schoolClassId Int
+
+//   user        user         @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   schoolClass schoolclass  @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
+
+//   @@id([userId, schoolClassId])
+// }
+
+// model StudentHasSchoolClass {
+//   studentId       Int
+//   schoolClassId   Int
+
+//   student        student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+//   schoolClass schoolclass         @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
+
+//   @@id([studentId, schoolClassId])
+// }
+
+// model token {
+//   token      String        @db.VarChar(255)
+//   type       TypeTokenEnum
+//   expires_at DateTime?
+//   user_id    Int
+//   user       user          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+//   created_at DateTime      @default(now())
+//   updated_at DateTime      @updatedAt
+
+//   @@id([user_id, type])
+// }
+
+
+// enum TypeTokenEnum {
+//   REFRESH_TOKEN
+//   FORGOT_PASSWORD
+//   VERIFICATION_EMAIL
+// }
+
+// enum UserRoleEnum {
+//   ADMIN
+//   TEACHER
+//   STUDENT
+// }
+
+// enum TrimesterEnum {
+//   TR1
+//   TR2
+//   TR3
+// }
+
+// enum LevelEnum {
+//   LVL0
+//   LVL1
+//   LVL2
+//   LVL3
+//   LVL4
+//   ABS
+//   NN
+// }

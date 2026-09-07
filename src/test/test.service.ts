@@ -79,6 +79,45 @@ export class TestService {
         })
     }
 
+    async getByClassId(userId : number, classId: number): Promise<test[]> {
+      return this.prismaService.test.findMany({
+        where: {
+          schoolclass: {
+            teachers: {
+              every: {
+                userId
+              }
+            }
+          },
+          schoolClassId: {
+            equals: classId
+          }
+        },
+        include: {
+          skills: {
+            select: {
+              skill: {
+                select: {
+                  id: true,
+                  name: true
+                }
+              }
+            }
+          },
+          testTag: {
+            select: {
+              id: true,
+              name: true,
+              color: true
+            }
+          }
+        },
+        orderBy: {
+          date: 'desc'
+        }
+      })
+    }
+
     async getById(id: number): Promise<TestWithClassAndSkills> {
       const test = await this.prismaService.test.findUnique({
         where: {id},

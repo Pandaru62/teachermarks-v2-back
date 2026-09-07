@@ -17,7 +17,7 @@ export class NotificationsController {
   }
 
   @Roles(UserRoleEnum.ADMIN)
-  @Post()
+  @Post('publish')
   async createAndPublish(@Body() body: CreateNotificationDto): Promise<notifications> {
     // create notification
     const newNotif = await this.notificationsService.create(body);

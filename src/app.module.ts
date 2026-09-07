@@ -13,9 +13,10 @@ import { UserModule } from './user/user.module';
 import { ReportModule } from './report/report.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { TestTagModule } from './testtag/testtag.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
-  imports: [PrismaModule, FormModule, SchoolclassModule, StudentModule, TestModule, SkillModule, StudentTestModule, AuthModule, UserModule, ReportModule, TestTagModule, NotificationsModule],
+  imports: [PrismaModule, FormModule, SchoolclassModule, StudentModule, TestModule, SkillModule, StudentTestModule, AuthModule, UserModule, ReportModule, TestTagModule, NotificationsModule, DashboardModule],
   controllers: [AppController],
   providers: [AppService],
 })

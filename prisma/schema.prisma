@@ -9,24 +9,74 @@ datasource db {
 
 model user {
   id            Int            @id @default(autoincrement())
-  email         String         @unique
+  login         String         @unique
+  email         String?
   password      String
-  is_validated  Boolean        @default(false)
-  is_first_visit  Boolean      @default(true)
   role          UserRoleEnum
-  current_trimester TrimesterEnum @default(TR1)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime?      @updatedAt()
-  profile       profile?
-  schoolClasses UserHasSchoolClass[]
-  createdSkills skill[]
+
+  isValidated   Boolean        @default(false)
+  isFirstVisit  Boolean      @default(true)
+
+  teacher       teacher?
+  student       student?
   tokens        token[]
   notifications userHasNotifications[]
-  weaknesses weakness[]
-  comments comment[]
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?      @updatedAt()
 
   @@index([id])
+}
+
+model teacher {
+  userId       Int           @unique
+  user         user         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  firstname     String
+  lastname      String
+
+  schoolId      Int?
+  school        school?       @relation(fields: [schoolId], references: [id], onDelete: SetNull)
+  
+  createdSkills skill[]
+  schoolClasses TeacherHasSchoolClass[]
+  weaknesses weakness[]
+  comments comment[]
   testTags testTag[]
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?      @updatedAt()
+
+  @@index([userId])
+}
+
+model student {
+  id                    Int                     @id @default(autoincrement())
+  
+  userId                Int?                    @unique
+  user                  user?                   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  lastName              String
+  firstName             String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime?               @updatedAt()
+  schoolClasses         StudentHasSchoolClass[]
+  studenttest           studenttest[]
+  reports               report[]
+  comments              comment[]
+}
+
+model school {
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  city                  String?
+  country               String?
+  currentTrimester      TrimesterEnum           @default(TR1)
+
+  createdAt             DateTime                @default(now())  
+  updatedAt             DateTime?               @updatedAt()
+
+  teachers teacher[]
 }
 
 model notifications {
@@ -51,18 +101,6 @@ model userHasNotifications {
   @@index([notificationId])
 }
 
-model profile {
-  userId        Int            @unique
-  firstname     String
-  lastname      String
-  school        String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime?      @updatedAt()
-  user          user           @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-}
-
 model form {
   id            Int                             @id @default(autoincrement())
   name          String
@@ -77,12 +115,13 @@ model schoolclass {
   color                 String
   isArchived            Boolean                 @default(false)
   formId                Int
+  schoolYear            SchoolYearEnum
   createdAt             DateTime                @default(now())
   updatedAt             DateTime?               @updatedAt()
   form                  form                    @relation(fields: [formId], references: [id], onDelete: Cascade)
   students              StudentHasSchoolClass[]
   test                  test[]
-  teachers              UserHasSchoolClass[]
+  teachers              TeacherHasSchoolClass[]
 
   @@index([formId])
 }
@@ -97,22 +136,10 @@ model skill {
   tests               testhasskill[]
   createdAt           DateTime                 @default(now())
   updatedAt           DateTime?                @updatedAt()
-  userId              Int?
-  createdBy           user?                    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  teacherId           Int?
+  createdBy           teacher?                    @relation(fields: [teacherId], references: [userId], onDelete: SetNull)
 
-  @@index([userId])
-}
-
-model student {
-  id                    Int                     @id @default(autoincrement())
-  lastName              String
-  firstName             String
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime?               @updatedAt()
-  schoolClasses         StudentHasSchoolClass[]
-  studenttest           studenttest[]
-  reports               report[]
-  comments              comment[]
+  @@index([teacherId])
 }
 
 model comment {
@@ -123,7 +150,7 @@ model comment {
   updatedAt             DateTime?               @updatedAt()
   student               student                 @relation(fields: [studentId], references: [id], onDelete: Cascade)
   createdById          Int
-  createdBy            user                    @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdBy            teacher                    @relation(fields: [createdById], references: [userId], onDelete: Cascade)
 
   @@index([studentId])
 }
@@ -188,10 +215,10 @@ model weakness {
   studenttesthasweaknesses studenttesthasweaknesses[]
   createdAt           DateTime                 @default(now())
   updatedAt           DateTime?                @updatedAt()
-  userId              Int?
-  createdBy           user?                    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  teacherId              Int?
+  createdBy           teacher?                    @relation(fields: [teacherId], references: [userId], onDelete: SetNull)
 
-  @@index([userId])
+  @@index([teacherId])
 }
 
 model test {
@@ -221,7 +248,7 @@ model testTag {
   createdAt   DateTime        @default(now())
   updatedAt   DateTime?       @updatedAt()
   createdById Int
-  createdBy   user            @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdBy   teacher            @relation(fields: [createdById], references: [userId], onDelete: Cascade)
   tests       test[]
 
   @@index([id])
@@ -236,14 +263,13 @@ model testhasskill {
   @@id([testId, skillId])
 }
 
-model UserHasSchoolClass {
-  userId       Int
+model TeacherHasSchoolClass {
+  teacherId       Int
   schoolClassId Int
-
-  user        user         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teacher        teacher         @relation(fields: [teacherId], references: [userId], onDelete: Cascade)
   schoolClass schoolclass  @relation(fields: [schoolClassId], references: [id], onDelete: Cascade)
 
-  @@id([userId, schoolClassId])
+  @@id([teacherId, schoolClassId])
 }
 
 model StudentHasSchoolClass {
@@ -278,6 +304,12 @@ enum TypeTokenEnum {
 enum UserRoleEnum {
   ADMIN
   TEACHER
+  STUDENT
+}
+
+enum SchoolYearEnum {
+  Y2025_2026
+  Y2026_2027
 }
 
 enum TrimesterEnum {
