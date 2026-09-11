@@ -5,7 +5,7 @@
 
 */
 -- AlterTable
-ALTER TABLE `testtag` ADD COLUMN `createdById` INTEGER NOT NULL;
+ALTER TABLE `testTag` ADD COLUMN `createdById` INTEGER NOT NULL;
 
 -- AddForeignKey
 ALTER TABLE `testTag` ADD CONSTRAINT `testTag_createdById_fkey` FOREIGN KEY (`createdById`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
