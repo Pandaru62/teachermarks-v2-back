@@ -7,7 +7,7 @@
   - You are about to drop the column `is_validated` on the `user` table. All the data in the column will be lost.
   - You are about to drop the column `userId` on the `weakness` table. All the data in the column will be lost.
   - You are about to drop the `profile` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `userhasschoolclass` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `userHasSchoolclass` table. If the table is not empty, all the data it contains will be lost.
   - A unique constraint covering the columns `[userId]` on the table `student` will be added. If there are existing duplicate values, this will fail.
   - A unique constraint covering the columns `[login]` on the table `user` will be added. If there are existing duplicate values, this will fail.
   - Added the required column `schoolYear` to the `schoolclass` table without a default value. This is not possible if the table is not empty.
@@ -24,13 +24,13 @@ ALTER TABLE `profile` DROP FOREIGN KEY `profile_userId_fkey`;
 ALTER TABLE `skill` DROP FOREIGN KEY `skill_userId_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `testtag` DROP FOREIGN KEY `testTag_createdById_fkey`;
+ALTER TABLE `testTag` DROP FOREIGN KEY `testTag_createdById_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `userhasschoolclass` DROP FOREIGN KEY `UserHasSchoolClass_schoolClassId_fkey`;
+ALTER TABLE `UserHasSchoolClass` DROP FOREIGN KEY `UserHasSchoolClass_schoolClassId_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `userhasschoolclass` DROP FOREIGN KEY `UserHasSchoolClass_userId_fkey`;
+ALTER TABLE `UserHasSchoolClass` DROP FOREIGN KEY `UserHasSchoolClass_userId_fkey`;
 
 -- DropForeignKey
 ALTER TABLE `weakness` DROP FOREIGN KEY `weakness_userId_fkey`;
@@ -42,7 +42,7 @@ DROP INDEX `comment_createdById_fkey` ON `comment`;
 DROP INDEX `skill_userId_idx` ON `skill`;
 
 -- DropIndex
-DROP INDEX `testTag_createdById_fkey` ON `testtag`;
+DROP INDEX `testTag_createdById_fkey` ON `testTag`;
 
 -- DropIndex
 DROP INDEX `user_email_key` ON `user`;
@@ -78,7 +78,7 @@ ALTER TABLE `weakness` DROP COLUMN `userId`,
 DROP TABLE `profile`;
 
 -- DropTable
-DROP TABLE `userhasschoolclass`;
+DROP TABLE `UserHasSchoolClass`;
 
 -- CreateTable
 CREATE TABLE `teacher` (
