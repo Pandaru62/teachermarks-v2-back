@@ -7,4 +7,7 @@ export class CreateUserDto {
 
     @IsStrongPassword()
     password: string;
+
+    @IsStrongPassword()
+    pseudo: string;
 }
