@@ -174,7 +174,7 @@ model studenttest {
   isUnmarked          Boolean                   @default(false)
   createdAt           DateTime                  @default(now())
   updatedAt           DateTime?                 @updatedAt()
-  comment            String?                   @default("")
+  comment            String?                    @db.Text
   student             student                   @relation(fields: [studentId], references: [id], onDelete: Cascade)
   test                test                      @relation(fields: [testId], references: [id], onDelete: Cascade)
   studenttesthasskill studenttesthasskill[]
