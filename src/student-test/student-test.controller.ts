@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Param, Delete, Req, ParseIntPipe, Put } fr
 import { StudentTestService } from './student-test.service';
 import { CreateStudentTestDto } from './dto/create-student-test.dto';
 import { IRequestWithUser } from 'src/auth/types';
+import { BatchUpdateStudentTestDto } from './dto/batch-update-student-test.dto';
 
 @Controller('student-test')
 export class StudentTestController {
@@ -41,6 +42,15 @@ export class StudentTestController {
   findOne(@Param('id') id: string) {
     return this.studentTestService.findOne(+id);
   }
+  
+  @Put('/:testId/batch')
+  async batchUpdate(
+      @Body() payload: BatchUpdateStudentTestDto,
+      @Param('testId', ParseIntPipe) testId: number,
+      @Req() req: IRequestWithUser
+  ) {
+      return this.studentTestService.batchUpsert(testId, req.user.sub, payload);
+  }
 
   @Put('/:studentId/student/:testId/test')
   async createOrUpdate(
@@ -63,9 +73,11 @@ export class StudentTestController {
     }
   }
 
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.studentTestService.remove(+id);
   }
+
 
 }

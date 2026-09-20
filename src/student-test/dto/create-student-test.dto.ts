@@ -1,5 +1,5 @@
 import { LevelEnum } from 'prisma/generated/browser';
-import { IsBoolean, IsNumber } from "class-validator";
+import { IsBoolean, IsNumber, IsOptional } from "class-validator";
 
 export class CreateStudentTestDto {
 
@@ -12,6 +12,7 @@ export class CreateStudentTestDto {
     @IsBoolean()
     isUnmarked?: boolean;
 
+    @IsOptional()
     comment?: string;
 
     skills: { 

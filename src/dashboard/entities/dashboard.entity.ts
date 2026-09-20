@@ -1,3 +1,5 @@
+import { schoolclass } from "prisma/generated/client"
+
 export class Dashboard {
     lastTests: {
         id: number,
@@ -9,4 +11,5 @@ export class Dashboard {
         },
         completion: number
     }[]
+    schoolClasses: Partial<schoolclass>[]
 }
