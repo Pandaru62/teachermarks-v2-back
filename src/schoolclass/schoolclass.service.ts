@@ -78,9 +78,10 @@ export class SchoolclassService {
         firstName: true,
         lastName: true
       },
-      orderBy: {
-        lastName: 'asc'
-      }
+      orderBy: [
+        {lastName: 'asc'},
+        {firstName: 'asc'}
+      ]
     })
 
     return {

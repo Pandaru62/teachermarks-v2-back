@@ -26,9 +26,10 @@ export class StudentService {
                     }
                 }
             },
-            orderBy: {
-                lastName: 'asc'
-            }
+            orderBy: [
+                {lastName: 'asc'},
+                {firstName: 'asc'}
+            ]
         })
     }
 
@@ -56,9 +57,10 @@ export class StudentService {
                     }
                 }
             },
-            orderBy: {
-                lastName: 'asc'
-            }
+            orderBy: [
+                {lastName: 'asc'},
+                {firstName: 'asc'}
+            ]
         })
     }
 
