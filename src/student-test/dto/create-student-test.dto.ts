@@ -1,22 +1,21 @@
 import { LevelEnum } from 'prisma/generated/browser';
-import { IsBoolean, IsNumber, IsOptional } from "class-validator";
+import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateStudentTestDto {
+  @IsNumber()
+  mark: number;
 
-    @IsNumber()
-    mark: number;
+  @IsBoolean()
+  isAbsent?: boolean;
 
-    @IsBoolean()
-    isAbsent?: boolean;
+  @IsBoolean()
+  isUnmarked?: boolean;
 
-    @IsBoolean()
-    isUnmarked?: boolean;
+  @IsOptional()
+  comment?: string;
 
-    @IsOptional()
-    comment?: string;
-
-    skills: { 
-        skillId: number;
-        level: LevelEnum;
-    }[]
+  skills: {
+    skillId: number;
+    level: LevelEnum;
+  }[];
 }

@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { NotificationsService } from './notifications.service';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
@@ -18,7 +27,9 @@ export class NotificationsController {
 
   @Roles(UserRoleEnum.ADMIN)
   @Post('publish')
-  async createAndPublish(@Body() body: CreateNotificationDto): Promise<notifications> {
+  async createAndPublish(
+    @Body() body: CreateNotificationDto,
+  ): Promise<notifications> {
     // create notification
     const newNotif = await this.notificationsService.create(body);
     // publish to users
@@ -39,15 +50,16 @@ export class NotificationsController {
   }
 
   @Get(':id')
-  async findOne(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<notifications> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<notifications> {
     return this.notificationsService.findOne(id);
   }
 
   @Roles(UserRoleEnum.ADMIN)
   @Patch(':id')
-  async update(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateNotificationDto): Promise<notifications> {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: UpdateNotificationDto,
+  ): Promise<notifications> {
     return this.notificationsService.update(id, body);
   }
 

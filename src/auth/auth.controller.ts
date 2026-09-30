@@ -1,4 +1,16 @@
-import { Body, ConflictException, Controller, Delete, Get, HttpCode, HttpStatus, Post, Req, Res, UnauthorizedException } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signin.dto';
 import { UserService } from 'src/user/user.service';
@@ -16,120 +28,139 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
-    private readonly notificationsService: NotificationsService
+    private readonly notificationsService: NotificationsService,
   ) {}
-
 
   // sign in -- Connexion
   @HttpCode(HttpStatus.OK)
-  @Post("signin")
+  @Post('signin')
   async signin(
-  @Body() body: SignInDto,
-  @Res({passthrough: true}) response : Response
+    @Body() body: SignInDto,
+    @Res({ passthrough: true }) response: Response,
   ) {
     // check user email
-    const userFound =  await this.userService.findByEmail(body.email);
-    if (!userFound) throw new UnauthorizedException("Bad Credentials");
+    const userFound = await this.userService.findByEmail(body.email);
+    if (!userFound) throw new UnauthorizedException('Bad Credentials');
 
     // check user is validated
     if (!userFound.isValidated) {
-      throw new ConflictException("Please verify your email before signing in",);
+      throw new ConflictException('Please verify your email before signing in');
     }
 
     // check password
     const compare = await argon2.verify(userFound.password, body.password);
-    if (!compare) throw new UnauthorizedException("Bad Credentials");
+    if (!compare) throw new UnauthorizedException('Bad Credentials');
 
     // create payload
     const payload: IPayloadType = {
       sub: userFound.id,
-      role: userFound.role
-    }
+      role: userFound.role,
+    };
 
     // generate access token
-    const access_token = await this.authService.createJwt(payload, process.env.JWT_SECRET, process.env.JWT_EXPIRES_IN);
+    const access_token = await this.authService.createJwt(
+      payload,
+      process.env.JWT_SECRET,
+      process.env.JWT_EXPIRES_IN,
+    );
 
     // generate refresh token
-    const refresh_token = await this.authService.createJwt(payload, process.env.JWT_REFRESH_SECRET, process.env.JWT_REFRESH_EXPIRES_IN);
+    const refresh_token = await this.authService.createJwt(
+      payload,
+      process.env.JWT_REFRESH_SECRET,
+      process.env.JWT_REFRESH_EXPIRES_IN,
+    );
 
     // create or update refresh token
-    await this.authService.upsertToken(userFound.id, await argon2.hash(refresh_token), TypeTokenEnum.REFRESH_TOKEN)
+    await this.authService.upsertToken(
+      userFound.id,
+      await argon2.hash(refresh_token),
+      TypeTokenEnum.REFRESH_TOKEN,
+    );
 
     // Set refresh token in secure cookie
     response.cookie('refresh_token', refresh_token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none',
-    path: '/',
-    maxAge: 1000 * 60 * 60 * 24 * 7
-  });
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none',
+      path: '/',
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    });
 
     // Retrive last unread notification
-    const lastNotif = await this.notificationsService.findLastUnreadNotification(userFound.id);
+    const lastNotif =
+      await this.notificationsService.findLastUnreadNotification(userFound.id);
 
     return {
       access_token,
       user: {
         email: userFound.email,
-        firstname: userFound.teacher?.firstname ?? userFound.student?.firstName ?? '',
-        lastname: userFound.teacher?.lastname ?? userFound.student?.lastName ?? '',
+        firstname:
+          userFound.teacher?.firstname ?? userFound.student?.firstName ?? '',
+        lastname:
+          userFound.teacher?.lastname ?? userFound.student?.lastName ?? '',
         school: userFound.teacher?.school?.name ?? null,
         id: userFound.id,
         is_first_visit: userFound.isFirstVisit,
         current_trimester: userFound.teacher?.school?.currentTrimester ?? null,
-        lastNotif: lastNotif ? {
-          title: lastNotif.title,
-          message: lastNotif.message,
-          createdAt: lastNotif.createdAt
-        } : null
-      }
-    }
+        lastNotif: lastNotif
+          ? {
+              title: lastNotif.title,
+              message: lastNotif.message,
+              createdAt: lastNotif.createdAt,
+            }
+          : null,
+      },
+    };
   }
 
   // sign up -- Inscription
-  @Post("signup")
-  async signup(
-  @Body() body: CreateUserDto
-  ) {
+  @Post('signup')
+  async signup(@Body() body: CreateUserDto) {
     // check user email doesn't exist
-    const user =  await this.userService.findByEmail(body.email);
-    if (user) throw new ConflictException("Bad Credentials");
-    
+    const user = await this.userService.findByEmail(body.email);
+    if (user) throw new ConflictException('Bad Credentials');
+
     // hash password
-    body.password = await argon2.hash(body.password);    
+    body.password = await argon2.hash(body.password);
 
     // create user
     const newUser = await this.userService.create(body);
 
     return {
-      message: "Utilisateur créé avec succès",
-      email: newUser.email
-    }
-
+      message: 'Utilisateur créé avec succès',
+      email: newUser.email,
+    };
   }
 
-  @Get("refresh-token")
-  async refreshToken(@Req() req: IRequestWithRefreshToken, @Res({passthrough: true}) res : Response) {
-
+  @Get('refresh-token')
+  async refreshToken(
+    @Req() req: IRequestWithRefreshToken,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     const refresh_token = req.cookies['refresh_token'];
     if (!refresh_token) {
-      throw new UnauthorizedException("Missing refresh token");
+      throw new UnauthorizedException('Missing refresh token');
     }
-    
+
     let decoded: IPayloadType;
     try {
       decoded = await this.authService.verifyJwt(
         refresh_token,
-        process.env.JWT_REFRESH_SECRET
+        process.env.JWT_REFRESH_SECRET,
       );
     } catch (err) {
-      throw new UnauthorizedException("Invalid refresh token");
+      console.error(err);
+      throw new UnauthorizedException('Invalid refresh token');
     }
 
     // Check if the token matches stored hash
-    const stored = await this.authService.getByUnique(decoded.sub, TypeTokenEnum.REFRESH_TOKEN);
+    const stored = await this.authService.getByUnique(
+      decoded.sub,
+      TypeTokenEnum.REFRESH_TOKEN,
+    );
     if (!stored || !(await argon2.verify(stored.token, refresh_token))) {
-      throw new UnauthorizedException("Refresh token does not match");
+      throw new UnauthorizedException('Refresh token does not match');
     }
 
     // Create new tokens
@@ -141,19 +172,19 @@ export class AuthController {
     const newAccessToken = await this.authService.createJwt(
       payload,
       process.env.JWT_SECRET,
-      process.env.JWT_EXPIRES_IN
+      process.env.JWT_EXPIRES_IN,
     );
 
     const newRefreshToken = await this.authService.createJwt(
       payload,
       process.env.JWT_REFRESH_SECRET,
-      process.env.JWT_REFRESH_EXPIRES_IN
+      process.env.JWT_REFRESH_EXPIRES_IN,
     );
 
     await this.authService.upsertToken(
       decoded.sub,
       await argon2.hash(newRefreshToken),
-      TypeTokenEnum.REFRESH_TOKEN
+      TypeTokenEnum.REFRESH_TOKEN,
     );
 
     // Set new cookie (secure only in production)
@@ -162,33 +193,37 @@ export class AuthController {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'none',
       path: '/',
-      maxAge: 1000 * 60 * 60 * 24 * 7
+      maxAge: 1000 * 60 * 60 * 24 * 7,
     });
 
     // Return only new access token
     return {
-      newAccessToken
+      newAccessToken,
     };
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Delete("logout")
+  @Delete('logout')
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const refreshToken = req.cookies['refresh_token'];
     if (refreshToken) {
-      const payload = await this.authService.verifyJwt(refreshToken, process.env.JWT_REFRESH_SECRET);
-      await this.authService.deleteToken({ user_id: payload.sub, type: TypeTokenEnum.REFRESH_TOKEN }); // remove stored hashed token
-        // Clear cookie client-side (must match cookie path/sameSite used when setting it)
+      const payload = await this.authService.verifyJwt(
+        refreshToken,
+        process.env.JWT_REFRESH_SECRET,
+      );
+      await this.authService.deleteToken({
+        user_id: payload.sub,
+        type: TypeTokenEnum.REFRESH_TOKEN,
+      }); // remove stored hashed token
+      // Clear cookie client-side (must match cookie path/sameSite used when setting it)
       res.clearCookie('refresh_token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'none',
-        path: '/'
+        path: '/',
       });
-
     }
 
     // No body is returned (204 No Content)
   }
-
 }

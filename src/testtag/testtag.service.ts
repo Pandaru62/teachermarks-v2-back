@@ -10,56 +10,53 @@ export type testTagOutput = {
 };
 
 const testTagSelect = {
-    id: true,
-    name: true,
-    color: true
-}
+  id: true,
+  name: true,
+  color: true,
+};
 
 @Injectable()
 export class TestTagService {
+  constructor(private readonly prismaService: PrismaService) {}
 
-    constructor(private readonly prismaService: PrismaService) {}
-
-    async getAll(userId : number): Promise<testTagOutput[]> {
-        return this.prismaService.testTag.findMany({
-          where: {
-            createdBy: {
-                user: {
-                    id: userId
-                }
-            }
+  async getAll(userId: number): Promise<testTagOutput[]> {
+    return this.prismaService.testTag.findMany({
+      where: {
+        createdBy: {
+          user: {
+            id: userId,
           },
-          select: testTagSelect
-        })
-    }
+        },
+      },
+      select: testTagSelect,
+    });
+  }
 
-    async getById(id: number): Promise<testTagOutput> {
-        return this.prismaService.testTag.findUnique({
-            where: {id},
-            select: testTagSelect
-        })
-    }
+  async getById(id: number): Promise<testTagOutput> {
+    return this.prismaService.testTag.findUnique({
+      where: { id },
+      select: testTagSelect,
+    });
+  }
 
-    async create(data: CreateTestTagDto, userId: number): Promise<testTagOutput> {
-        return this.prismaService.testTag.create({
-            data: {...data, createdById: userId},
-        });
-    }
+  async create(data: CreateTestTagDto, userId: number): Promise<testTagOutput> {
+    return this.prismaService.testTag.create({
+      data: { ...data, createdById: userId },
+    });
+  }
 
-    async update(id: number, data: UpdateTestTagDto):Promise<testTagOutput> {
-        return this.prismaService.testTag.update({
-            where: {id},
-            data: {
-                ...data
-            }
-        })
+  async update(id: number, data: UpdateTestTagDto): Promise<testTagOutput> {
+    return this.prismaService.testTag.update({
+      where: { id },
+      data: {
+        ...data,
+      },
+    });
+  }
 
-    }
-
-    async remove(id: number): Promise<testTagOutput> {
-        return this.prismaService.testTag.delete({
-        where: {id}
-        })
-    }
-  
+  async remove(id: number): Promise<testTagOutput> {
+    return this.prismaService.testTag.delete({
+      where: { id },
+    });
+  }
 }

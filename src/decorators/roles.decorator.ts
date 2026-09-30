@@ -1,4 +1,4 @@
-import { SetMetadata } from "@nestjs/common";
+import { SetMetadata } from '@nestjs/common';
 import { UserRoleEnum } from 'prisma/generated/browser';
 
 /**
@@ -7,5 +7,6 @@ import { UserRoleEnum } from 'prisma/generated/browser';
  * Le fait que role.guard.ts traite la demande c'est parce qu'il est appelé de façon global depuis auth.module.ts
  */
 
-export const ROLES_KEY = "roles";
-export const Roles = (...roles: UserRoleEnum[]) => SetMetadata(ROLES_KEY, roles);
+export const ROLES_KEY = 'roles';
+export const Roles = (...roles: UserRoleEnum[]) =>
+  SetMetadata(ROLES_KEY, roles);

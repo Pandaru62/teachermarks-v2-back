@@ -6,20 +6,19 @@ import { Dashboard } from './entities/dashboard.entity';
 export class DashboardService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getDashboardData(userId : number): Promise<Dashboard> {
-
+  async getDashboardData(userId: number): Promise<Dashboard> {
     const lastTestsFound = await this.prismaService.test.findMany({
       where: {
         schoolclass: {
           teachers: {
             some: {
-              teacherId: userId
-            }
-          }
-        }
+              teacherId: userId,
+            },
+          },
+        },
       },
       orderBy: {
-        date: "desc"
+        date: 'desc',
       },
       take: 3,
       select: {
@@ -32,29 +31,29 @@ export class DashboardService {
             name: true,
             _count: {
               select: {
-                students: true
-              }
-            }
+                students: true,
+              },
+            },
           },
         },
-      }
-    })
+      },
+    });
 
     // return number of studenttests found for each testId
 
-    const testIds = lastTestsFound.map(test => test.id);
+    const testIds = lastTestsFound.map((test) => test.id);
 
     // 1. Complétion : nombre de studenttest notés (mark non-null) par test
     const completionStats = await this.prismaService.studenttest.groupBy({
       by: ['testId'],
       where: {
         testId: {
-          in: testIds
-        }
+          in: testIds,
+        },
       },
       _count: {
-        mark: true
-      }
+        mark: true,
+      },
     });
 
     // 2. Absences : nombre de studenttest avec isAbsent = true par test.
@@ -65,48 +64,50 @@ export class DashboardService {
       by: ['testId'],
       where: {
         testId: {
-          in: testIds
+          in: testIds,
         },
-        isAbsent: true
+        isAbsent: true,
       },
       _count: {
-        _all: true
-      }
+        _all: true,
+      },
     });
 
     // Compare numbers and create a percentage
-    const lastTestsResult = lastTestsFound.map(test => {
+    const lastTestsResult = lastTestsFound.map((test) => {
+      const completion = completionStats.find(
+        (stat) => stat.testId === test.id,
+      );
+      const absent = absentStats.find((stat) => stat.testId === test.id);
 
-    const completion = completionStats.find(stat => stat.testId === test.id);
-    const absent = absentStats.find(stat => stat.testId === test.id);
+      const completed = completion?._count.mark ?? 0;
+      const absents = absent?._count._all ?? 0;
+      const totalStudents = test.schoolclass._count.students;
 
-    const completed = completion?._count.mark ?? 0;
-    const absents = absent?._count._all ?? 0;
-    const totalStudents = test.schoolclass._count.students;
-
-    return {
-      id: test.id,
-      name: test.name,
-      date: test.date,
-      schoolclass: {
-        id: test.schoolclass.id,
-        name: test.schoolclass.name,
-      },
-      completion: totalStudents === 0
-        ? 0
-        : Math.round((completed / totalStudents) * 100),
-      absents
-    };
+      return {
+        id: test.id,
+        name: test.name,
+        date: test.date,
+        schoolclass: {
+          id: test.schoolclass.id,
+          name: test.schoolclass.name,
+        },
+        completion:
+          totalStudents === 0
+            ? 0
+            : Math.round((completed / totalStudents) * 100),
+        absents,
+      };
     });
 
     const schoolClasses = await this.prismaService.schoolclass.findMany({
       where: {
         teachers: {
           some: {
-            teacherId: userId
-          }
+            teacherId: userId,
+          },
         },
-        isArchived: false
+        isArchived: false,
       },
       select: {
         id: true,
@@ -115,18 +116,19 @@ export class DashboardService {
         _count: {
           select: {
             students: true,
-            test: true
-          }
-        }
-      }
-    })
-    console.log("🚀 ~ DashboardService ~ getDashboardData ~ schoolClasses:", schoolClasses)
+            test: true,
+          },
+        },
+      },
+    });
+    console.log(
+      '🚀 ~ DashboardService ~ getDashboardData ~ schoolClasses:',
+      schoolClasses,
+    );
 
     return {
       lastTests: lastTestsResult,
-      schoolClasses
-    }
-    ;
+      schoolClasses,
+    };
   }
-  
 }

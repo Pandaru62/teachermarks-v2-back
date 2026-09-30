@@ -1,7 +1,5 @@
 export class UpdateProfileDto {
-
-    firstname: string;
-    lastname: string;
-    school: string;
-
+  firstname: string;
+  lastname: string;
+  school: string;
 }

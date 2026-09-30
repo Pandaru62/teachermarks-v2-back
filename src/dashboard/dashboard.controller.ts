@@ -8,10 +8,7 @@ export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
 
   @Get()
-  async getDashboardData(
-    @Req() req: IRequestWithUser
-  ): Promise<Dashboard> {
+  async getDashboardData(@Req() req: IRequestWithUser): Promise<Dashboard> {
     return this.dashboardService.getDashboardData(req.user.sub);
   }
-
 }

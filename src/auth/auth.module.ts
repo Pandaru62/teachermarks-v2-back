@@ -28,8 +28,8 @@ import { NotificationsService } from 'src/notifications/notifications.service';
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
-    NotificationsService
+    NotificationsService,
   ],
-  exports: [AuthService]
+  exports: [AuthService],
 })
 export class AuthModule {}

@@ -6,45 +6,42 @@ import { PrismaService } from 'prisma/prisma.service';
 import { LevelEnum } from 'prisma/generated/enums';
 
 const selectReturn = {
-    id: true,
-    mark: true,
-    isAbsent: true,
-    isUnmarked: true,
-    comment: true,
-    student: {
-      select: {
-        id: true,
-        lastName: true,
-        firstName: true,
-      }
+  id: true,
+  mark: true,
+  isAbsent: true,
+  isUnmarked: true,
+  comment: true,
+  student: {
+    select: {
+      id: true,
+      lastName: true,
+      firstName: true,
     },
-    studenttesthasskill: {
-      select: {
-        skill: {
-          select: {
-            id: true,
-            name: true,
-            abbreviation: true
-          }
+  },
+  studenttesthasskill: {
+    select: {
+      skill: {
+        select: {
+          id: true,
+          name: true,
+          abbreviation: true,
         },
-        level: true
-      }
-    }
-  };
-
+      },
+      level: true,
+    },
+  },
+};
 
 @Injectable()
 export class StudentTestService {
-
-
   constructor(private readonly prismaService: PrismaService) {}
 
-  async checkIfExists(studentId :number, testId :number, userId :number) {
+  async checkIfExists(studentId: number, testId: number, userId: number) {
     return this.prismaService.studenttest.findUnique({
       where: {
         studentTestId: {
           studentId,
-          testId
+          testId,
         },
         student: {
           schoolClasses: {
@@ -53,16 +50,16 @@ export class StudentTestService {
                 teachers: {
                   some: {
                     teacher: {
-                      userId
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    })
+                      userId,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   create(data: CreateStudentTestDto, studentId: number, testId: number) {
@@ -74,27 +71,25 @@ export class StudentTestService {
         comment: data.comment,
         student: {
           connect: {
-            id: studentId
-          }
+            id: studentId,
+          },
         },
         test: {
           connect: {
-            id: testId
-          }
+            id: testId,
+          },
         },
         studenttesthasskill: {
           createMany: {
-            data: data.skills.map((sk) => (
-              {
-                level: sk.level,
-                skillId: sk.skillId
-              }
-            ))
-          }
-        }
+            data: data.skills.map((sk) => ({
+              level: sk.level,
+              skillId: sk.skillId,
+            })),
+          },
+        },
       },
-      select: selectReturn
-    })
+      select: selectReturn,
+    });
   }
 
   async findAllByStudentId(studentId: number, teacherId: number) {
@@ -108,16 +103,16 @@ export class StudentTestService {
                 teachers: {
                   some: {
                     teacher: {
-                      userId: teacherId
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                      userId: teacherId,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
-      select:  {
+      select: {
         id: true,
         mark: true,
         isAbsent: true,
@@ -132,7 +127,7 @@ export class StudentTestService {
             name: true,
             scale: true,
             trimester: true,
-          }
+          },
         },
         studenttesthasskill: {
           select: {
@@ -140,56 +135,55 @@ export class StudentTestService {
               select: {
                 id: true,
                 name: true,
-                abbreviation: true
-              }
+                abbreviation: true,
+              },
             },
-            level: true
-          }
-        }
+            level: true,
+          },
+        },
       },
       orderBy: {
-        test : {
-          date: 'desc'
-        }
-      }
-    })
+        test: {
+          date: 'desc',
+        },
+      },
+    });
   }
 
-  async findAllByTestId(testId : number, teacherId: number) {
-    return this.prismaService.studenttest.findMany(
-      {where:
-        {
-          testId,
-          student: {
-            schoolClasses: {
-              some: {
-                schoolClass: {
-                  teachers: {
-                    some: {
-                      teacher: {
-                        userId: teacherId
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+  async findAllByTestId(testId: number, teacherId: number) {
+    return this.prismaService.studenttest.findMany({
+      where: {
+        testId,
+        student: {
+          schoolClasses: {
+            some: {
+              schoolClass: {
+                teachers: {
+                  some: {
+                    teacher: {
+                      userId: teacherId,
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
-        select: selectReturn,
-        orderBy:
-          [{
-            student: {
-              lastName: 'asc',
-            }
-          }, {
-            student: {
-              firstName: 'asc'
-            }
-          }
-          ],
-      }
-    )
+      },
+      select: selectReturn,
+      orderBy: [
+        {
+          student: {
+            lastName: 'asc',
+          },
+        },
+        {
+          student: {
+            firstName: 'asc',
+          },
+        },
+      ],
+    });
   }
 
   findOne(id: number) {
@@ -197,56 +191,55 @@ export class StudentTestService {
   }
 
   async update(id: number, updatedStudentTest: UpdateStudentTestDto) {
-
     const isStudentAbsent = updatedStudentTest.isAbsent;
     const isStudentUnmarked = updatedStudentTest.isUnmarked;
 
     // 1. Update Skills
     for (const skill of updatedStudentTest.skills) {
-
       const newInfo = {
-        level: isStudentAbsent ? LevelEnum.ABS : isStudentUnmarked ? LevelEnum.NN : skill.level,
+        level: isStudentAbsent
+          ? LevelEnum.ABS
+          : isStudentUnmarked
+            ? LevelEnum.NN
+            : skill.level,
         skill: {
           connect: {
-            id: skill.skillId
-          }
+            id: skill.skillId,
+          },
         },
         studenttest: {
           connect: {
-            id
-          }
-        }
-      }
-
-      await this.prismaService.studenttesthasskill.upsert(
-        {
-          where: {
-            studentTestSkillId: {
-              skillId: skill.skillId,
-              studentTestId: id
-            }
+            id,
           },
-          update: newInfo,
-          create: newInfo,
-        }
-      )
+        },
+      };
+
+      await this.prismaService.studenttesthasskill.upsert({
+        where: {
+          studentTestSkillId: {
+            skillId: skill.skillId,
+            studentTestId: id,
+          },
+        },
+        update: newInfo,
+        create: newInfo,
+      });
     }
 
     // 2. Update StudentTest and return it
     return this.prismaService.studenttest.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
         isAbsent: updatedStudentTest.isAbsent,
         isUnmarked: updatedStudentTest.isUnmarked,
         mark: updatedStudentTest.mark,
-        comment: updatedStudentTest.comment
+        comment: updatedStudentTest.comment,
       },
-      select: selectReturn
-    })
+      select: selectReturn,
+    });
   }
-
 
   /*
   |--------------------------------------------------------------------------
@@ -259,9 +252,8 @@ export class StudentTestService {
   async batchUpsert(
     testId: number,
     teacherId: number,
-    payload: BatchUpdateStudentTestDto
+    payload: BatchUpdateStudentTestDto,
   ) {
-
     const { studentTests } = payload;
 
     if (studentTests.length === 0) {
@@ -280,37 +272,35 @@ export class StudentTestService {
               teachers: {
                 some: {
                   teacher: {
-                    userId: teacherId
-                  }
-                }
-              }
-            }
-          }
-        }
+                    userId: teacherId,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
-      select: { id: true }
+      select: { id: true },
     });
 
     const authorizedStudentIds = new Set(
-      authorizedStudents.map((student) => student.id)
+      authorizedStudents.map((student) => student.id),
     );
 
     const unauthorizedEntry = studentTests.find(
-      (st) => !authorizedStudentIds.has(st.studentId)
+      (st) => !authorizedStudentIds.has(st.studentId),
     );
 
     if (unauthorizedEntry) {
       throw new ForbiddenException(
-        `L'élève #${unauthorizedEntry.studentId} n'appartient à aucune de vos classes.`
+        `L'élève #${unauthorizedEntry.studentId} n'appartient à aucune de vos classes.`,
       );
     }
 
     return this.prismaService.$transaction(async (tx) => {
-
       const studentTestIds: number[] = [];
 
       for (const item of studentTests) {
-
         const { studentId, mark, isAbsent, isUnmarked, comment, skills } = item;
 
         // 1. Upsert du studenttest lui-même (certains élèves n'ont
@@ -319,8 +309,8 @@ export class StudentTestService {
           where: {
             studentTestId: {
               studentId,
-              testId
-            }
+              testId,
+            },
           },
           create: {
             mark,
@@ -328,20 +318,19 @@ export class StudentTestService {
             isUnmarked,
             comment,
             student: { connect: { id: studentId } },
-            test: { connect: { id: testId } }
+            test: { connect: { id: testId } },
           },
           update: {
             mark,
             isAbsent,
             isUnmarked,
-            comment
-          }
+            comment,
+          },
         });
 
         // 2. Upsert de chaque compétence, avec la même règle que
         //    update() : absent/non noté écrase le niveau saisi.
         for (const skill of skills) {
-
           const level = isAbsent
             ? LevelEnum.ABS
             : isUnmarked
@@ -351,24 +340,22 @@ export class StudentTestService {
           const skillInfo = {
             level,
             skill: { connect: { id: skill.skillId } },
-            studenttest: { connect: { id: studentTest.id } }
+            studenttest: { connect: { id: studentTest.id } },
           };
 
           await tx.studenttesthasskill.upsert({
             where: {
               studentTestSkillId: {
                 skillId: skill.skillId,
-                studentTestId: studentTest.id
-              }
+                studentTestId: studentTest.id,
+              },
             },
             update: skillInfo,
-            create: skillInfo
+            create: skillInfo,
           });
-
         }
 
         studentTestIds.push(studentTest.id);
-
       }
 
       // On renvoie les lignes à jour, dans le même format que
@@ -376,11 +363,9 @@ export class StudentTestService {
       // remplacer les entrées modifiées dans son cache.
       return tx.studenttest.findMany({
         where: { id: { in: studentTestIds } },
-        select: selectReturn
+        select: selectReturn,
       });
-
     });
-
   }
 
   remove(id: number) {

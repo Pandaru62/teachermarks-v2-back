@@ -37,7 +37,7 @@ export class TestController {
     return this.testService.getAll(req.user.sub);
   }
 
-    @Get('class/:id')
+  @Get('class/:id')
   async findByClass(
     @Req() req: IRequestWithUser,
     @Param('id', ParseIntPipe) id: number,

@@ -19,7 +19,7 @@ export type TestWithClassAndSkills = {
     id: number;
     name: string;
     color: string;
-  }
+  };
   schoolclass: {
     name: string;
     count: number;
@@ -34,157 +34,157 @@ export type TestWithClassAndSkills = {
 
 @Injectable()
 export class TestService {
+  constructor(private readonly prismaService: PrismaService) {}
 
-    constructor(private readonly prismaService: PrismaService) {}
-
-    async getAll(userId : number): Promise<test[]> {
-        return this.prismaService.test.findMany({
-          where: {
-            schoolclass: {
-              teachers: {
-                every: {
-                  teacher: {
-                    userId
-                  }
-                }
-              }
-            }
+  async getAll(userId: number): Promise<test[]> {
+    return this.prismaService.test.findMany({
+      where: {
+        schoolclass: {
+          teachers: {
+            every: {
+              teacher: {
+                userId,
+              },
+            },
           },
-          include: {
-            schoolclass: {
-              select: {
-                name: true,
-                color: true
-              }
-            },
-            skills: {
-              select: {
-                skill: {
-                  select: {
-                    id: true,
-                    name: true
-                  }
-                }
-              }
-            },
-            testTag: {
+        },
+      },
+      include: {
+        schoolclass: {
+          select: {
+            name: true,
+            color: true,
+          },
+        },
+        skills: {
+          select: {
+            skill: {
               select: {
                 id: true,
                 name: true,
-                color: true
-              }
-            }
-          },
-          orderBy: {
-            date: 'desc'
-          }
-        })
-    }
-
-    async getByClassId(userId : number, classId: number): Promise<test[]> {
-      return this.prismaService.test.findMany({
-        where: {
-          schoolclass: {
-            teachers: {
-              every: {
-                teacher: {
-                  userId
-                }
-              }
-            }
-          },
-          schoolClassId: {
-            equals: classId
-          }
-        },
-        include: {
-          skills: {
-            select: {
-              skill: {
-                select: {
-                  id: true,
-                  name: true
-                }
-              }
-            }
-          },
-          testTag: {
-            select: {
-              id: true,
-              name: true,
-              color: true
-            }
-          }
-        },
-        orderBy: {
-          date: 'desc'
-        }
-      })
-    }
-
-    async getById(id: number): Promise<TestWithClassAndSkills> {
-      const test = await this.prismaService.test.findUnique({
-        where: {id},
-        include: {
-          schoolclass: {
-            select: {
-              name: true,
-              color: true,
-              _count: {
-                select: {
-                  students: true
-                }
-              }
+              },
             },
           },
-          skills: {
-            select: {
-              skill: {
-                select: {
-                  id: true,
-                  name: true,
-                  abbreviation: true
-                }
-              }
-            }
+        },
+        testTag: {
+          select: {
+            id: true,
+            name: true,
+            color: true,
           },
-          testTag: {
-            select: {
-              id: true,
-              name: true,
-              color: true
-            }
-          }
-        }
-      })
+        },
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    });
+  }
 
-        return {
-          id: test.id,
-          name: test.name,
-          description: test.description,
-          coefficient: test.coefficient,
-          date: test.date,
-          scale: test.scale,
-          schoolClassId: test.schoolClassId,
-          trimester: test.trimester,
-          schoolclass: {
-            name: test.schoolclass.name,
-            color: test.schoolclass.color,
-            count: test.schoolclass._count.students
+  async getByClassId(userId: number, classId: number): Promise<test[]> {
+    return this.prismaService.test.findMany({
+      where: {
+        schoolclass: {
+          teachers: {
+            every: {
+              teacher: {
+                userId,
+              },
+            },
           },
-          skills: test.skills.map((sk) => ({
-            id: sk.skill.id,
-            name: sk.skill.name,
-            abbreviation: sk.skill.abbreviation
-          })),
-          testTag: test.testTag
-        }
-    }
+        },
+        schoolClassId: {
+          equals: classId,
+        },
+      },
+      include: {
+        skills: {
+          select: {
+            skill: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+        testTag: {
+          select: {
+            id: true,
+            name: true,
+            color: true,
+          },
+        },
+      },
+      orderBy: {
+        date: 'desc',
+      },
+    });
+  }
 
-async create(data: CreateTestDto): Promise<test & { skills: { id: number; name: string }[] }> {
+  async getById(id: number): Promise<TestWithClassAndSkills> {
+    const test = await this.prismaService.test.findUnique({
+      where: { id },
+      include: {
+        schoolclass: {
+          select: {
+            name: true,
+            color: true,
+            _count: {
+              select: {
+                students: true,
+              },
+            },
+          },
+        },
+        skills: {
+          select: {
+            skill: {
+              select: {
+                id: true,
+                name: true,
+                abbreviation: true,
+              },
+            },
+          },
+        },
+        testTag: {
+          select: {
+            id: true,
+            name: true,
+            color: true,
+          },
+        },
+      },
+    });
 
-  const [newTest] = await this.prismaService.$transaction([
-    // 1. Create the test
+    return {
+      id: test.id,
+      name: test.name,
+      description: test.description,
+      coefficient: test.coefficient,
+      date: test.date,
+      scale: test.scale,
+      schoolClassId: test.schoolClassId,
+      trimester: test.trimester,
+      schoolclass: {
+        name: test.schoolclass.name,
+        color: test.schoolclass.color,
+        count: test.schoolclass._count.students,
+      },
+      skills: test.skills.map((sk) => ({
+        id: sk.skill.id,
+        name: sk.skill.name,
+        abbreviation: sk.skill.abbreviation,
+      })),
+      testTag: test.testTag,
+    };
+  }
+
+  async create(
+    data: CreateTestDto,
+  ): Promise<test & { skills: { id: number; name: string }[] }> {
+    const [newTest] = await this.prismaService.$transaction([
+      // 1. Create the test
       this.prismaService.test.create({
         data: {
           name: data.name,
@@ -207,94 +207,99 @@ async create(data: CreateTestDto): Promise<test & { skills: { id: number; name: 
       }),
     ]);
 
-  // 2. Connect skills (correctly, since we now know the test ID)
-  for (const skill of data.skills) {
-    await this.prismaService.testhasskill.createMany({
-      data: {
-        testId: newTest.id,
-        skillId: skill.id
-      },
-    });
-  }
+    // 2. Connect skills (correctly, since we now know the test ID)
+    for (const skill of data.skills) {
+      await this.prismaService.testhasskill.createMany({
+        data: {
+          testId: newTest.id,
+          skillId: skill.id,
+        },
+      });
+    }
 
-  // 3. Retrieve skills (id + name)
-  const testSkills = await this.prismaService.testhasskill.findMany({
-    where: { testId: newTest.id },
-    select: {
-      skill: {
-        select: {
-          id: true,
-          name: true,
+    // 3. Retrieve skills (id + name)
+    const testSkills = await this.prismaService.testhasskill.findMany({
+      where: { testId: newTest.id },
+      select: {
+        skill: {
+          select: {
+            id: true,
+            name: true,
+          },
         },
       },
-    },
-  });
+    });
 
-  // 4. Return full result
-  return {
-    ...newTest,
-    skills: testSkills.map((ts) => ({
-      id: ts.skill.id,
-      name: ts.skill.name,
-    })),
-  };
-}
+    // 4. Return full result
+    return {
+      ...newTest,
+      skills: testSkills.map((ts) => ({
+        id: ts.skill.id,
+        name: ts.skill.name,
+      })),
+    };
+  }
 
-
-  async update(id: number, data: UpdateTestDto):Promise<TestWithClassAndSkills> {
+  async update(
+    id: number,
+    data: UpdateTestDto,
+  ): Promise<TestWithClassAndSkills> {
     await this.prismaService.test.update({
-      where: {id},
+      where: { id },
       data: {
         name: data.name,
         description: data.description,
         coefficient: data.coefficient,
-        date : new Date(data.date),
-        scale : data.scale,
+        date: new Date(data.date),
+        scale: data.scale,
         trimester: data.trimester,
         testTagId: data.testTagId,
-      }
-    })
+      },
+    });
 
-    const updatedSkillIds = data.skills.map((sk) => sk.id)
+    const updatedSkillIds = data.skills.map((sk) => sk.id);
 
     // Get current skill ids linked to the test
-    const currentSkills = await this.prismaService.testhasskill.findMany(
-      {
-        where: {testId: id},
-        select: { skillId: true }
-      });
+    const currentSkills = await this.prismaService.testhasskill.findMany({
+      where: { testId: id },
+      select: { skillId: true },
+    });
 
     const currentSkillIds = currentSkills.map((sk) => sk.skillId);
 
     // Calculate skills to add and delete
-    const skillsToAdd = updatedSkillIds.filter((id) => !currentSkillIds.includes(id));
-    const skillsToDelete = currentSkillIds.filter((id) => !updatedSkillIds.includes(id));
+    const skillsToAdd = updatedSkillIds.filter(
+      (id) => !currentSkillIds.includes(id),
+    );
+    const skillsToDelete = currentSkillIds.filter(
+      (id) => !updatedSkillIds.includes(id),
+    );
 
     // Delete removed skills
     await this.prismaService.testhasskill.deleteMany({
       where: {
         testId: id,
-        skillId: { in: skillsToDelete }
-      }
+        skillId: { in: skillsToDelete },
+      },
     });
 
     // Delete associated testskills
     await this.prismaService.studenttesthasskill.deleteMany({
       where: {
         studenttest: {
-          testId: id
+          testId: id,
         },
-        skillId: { in: skillsToDelete }
-      }
+        skillId: { in: skillsToDelete },
+      },
     });
 
     // Add new skills
-    for(const skillId of skillsToAdd) {
+    for (const skillId of skillsToAdd) {
       await this.prismaService.testhasskill.create({
         data: {
-          test: { connect: { id }},
-          skill: {connect: { id: skillId }}
-        }
+          test: { connect: { id } },
+          skill: { connect: { id: skillId } },
+        },
       });
     }
 
@@ -303,9 +308,8 @@ async create(data: CreateTestDto): Promise<test & { skills: { id: number; name: 
   }
 
   async remove(id: number): Promise<test> {
-      return this.prismaService.test.delete({
-      where: {id}
-      })
+    return this.prismaService.test.delete({
+      where: { id },
+    });
   }
-  
 }

@@ -6,14 +6,15 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const adapter = new ExpressAdapter();
-  adapter.set('trust proxy', 1)
+  adapter.set('trust proxy', 1);
   const app = await NestFactory.create(AppModule, adapter);
 
   app.useGlobalFilters(new CustomHttpExceptionFilter());
   app.useGlobalPipes(new ValidationPipe());
 
   // Support multiple allowed origins via env (comma-separated)
-  const frontendUrls = process.env.FRONTEND_URLS?.split(",").map(url => url.trim()) || [];
+  const frontendUrls =
+    process.env.FRONTEND_URLS?.split(',').map((url) => url.trim()) || [];
 
   app.enableCors({
     origin: (origin, callback) => {
@@ -26,16 +27,16 @@ async function bootstrap() {
       }
       return callback(new Error(`CORS blocked for origin: ${origin}`), false);
     },
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,
   });
 
   if (frontendUrls.length === 0) {
-    console.log("⚠️  CORS enabled for ALL origins (no FRONTEND_URLS set)");
+    console.log('⚠️  CORS enabled for ALL origins (no FRONTEND_URLS set)');
   } else {
-    console.log(`✅ CORS enabled for origins: ${frontendUrls.join(", ")}`);
+    console.log(`✅ CORS enabled for origins: ${frontendUrls.join(', ')}`);
   }
 
-  await app.listen(3000, "0.0.0.0");
+  await app.listen(3000, '0.0.0.0');
 }
 bootstrap();

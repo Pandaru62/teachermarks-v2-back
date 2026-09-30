@@ -1,5 +1,5 @@
 import { UserRoleEnum } from 'prisma/generated/browser';
-import { Request } from "express";
+import { Request } from 'express';
 
 export interface IPayloadType {
   sub: number;

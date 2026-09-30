@@ -6,63 +6,65 @@ import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class SkillService {
+  constructor(private readonly prismaService: PrismaService) {}
 
-    constructor(private readonly prismaService: PrismaService) {}
+  async create(data: CreateSkillDto, userId: number): Promise<skill> {
+    return this.prismaService.skill.create({
+      data: {
+        name: data.name,
+        description: data.description,
+        abbreviation: data.abbreviation,
+        teacherId: userId,
+      },
+    });
+  }
 
-    async create(data: CreateSkillDto, userId: number):Promise<skill> {
-        return this.prismaService.skill.create({ data: 
-            { 
-                name: data.name,
-                description: data.description,
-                abbreviation: data.abbreviation,
-                teacherId: userId
-            }
-        })
-    }
+  async getAll(): Promise<skill[]> {
+    return this.prismaService.skill.findMany({});
+  }
 
-    async getAll(): Promise<skill[]> {
-        return this.prismaService.skill.findMany({})
-    }
+  async getAllByUser(userId: number): Promise<skill[]> {
+    return this.prismaService.skill.findMany({ where: { teacherId: userId } });
+  }
 
-    async getAllByUser(userId: number): Promise<skill[]> {
-        return this.prismaService.skill.findMany({where: {teacherId: userId}})
-    }
+  async getById(id: number): Promise<skill> {
+    return this.prismaService.skill.findUnique({
+      where: { id },
+    });
+  }
 
-    async getById(id: number): Promise<skill> {
-        return this.prismaService.skill.findUnique({
-        where: {id}
-        })
-    }
+  async update(
+    id: number,
+    data: UpdateSkillDto,
+    userId: number,
+  ): Promise<skill> {
+    return this.prismaService.skill.update({
+      where: { id, teacherId: userId },
+      data,
+    });
+  }
 
-    async update(id: number, data: UpdateSkillDto, userId: number):Promise<skill> {
-        return this.prismaService.skill.update({
-            where: {id, teacherId: userId},
-            data
-        })
-    }
+  async archive(id: number, userId: number): Promise<skill> {
+    return this.prismaService.skill.update({
+      where: { id, teacherId: userId },
+      data: {
+        isArchived: true,
+      },
+    });
+  }
 
-    async archive(id: number, userId: number):Promise<skill> {
-        return this.prismaService.skill.update({
-            where: {id, teacherId: userId},
-            data: {
-                isArchived: true
-            }
-        })
-    }
+  async unArchive(id: number, userId: number): Promise<skill> {
+    return this.prismaService.skill.update({
+      where: { id, teacherId: userId },
+      data: {
+        isArchived: false,
+      },
+    });
+  }
 
-    async unArchive(id: number, userId: number):Promise<skill> {
-        return this.prismaService.skill.update({
-            where: {id, teacherId: userId},
-            data: {
-                isArchived: false
-            }
-        })
-    }
-
-    async remove(id: number, userId: number): Promise<skill> {
-            return this.prismaService.skill.delete({
-            where: {id, teacherId: userId}
-            })
-        }
-  
+  async remove(id: number, userId: number): Promise<skill> {
+    return this.prismaService.skill.delete({
+      where: { id, teacherId: userId },
+    });
+  }
 }

@@ -11,20 +11,15 @@ import {
 } from 'class-validator';
 import { LevelEnum } from 'prisma/generated/enums';
 
-
 export class BatchStudentTestSkillDto {
-
   @IsInt()
   skillId: number;
 
   @IsEnum(LevelEnum)
   level: LevelEnum;
-
 }
 
-
 export class BatchStudentTestItemDto {
-
   @IsInt()
   studentId: number;
 
@@ -45,15 +40,11 @@ export class BatchStudentTestItemDto {
   @ValidateNested({ each: true })
   @Type(() => BatchStudentTestSkillDto)
   skills: BatchStudentTestSkillDto[];
-
 }
 
-
 export class BatchUpdateStudentTestDto {
-
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => BatchStudentTestItemDto)
   studentTests: BatchStudentTestItemDto[];
-
 }

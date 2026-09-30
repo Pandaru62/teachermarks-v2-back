@@ -5,35 +5,32 @@ import { form } from 'prisma/generated/browser';
 
 @Injectable()
 export class FormService {
+  constructor(private readonly prismaService: PrismaService) {}
 
-    constructor(private readonly prismaService: PrismaService) {}
+  async getAll(): Promise<form[]> {
+    return this.prismaService.form.findMany({});
+  }
 
-    async getAll(): Promise<form[]> {
-        return this.prismaService.form.findMany({})
-    }
+  async getById(id: number): Promise<form> {
+    return this.prismaService.form.findUnique({
+      where: { id },
+    });
+  }
 
-    async getById(id: number): Promise<form> {
-        return this.prismaService.form.findUnique({
-        where: {id}
-        })
-    }
+  async create(data: CreateFormDto): Promise<form> {
+    return this.prismaService.form.create({ data });
+  }
 
-    async create(data: CreateFormDto):Promise<form> {
-        return this.prismaService.form.create({data})
-    }
+  async update(id: number, data: UpdateFormDto): Promise<form> {
+    return this.prismaService.form.update({
+      where: { id },
+      data,
+    });
+  }
 
-    async update(id: number, data: UpdateFormDto):Promise<form> {
-        return this.prismaService.form.update({
-            where: {id},
-            data
-        })
-    }
-
-    async remove(id: number): Promise<form> {
-        return this.prismaService.form.delete({
-        where: {id}
-        })
-    }
-    
-  
+  async remove(id: number): Promise<form> {
+    return this.prismaService.form.delete({
+      where: { id },
+    });
+  }
 }

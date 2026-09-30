@@ -1,15 +1,20 @@
-import { CanActivate, ExecutionContext, HttpStatus, Injectable } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
-import { JwtService } from "@nestjs/jwt";
-import { Request } from "express";
-import { IS_PUBLIC_KEY } from "src/decorators/public.decorator";
-import { CustomHttpException } from "../custom-exceptions/customhttp.exception";
+import {
+  CanActivate,
+  ExecutionContext,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
+import { IS_PUBLIC_KEY } from 'src/decorators/public.decorator';
+import { CustomHttpException } from '../custom-exceptions/customhttp.exception';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly reflector: Reflector
+    private readonly reflector: Reflector,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -29,7 +34,11 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
     // Si le token n'est pas présent, on renvoie une erreur
     if (!token) {
-      throw new CustomHttpException("No token provided!", HttpStatus.UNAUTHORIZED, "AG-001");
+      throw new CustomHttpException(
+        'No token provided!',
+        HttpStatus.UNAUTHORIZED,
+        'AG-001',
+      );
     }
     try {
       // Vérification du token
@@ -38,17 +47,21 @@ export class AuthGuard implements CanActivate {
       });
       // On assigne le payload à l'objet request ici
       // afin que nous puissions y accéder dans nos gestionnaires de routes
-      request["user"] = payload;
+      request['user'] = payload;
     } catch (error) {
       // Si le token n'est pas valide, on renvoie une erreur
-      throw new CustomHttpException(error.message, HttpStatus.UNAUTHORIZED, "AG-002");
+      throw new CustomHttpException(
+        error.message,
+        HttpStatus.UNAUTHORIZED,
+        'AG-002',
+      );
     }
     return true;
   }
 
   // Extraction du token
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(" ") ?? [];
-    return type === "Bearer" ? token : undefined;
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 }

@@ -1,6 +1,6 @@
-import { ExceptionFilter, Catch, ArgumentsHost } from "@nestjs/common";
-import { Request, Response } from "express";
-import { CustomHttpException } from "./customhttp.exception";
+import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { CustomHttpException } from './customhttp.exception';
 
 /**
  * Filtre personnalisé pour gérer les exceptions de type CustomHttpException

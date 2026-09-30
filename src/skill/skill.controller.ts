@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Req, Put, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  ParseIntPipe,
+  Req,
+  Put,
+  Patch,
+} from '@nestjs/common';
 import { SkillService } from './skill.service';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
@@ -15,23 +26,20 @@ export class SkillController {
   @Post()
   async create(
     @Body() body: CreateSkillDto,
-    @Req() req: IRequestWithUser
+    @Req() req: IRequestWithUser,
   ): Promise<skill> {
     return this.skillService.create(body, req.user.sub);
   }
 
   /* GET ALL SKILLS */
   @Get('all')
-  async findAll(
-  ): Promise<skill[]> {
+  async findAll(): Promise<skill[]> {
     return this.skillService.getAll();
   }
 
   /* GET SKILLS CREATED BY LOGGED USER */
   @Get()
-  async findAllByUser(
-    @Req() req: IRequestWithUser
-  ): Promise<skill[]> {
+  async findAllByUser(@Req() req: IRequestWithUser): Promise<skill[]> {
     return this.skillService.getAllByUser(req.user.sub);
   }
 
@@ -46,17 +54,16 @@ export class SkillController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() body: UpdateSkillDto,
-    @Req() req: IRequestWithUser
+    @Req() req: IRequestWithUser,
   ): Promise<skill> {
     return this.skillService.update(id, body, req.user.sub);
   }
 
-  
   /* ARCHIVE SKILL FROM ID */
   @Patch(':id/archive')
   async archive(
     @Param('id', ParseIntPipe) id: number,
-    @Req() req: IRequestWithUser
+    @Req() req: IRequestWithUser,
   ): Promise<skill> {
     return this.skillService.archive(id, req.user.sub);
   }
@@ -65,7 +72,7 @@ export class SkillController {
   @Patch(':id/unarchive')
   async unArchive(
     @Param('id', ParseIntPipe) id: number,
-    @Req() req: IRequestWithUser
+    @Req() req: IRequestWithUser,
   ): Promise<skill> {
     return this.skillService.unArchive(id, req.user.sub);
   }
@@ -74,7 +81,7 @@ export class SkillController {
   @Delete(':id')
   async remove(
     @Param('id', ParseIntPipe) id: number,
-    @Req() req: IRequestWithUser
+    @Req() req: IRequestWithUser,
   ): Promise<skill> {
     return this.skillService.remove(id, req.user.sub);
   }

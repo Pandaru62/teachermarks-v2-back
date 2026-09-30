@@ -20,7 +20,10 @@ export class TestTagController {
   constructor(private readonly testTagService: TestTagService) {}
 
   @Post()
-  async create(@Body() body: CreateTestTagDto, @Req() req: IRequestWithUser): Promise<testTagOutput> {
+  async create(
+    @Body() body: CreateTestTagDto,
+    @Req() req: IRequestWithUser,
+  ): Promise<testTagOutput> {
     return this.testTagService.create(body, req.user.sub);
   }
 
@@ -30,9 +33,7 @@ export class TestTagController {
   }
 
   @Get(':id')
-  async findOne(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<testTagOutput> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<testTagOutput> {
     return this.testTagService.getById(id);
   }
 

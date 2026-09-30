@@ -7,6 +7,6 @@ import { PrismaModule } from 'prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [SkillController],
   providers: [SkillService],
-  exports: [SkillService]
+  exports: [SkillService],
 })
 export class SkillModule {}

@@ -1,14 +1,14 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { PrismaService } from "prisma/prisma.service";
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from 'prisma/prisma.service';
 import { token, TypeTokenEnum } from 'prisma/generated/browser';
-import { IPayloadType } from "./types";
+import { IPayloadType } from './types';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly prismaService: PrismaService
+    private readonly prismaService: PrismaService,
   ) {}
 
   /**
@@ -21,7 +21,7 @@ export class AuthService {
   async createJwt(
     payload: IPayloadType,
     secret: string,
-    expiresIn: string | number
+    expiresIn: string | number,
   ): Promise<string> {
     return this.jwtService.signAsync(payload, { secret, expiresIn });
   }
@@ -59,7 +59,11 @@ export class AuthService {
    * @param type - Type de token
    * @returns Promise<Token> - Token mis à jour ou créé
    */
-  async upsertToken(user_id: number, token: string, type: TypeTokenEnum): Promise<token> {
+  async upsertToken(
+    user_id: number,
+    token: string,
+    type: TypeTokenEnum,
+  ): Promise<token> {
     return this.prismaService.token.upsert({
       where: { user_id_type: { user_id, type } },
       update: { token },
@@ -72,17 +76,24 @@ export class AuthService {
    * @param type_userId - Type et ID de l'utilisateur
    * @returns Promise<void> - Token supprimé
    */
-  async deleteToken(user_id_type: { user_id: number; type: TypeTokenEnum }): Promise<void> {
+  async deleteToken(user_id_type: {
+    user_id: number;
+    type: TypeTokenEnum;
+  }): Promise<void> {
     await this.prismaService.token.delete({
       where: { user_id_type },
     });
   }
 
-  async verifyJwt<T extends object = any>(token: string, secret: string): Promise<T> {
+  async verifyJwt<T extends object = any>(
+    token: string,
+    secret: string,
+  ): Promise<T> {
     try {
       return await this.jwtService.verifyAsync<T>(token, { secret });
-    } catch (err) {
-      throw new UnauthorizedException("Invalid or expired token");
+    } catch (error) {
+      console.error(error);
+      throw new UnauthorizedException('Invalid or expired token');
     }
   }
 }

@@ -5,16 +5,20 @@ import { TrimesterEnum, user } from 'prisma/generated/browser';
 import { UpdatePreferencesDto } from './dto/update-preferences.dto';
 
 export interface UserWithoutPassword {
-    email: string;
-    firstname: string;
-    id: number;
-    lastname: string;
-    school: string | null;
-    is_first_visit: boolean;
-    current_trimester: TrimesterEnum | null;
+  email: string;
+  firstname: string;
+  id: number;
+  lastname: string;
+  school: string | null;
+  is_first_visit: boolean;
+  current_trimester: TrimesterEnum | null;
 }
 
-export interface UserForAuth extends Pick<user, 'id' | 'email' | 'password' | 'role' | 'isValidated' | 'isFirstVisit'> {
+export interface UserForAuth
+  extends Pick<
+    user,
+    'id' | 'email' | 'password' | 'role' | 'isValidated' | 'isFirstVisit'
+  > {
   teacher: {
     firstname: string;
     lastname: string;
@@ -25,14 +29,11 @@ export interface UserForAuth extends Pick<user, 'id' | 'email' | 'password' | 'r
 
 @Injectable()
 export class UserService {
-
-  constructor(private readonly prismaService : PrismaService){}
-
-  
+  constructor(private readonly prismaService: PrismaService) {}
 
   async findByEmail(email: string): Promise<UserForAuth | null> {
     return this.prismaService.user.findFirst({
-      where: {email},
+      where: { email },
       select: {
         id: true,
         email: true,
@@ -47,18 +48,18 @@ export class UserService {
             school: {
               select: {
                 name: true,
-                currentTrimester: true
-              }
-            }
-          }
+                currentTrimester: true,
+              },
+            },
+          },
         },
         student: {
           select: {
             firstName: true,
-            lastName: true
-          }
-        }
-      }
+            lastName: true,
+          },
+        },
+      },
     });
   }
 
@@ -75,17 +76,20 @@ export class UserService {
         teacher: {
           create: {
             firstname: '',
-            lastname: ''
-          }
-        }
+            lastname: '',
+          },
+        },
       },
-    })
+    });
   }
 
-  async updateProfile(profile: { firstname: string; lastname: string; school: string }, userId: number): Promise<UserWithoutPassword> {
+  async updateProfile(
+    profile: { firstname: string; lastname: string; school: string },
+    userId: number,
+  ): Promise<UserWithoutPassword> {
     const account = await this.prismaService.user.findUnique({
       where: { id: userId },
-      select: { role: true }
+      select: { role: true },
     });
 
     if (account?.role === 'STUDENT') {
@@ -93,7 +97,7 @@ export class UserService {
         where: { userId },
         data: {
           firstName: profile.firstname,
-          lastName: profile.lastname
+          lastName: profile.lastname,
         },
         select: {
           firstName: true,
@@ -101,10 +105,10 @@ export class UserService {
           user: {
             select: {
               email: true,
-              isFirstVisit: true
-            }
-          }
-        }
+              isFirstVisit: true,
+            },
+          },
+        },
       });
 
       return {
@@ -114,7 +118,7 @@ export class UserService {
         lastname: student.lastName,
         school: null,
         is_first_visit: student.user.isFirstVisit,
-        current_trimester: null
+        current_trimester: null,
       };
     }
 
@@ -126,9 +130,9 @@ export class UserService {
         school: {
           upsert: {
             create: { name: profile.school },
-            update: { name: profile.school }
-          }
-        }
+            update: { name: profile.school },
+          },
+        },
       },
       select: {
         firstname: true,
@@ -136,16 +140,16 @@ export class UserService {
         user: {
           select: {
             email: true,
-            isFirstVisit: true
-          }
+            isFirstVisit: true,
+          },
         },
         school: {
           select: {
             name: true,
-            currentTrimester: true
-          }
-        }
-      }
+            currentTrimester: true,
+          },
+        },
+      },
     });
 
     return {
@@ -155,14 +159,17 @@ export class UserService {
       lastname: teacher.lastname,
       school: teacher.school?.name ?? null,
       is_first_visit: teacher.user.isFirstVisit,
-      current_trimester: teacher.school?.currentTrimester ?? null
+      current_trimester: teacher.school?.currentTrimester ?? null,
     };
   }
 
-  async updatePreferences(body: UpdatePreferencesDto, userId: number) : Promise<TrimesterEnum> {
+  async updatePreferences(
+    body: UpdatePreferencesDto,
+    userId: number,
+  ): Promise<TrimesterEnum> {
     const teacher = await this.prismaService.teacher.findUnique({
       where: { userId },
-      select: { schoolId: true }
+      select: { schoolId: true },
     });
 
     if (!teacher?.schoolId) {
@@ -171,21 +178,20 @@ export class UserService {
 
     const updatedSchool = await this.prismaService.school.update({
       where: { id: teacher.schoolId },
-      data: { currentTrimester: body.current_trimester }
+      data: { currentTrimester: body.current_trimester },
     });
 
     return updatedSchool.currentTrimester;
   }
 
-  async disableIsFirstVisit(userId: number) : Promise<user> {
+  async disableIsFirstVisit(userId: number): Promise<user> {
     return this.prismaService.user.update({
       where: {
-        id: userId
+        id: userId,
       },
       data: {
-        isFirstVisit: false
-      }
-    })
+        isFirstVisit: false,
+      },
+    });
   }
-
 }
