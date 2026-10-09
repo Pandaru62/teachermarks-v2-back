@@ -4,6 +4,8 @@ import { UpdateStudentTestDto } from './dto/update-student-test.dto';
 import { BatchUpdateStudentTestDto } from './dto/batch-update-student-test.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { LevelEnum } from 'prisma/generated/enums';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import PDFDocument = require('pdfkit');
 
 const selectReturn = {
   id: true,
@@ -183,6 +185,82 @@ export class StudentTestService {
           },
         },
       ],
+    });
+  }
+
+  generateCsv(
+    studentTests: Array<{
+      student: { lastName: string; firstName: string };
+      mark: { toString(): string };
+      comment: string | null;
+    }>,
+  ) {
+    const escapeCell = (value: string) => `"${value.replaceAll('"', '""')}"`;
+    const rows = [
+      ['Name', 'Firstname', 'Mark', 'Comment'],
+      ...studentTests.map(({ student, mark, comment }) => [
+        student.lastName,
+        student.firstName,
+        mark.toString(),
+        comment ?? '',
+      ]),
+    ];
+
+    return rows.map((row) => row.map(escapeCell).join(',')).join('\r\n');
+  }
+
+  generatePdf(
+    studentTests: Array<{
+      student: { lastName: string; firstName: string };
+      mark: { toString(): string };
+      comment: string | null;
+    }>,
+  ): Promise<Buffer> {
+    const document = new PDFDocument({ size: 'A4', margin: 36 });
+    const chunks: Buffer[] = [];
+
+    return new Promise((resolve, reject) => {
+      document.on('data', (chunk: Buffer) => chunks.push(chunk));
+      document.on('end', () => resolve(Buffer.concat(chunks)));
+      document.on('error', reject);
+
+      const margin = 36;
+      const horizontalPadding = 8;
+      const verticalPadding = 7;
+      const contentWidth =
+        document.page.width - margin * 2 - horizontalPadding * 2;
+      const bottom = document.page.height - margin;
+      let y = margin;
+
+      document.font('Helvetica').fontSize(11).fillColor('#222222');
+
+      for (const { student, mark, comment } of studentTests) {
+        const text = `${student.lastName} ${student.firstName} ${mark.toString()}\n${comment ?? ''}`;
+        const textHeight = document.heightOfString(text, {
+          width: contentWidth,
+          lineGap: 3,
+        });
+        const rowHeight = Math.max(32, textHeight + verticalPadding * 2);
+
+        if (y > margin && y + rowHeight > bottom) {
+          document.addPage();
+          y = margin;
+        }
+
+        document
+          .lineWidth(0.5)
+          .strokeColor('#b8b8b8')
+          .rect(margin, y, document.page.width - margin * 2, rowHeight)
+          .stroke();
+        document.text(text, margin + horizontalPadding, y + verticalPadding, {
+          width: contentWidth,
+          lineGap: 3,
+        });
+
+        y += rowHeight;
+      }
+
+      document.end();
     });
   }
 

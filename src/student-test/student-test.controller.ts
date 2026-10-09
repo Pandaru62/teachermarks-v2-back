@@ -8,11 +8,13 @@ import {
   Req,
   ParseIntPipe,
   Put,
+  Res,
 } from '@nestjs/common';
 import { StudentTestService } from './student-test.service';
 import { CreateStudentTestDto } from './dto/create-student-test.dto';
 import { IRequestWithUser } from 'src/auth/types';
 import { BatchUpdateStudentTestDto } from './dto/batch-update-student-test.dto';
+import { Response } from 'express';
 
 @Controller('student-test')
 export class StudentTestController {
@@ -41,6 +43,47 @@ export class StudentTestController {
       req.user.sub,
     );
     return studentTests;
+  }
+
+  @Get('csv/test/:id/export')
+  async exportByTestId(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: IRequestWithUser,
+    @Res() res: Response,
+  ) {
+    const studentsTests = await this.studentTestService.findAllByTestId(
+      id,
+      req.user.sub,
+    );
+
+    const csv = this.studentTestService.generateCsv(studentsTests);
+
+    res.set({
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': `attachment; filename="evaluation-${id}.csv"`,
+    });
+
+    return res.send('\uFEFF' + csv);
+  }
+
+  @Get('pdf/test/:id/export')
+  async exportPdfByTestId(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: IRequestWithUser,
+    @Res() res: Response,
+  ) {
+    const studentsTests = await this.studentTestService.findAllByTestId(
+      id,
+      req.user.sub,
+    );
+    const pdf = await this.studentTestService.generatePdf(studentsTests);
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename="evaluation-${id}.pdf"`,
+    });
+
+    return res.send(pdf);
   }
 
   @Get('test/:id')

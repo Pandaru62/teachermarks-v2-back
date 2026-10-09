@@ -121,10 +121,6 @@ export class DashboardService {
         },
       },
     });
-    console.log(
-      '🚀 ~ DashboardService ~ getDashboardData ~ schoolClasses:',
-      schoolClasses,
-    );
 
     return {
       lastTests: lastTestsResult,
