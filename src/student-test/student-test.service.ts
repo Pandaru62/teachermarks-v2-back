@@ -172,7 +172,14 @@ export class StudentTestService {
           },
         },
       },
-      select: selectReturn,
+      select: {
+        ...selectReturn,
+        test: {
+          select: {
+            scale: true,
+          },
+        },
+      },
       orderBy: [
         {
           student: {
@@ -214,6 +221,7 @@ export class StudentTestService {
       student: { lastName: string; firstName: string };
       mark: { toString(): string };
       comment: string | null;
+      test: { scale: number };
     }>,
   ): Promise<Buffer> {
     const document = new PDFDocument({ size: 'A4', margin: 36 });
@@ -232,14 +240,25 @@ export class StudentTestService {
       const bottom = document.page.height - margin;
       let y = margin;
 
-      document.font('Helvetica').fontSize(11).fillColor('#222222');
+      document.fontSize(10).fillColor('#222222');
 
-      for (const { student, mark, comment } of studentTests) {
-        const text = `${student.lastName} ${student.firstName} ${mark.toString()}\n${comment ?? ''}`;
-        const textHeight = document.heightOfString(text, {
+      for (const { student, mark, comment, test } of studentTests) {
+        const heading = `${student.lastName} ${student.firstName} ${mark.toString()}/${test.scale}`;
+        const commentText = comment ?? '';
+        document.font('Helvetica-Bold');
+        const headingHeight = document.heightOfString(heading, {
           width: contentWidth,
           lineGap: 3,
         });
+        document.font('Helvetica');
+        const commentHeight = commentText
+          ? document.heightOfString(commentText, {
+              width: contentWidth,
+              lineGap: 3,
+            })
+          : 0;
+        const textHeight =
+          headingHeight + (commentHeight ? 3 + commentHeight : 0);
         const rowHeight = Math.max(32, textHeight + verticalPadding * 2);
 
         if (y > margin && y + rowHeight > bottom) {
@@ -252,10 +271,22 @@ export class StudentTestService {
           .strokeColor('#b8b8b8')
           .rect(margin, y, document.page.width - margin * 2, rowHeight)
           .stroke();
-        document.text(text, margin + horizontalPadding, y + verticalPadding, {
-          width: contentWidth,
-          lineGap: 3,
-        });
+        document
+          .font('Helvetica-Bold')
+          .text(heading, margin + horizontalPadding, y + verticalPadding, {
+            width: contentWidth,
+            lineGap: 3,
+          });
+        if (commentText) {
+          document
+            .font('Helvetica')
+            .text(
+              commentText,
+              margin + horizontalPadding,
+              y + verticalPadding + headingHeight + 3,
+              { width: contentWidth, lineGap: 3 },
+            );
+        }
 
         y += rowHeight;
       }
