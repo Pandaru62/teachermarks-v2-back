@@ -224,10 +224,13 @@ export class StudentTestService {
       mark: { toString(): string };
       comment: string | null;
       test: { scale: number };
+      isAbsent: boolean;
+      isUnmarked: boolean;
     }>,
   ): Promise<Buffer> {
     const filteredStudentTests = studentTests.filter(
-      ({ mark, comment }) => mark !== null || mark !== 0 || comment !== null,
+      ({ mark, comment, isAbsent, isUnmarked }) =>
+        mark !== null || comment !== null || !isAbsent || !isUnmarked,
     );
 
     if (filteredStudentTests.length === 0) {
@@ -247,7 +250,8 @@ export class StudentTestService {
 
       const margin = 18;
       const horizontalPadding = 6;
-      const verticalPadding = 2;
+      const topPadding = 2;
+      const bottomPadding = 2;
       const contentWidth =
         document.page.width - margin * 2 - horizontalPadding * 2;
       const bottom = document.page.height - margin;
@@ -264,7 +268,7 @@ export class StudentTestService {
           width: contentWidth,
           lineGap: 3,
         });
-        const rowHeight = Math.max(20, textHeight + verticalPadding * 2);
+        const rowHeight = Math.max(20, textHeight + topPadding + bottomPadding);
 
         if (y > margin && y + rowHeight > bottom) {
           document.addPage();
@@ -283,7 +287,7 @@ export class StudentTestService {
         if (commentText) {
           document
             .font('Helvetica-Bold')
-            .text(heading, margin + horizontalPadding, y + verticalPadding, {
+            .text(heading, margin + horizontalPadding, y + topPadding, {
               ...textOptions,
               continued: true,
             })
@@ -292,7 +296,7 @@ export class StudentTestService {
         } else {
           document
             .font('Helvetica-Bold')
-            .text(heading, margin + horizontalPadding, y + verticalPadding, {
+            .text(heading, margin + horizontalPadding, y + topPadding, {
               ...textOptions,
             });
         }
