@@ -254,8 +254,9 @@ export class StudentTestService {
 
       const margin = 18;
       const horizontalPadding = 6;
-      const verticalPadding = 4;
-      const minRowHeight = 22;
+      const verticalPadding = 3;
+
+      const minRowHeight = 20;
 
       const contentWidth =
         document.page.width - margin * 2 - horizontalPadding * 2;
@@ -267,20 +268,21 @@ export class StudentTestService {
       document.fontSize(10).fillColor('#222222');
 
       for (const { student, mark, comment, test } of filteredStudentTests) {
-        const commentText = comment ?? '';
+        const commentText = comment?.trim() ?? '';
 
         const heading = `${student.lastName} ${student.firstName} (${mark.toString()} / ${test.scale})`;
 
-        const rowText = commentText ? `${heading} | ${commentText}` : heading;
-
         const textOptions = {
           width: contentWidth,
-          lineGap: 2,
+          lineGap: 1,
         };
 
         document.font('Helvetica-Bold');
 
-        const textHeight = document.heightOfString(rowText, textOptions);
+        const textHeight = document.heightOfString(
+          commentText ? `${heading} - ${commentText}` : heading,
+          textOptions,
+        );
 
         const rowHeight = Math.max(
           minRowHeight,
@@ -292,14 +294,16 @@ export class StudentTestService {
           y = margin;
         }
 
+        // Cell border
         document
           .lineWidth(0.5)
           .strokeColor('#b8b8b8')
           .rect(margin, y, document.page.width - margin * 2, rowHeight)
           .stroke();
 
-        // Vertically center the text inside the cell
-        const textY = y + (rowHeight - textHeight) / 2;
+        const verticalOffset = -1;
+
+        const textY = y + (rowHeight - textHeight) / 2 + verticalOffset;
 
         if (commentText) {
           document
