@@ -239,7 +239,12 @@ export class StudentTestService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    const document = new PDFDocument({ size: 'A4', margin: 18 });
+
+    const document = new PDFDocument({
+      size: 'A4',
+      margin: 18,
+    });
+
     const chunks: Buffer[] = [];
 
     return new Promise((resolve, reject) => {
@@ -249,25 +254,38 @@ export class StudentTestService {
 
       const margin = 18;
       const horizontalPadding = 6;
-      const topPadding = 2;
-      const bottomPadding = 2;
+      const verticalPadding = 4;
+      const minRowHeight = 22;
+
       const contentWidth =
         document.page.width - margin * 2 - horizontalPadding * 2;
+
       const bottom = document.page.height - margin;
+
       let y = margin;
 
       document.fontSize(10).fillColor('#222222');
 
       for (const { student, mark, comment, test } of filteredStudentTests) {
         const commentText = comment ?? '';
+
         const heading = `${student.lastName} ${student.firstName} (${mark.toString()} / ${test.scale})`;
+
         const rowText = commentText ? `${heading} | ${commentText}` : heading;
-        document.font('Helvetica-Bold');
-        const textHeight = document.heightOfString(rowText, {
+
+        const textOptions = {
           width: contentWidth,
-          lineGap: 3,
-        });
-        const rowHeight = Math.max(20, textHeight + topPadding + bottomPadding);
+          lineGap: 2,
+        };
+
+        document.font('Helvetica-Bold');
+
+        const textHeight = document.heightOfString(rowText, textOptions);
+
+        const rowHeight = Math.max(
+          minRowHeight,
+          textHeight + verticalPadding * 2,
+        );
 
         if (y > margin && y + rowHeight > bottom) {
           document.addPage();
@@ -279,11 +297,10 @@ export class StudentTestService {
           .strokeColor('#b8b8b8')
           .rect(margin, y, document.page.width - margin * 2, rowHeight)
           .stroke();
-        const textOptions = {
-          width: contentWidth,
-          lineGap: 3,
-        };
-        const textY = y + Math.max(topPadding, (rowHeight - textHeight) / 2);
+
+        // Vertically center the text inside the cell
+        const textY = y + (rowHeight - textHeight) / 2;
+
         if (commentText) {
           document
             .font('Helvetica-Bold')
@@ -296,9 +313,7 @@ export class StudentTestService {
         } else {
           document
             .font('Helvetica-Bold')
-            .text(heading, margin + horizontalPadding, textY, {
-              ...textOptions,
-            });
+            .text(heading, margin + horizontalPadding, textY, textOptions);
         }
 
         y += rowHeight;
