@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateStudentTestDto } from './dto/create-student-test.dto';
 import { UpdateStudentTestDto } from './dto/update-student-test.dto';
 import { BatchUpdateStudentTestDto } from './dto/batch-update-student-test.dto';
@@ -6,6 +6,8 @@ import { PrismaService } from 'prisma/prisma.service';
 import { LevelEnum } from 'prisma/generated/enums';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 import PDFDocument = require('pdfkit');
+import { ErrorCode } from 'src/common/exceptions/error-code.enum';
+import { AppException } from 'src/common/exceptions/app.exception';
 
 const selectReturn = {
   id: true,
@@ -225,11 +227,15 @@ export class StudentTestService {
     }>,
   ): Promise<Buffer> {
     const filteredStudentTests = studentTests.filter(
-      ({ mark, comment }) => mark !== null || comment !== null,
+      ({ mark, comment }) => mark !== null || mark !== 0 || comment !== null,
     );
 
     if (filteredStudentTests.length === 0) {
-      throw new Error('No student tests to generate PDF');
+      throw new AppException(
+        ErrorCode.EMPTY_PDF,
+        'No student tests to generate PDF',
+        HttpStatus.BAD_REQUEST,
+      );
     }
     const document = new PDFDocument({ size: 'A4', margin: 18 });
     const chunks: Buffer[] = [];
@@ -240,8 +246,8 @@ export class StudentTestService {
       document.on('error', reject);
 
       const margin = 18;
-      const horizontalPadding = 8;
-      const verticalPadding = 7;
+      const horizontalPadding = 6;
+      const verticalPadding = 2;
       const contentWidth =
         document.page.width - margin * 2 - horizontalPadding * 2;
       const bottom = document.page.height - margin;
@@ -250,23 +256,15 @@ export class StudentTestService {
       document.fontSize(10).fillColor('#222222');
 
       for (const { student, mark, comment, test } of filteredStudentTests) {
-        const heading = `${student.lastName} ${student.firstName} ${mark.toString()}/${test.scale}`;
         const commentText = comment ?? '';
+        const heading = `${student.lastName} ${student.firstName} (${mark.toString()} / ${test.scale})`;
+        const rowText = commentText ? `${heading} | ${commentText}` : heading;
         document.font('Helvetica-Bold');
-        const headingHeight = document.heightOfString(heading, {
+        const textHeight = document.heightOfString(rowText, {
           width: contentWidth,
           lineGap: 3,
         });
-        document.font('Helvetica');
-        const commentHeight = commentText
-          ? document.heightOfString(commentText, {
-              width: contentWidth,
-              lineGap: 3,
-            })
-          : 0;
-        const textHeight =
-          headingHeight + (commentHeight ? 3 + commentHeight : 0);
-        const rowHeight = Math.max(32, textHeight + verticalPadding * 2);
+        const rowHeight = Math.max(20, textHeight + verticalPadding * 2);
 
         if (y > margin && y + rowHeight > bottom) {
           document.addPage();
@@ -278,21 +276,25 @@ export class StudentTestService {
           .strokeColor('#b8b8b8')
           .rect(margin, y, document.page.width - margin * 2, rowHeight)
           .stroke();
-        document
-          .font('Helvetica-Bold')
-          .text(heading, margin + horizontalPadding, y + verticalPadding, {
-            width: contentWidth,
-            lineGap: 3,
-          });
+        const textOptions = {
+          width: contentWidth,
+          lineGap: 3,
+        };
         if (commentText) {
           document
+            .font('Helvetica-Bold')
+            .text(heading, margin + horizontalPadding, y + verticalPadding, {
+              ...textOptions,
+              continued: true,
+            })
             .font('Helvetica')
-            .text(
-              commentText,
-              margin + horizontalPadding,
-              y + verticalPadding + headingHeight + 3,
-              { width: contentWidth, lineGap: 3 },
-            );
+            .text(` - ${commentText}`, textOptions);
+        } else {
+          document
+            .font('Helvetica-Bold')
+            .text(heading, margin + horizontalPadding, y + verticalPadding, {
+              ...textOptions,
+            });
         }
 
         y += rowHeight;

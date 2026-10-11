@@ -1,5 +1,12 @@
-import { LevelEnum } from 'prisma/generated/browser';
-import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsNumber,
+  IsOptional,
+  ValidateNested,
+} from 'class-validator';
+import { BatchStudentTestSkillDto } from './batch-update-student-test.dto';
+import { Type } from 'class-transformer';
 
 export class CreateStudentTestDto {
   @IsNumber()
@@ -14,8 +21,8 @@ export class CreateStudentTestDto {
   @IsOptional()
   comment?: string;
 
-  skills: {
-    skillId: number;
-    level: LevelEnum;
-  }[];
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => BatchStudentTestSkillDto)
+  skills: BatchStudentTestSkillDto[];
 }
