@@ -229,8 +229,7 @@ export class StudentTestService {
     }>,
   ): Promise<Buffer> {
     const filteredStudentTests = studentTests.filter(
-      ({ mark, comment, isAbsent, isUnmarked }) =>
-        mark !== null || comment !== null || !isAbsent || !isUnmarked,
+      ({ isAbsent, isUnmarked }) => !isAbsent && !isUnmarked,
     );
 
     if (filteredStudentTests.length === 0) {
@@ -284,10 +283,11 @@ export class StudentTestService {
           width: contentWidth,
           lineGap: 3,
         };
+        const textY = y + Math.max(topPadding, (rowHeight - textHeight) / 2);
         if (commentText) {
           document
             .font('Helvetica-Bold')
-            .text(heading, margin + horizontalPadding, y + topPadding, {
+            .text(heading, margin + horizontalPadding, textY, {
               ...textOptions,
               continued: true,
             })
@@ -296,7 +296,7 @@ export class StudentTestService {
         } else {
           document
             .font('Helvetica-Bold')
-            .text(heading, margin + horizontalPadding, y + topPadding, {
+            .text(heading, margin + horizontalPadding, textY, {
               ...textOptions,
             });
         }
