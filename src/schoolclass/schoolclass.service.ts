@@ -45,7 +45,6 @@ export class SchoolclassService {
     });
   }
 
-  // Promise<Pick<schoolclass, "id" | "color" | "name">
   async findOneWithPupils(id: number, userId: number): Promise<any> {
     const schoolClass = await this.prismaService.schoolclass.findUnique({
       where: {

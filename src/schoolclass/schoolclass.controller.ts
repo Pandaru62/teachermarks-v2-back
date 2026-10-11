@@ -95,7 +95,7 @@ export class SchoolclassController {
   }
 
   /* UNARCHIVE A CLASS BY THEIR ID */
-  @Patch(':id/archive')
+  @Patch(':id/unarchive')
   async unArchive(
     @Param('id', ParseIntPipe) id: number,
     @Req() req: IRequestWithUser,

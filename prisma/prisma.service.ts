@@ -6,14 +6,14 @@ import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 export class PrismaService extends PrismaClient {
   constructor() {
     const adapter = new PrismaMariaDb({
-      host: process.env.DB_HOST || "localhost",
+      host: process.env.DB_HOST || 'localhost',
       port: Number(process.env.DB_PORT) || 3306,
-      user: process.env.DB_USER || "root",
-      password: process.env.DB_PASSWORD || "root",
-      database: process.env.DB_NAME || "teachermarks",
+      user: process.env.DB_USER || 'root',
+      password: process.env.DB_PASSWORD || 'root',
+      database: process.env.DB_NAME || 'teachermarks',
       connectionLimit: 5,
-      ssl: false, 
-      allowPublicKeyRetrieval: true
+      ssl: false,
+      allowPublicKeyRetrieval: true,
     });
     super({ adapter });
   }

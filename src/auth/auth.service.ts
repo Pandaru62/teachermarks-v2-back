@@ -80,8 +80,8 @@ export class AuthService {
     user_id: number;
     type: TypeTokenEnum;
   }): Promise<void> {
-    await this.prismaService.token.delete({
-      where: { user_id_type },
+    await this.prismaService.token.deleteMany({
+      where: user_id_type,
     });
   }
 
@@ -91,8 +91,7 @@ export class AuthService {
   ): Promise<T> {
     try {
       return await this.jwtService.verifyAsync<T>(token, { secret });
-    } catch (error) {
-      console.error(error);
+    } catch {
       throw new UnauthorizedException('Invalid or expired token');
     }
   }

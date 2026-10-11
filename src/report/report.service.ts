@@ -20,21 +20,51 @@ export class ReportService {
     });
   }
 
-  async update(body: UpdateReportDto, reportId: number) {
+  async update(body: UpdateReportDto, reportId: number, userId: number) {
     return this.prismaService.report.update({
       data: {
         description: body.description,
       },
       where: {
         id: reportId,
+        student: {
+          schoolClasses: {
+            some: {
+              schoolClass: {
+                teachers: {
+                  some: {
+                    teacher: {
+                      userId,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
   }
 
-  async getByStudentId(studentId: number) {
+  async getByStudentId(studentId: number, teacherId: number) {
     return this.prismaService.report.findMany({
       where: {
         studentId,
+        student: {
+          schoolClasses: {
+            some: {
+              schoolClass: {
+                teachers: {
+                  some: {
+                    teacher: {
+                      userId: teacherId,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
   }

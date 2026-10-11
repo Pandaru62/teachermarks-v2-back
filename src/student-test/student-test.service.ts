@@ -224,7 +224,14 @@ export class StudentTestService {
       test: { scale: number };
     }>,
   ): Promise<Buffer> {
-    const document = new PDFDocument({ size: 'A4', margin: 36 });
+    const filteredStudentTests = studentTests.filter(
+      ({ mark, comment }) => mark !== null || comment !== null,
+    );
+
+    if (filteredStudentTests.length === 0) {
+      throw new Error('No student tests to generate PDF');
+    }
+    const document = new PDFDocument({ size: 'A4', margin: 18 });
     const chunks: Buffer[] = [];
 
     return new Promise((resolve, reject) => {
@@ -232,7 +239,7 @@ export class StudentTestService {
       document.on('end', () => resolve(Buffer.concat(chunks)));
       document.on('error', reject);
 
-      const margin = 36;
+      const margin = 18;
       const horizontalPadding = 8;
       const verticalPadding = 7;
       const contentWidth =
@@ -242,7 +249,7 @@ export class StudentTestService {
 
       document.fontSize(10).fillColor('#222222');
 
-      for (const { student, mark, comment, test } of studentTests) {
+      for (const { student, mark, comment, test } of filteredStudentTests) {
         const heading = `${student.lastName} ${student.firstName} ${mark.toString()}/${test.scale}`;
         const commentText = comment ?? '';
         document.font('Helvetica-Bold');

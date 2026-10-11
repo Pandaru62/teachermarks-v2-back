@@ -1,16 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { CustomHttpExceptionFilter } from './auth/custom-exceptions/custom.filter-exception';
 import { ValidationPipe } from '@nestjs/common';
 import { ExpressAdapter } from '@nestjs/platform-express';
+import { GlobalExceptionFilter } from './common/exceptions/global-exception.filter';
 
 async function bootstrap() {
   const adapter = new ExpressAdapter();
   adapter.set('trust proxy', 1);
   const app = await NestFactory.create(AppModule, adapter);
 
-  app.useGlobalFilters(new CustomHttpExceptionFilter());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
   // Support multiple allowed origins via env (comma-separated)
   const frontendUrls =

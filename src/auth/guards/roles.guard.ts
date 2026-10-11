@@ -7,39 +7,49 @@ import {
 import { Reflector } from '@nestjs/core';
 import { UserRoleEnum } from 'prisma/generated/browser';
 import { ROLES_KEY } from 'src/decorators/roles.decorator';
-import { CustomHttpException } from '../custom-exceptions/customhttp.exception';
+import { AppException } from 'src/common/exceptions/app.exception';
+import { ErrorCode } from 'src/common/exceptions/error-code.enum';
+
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    // Récupération des rôles requis pour accéder à la ressource
     const requiredRoles = this.reflector.getAllAndOverride<UserRoleEnum[]>(
       ROLES_KEY,
       [context.getHandler(), context.getClass()],
     );
-    // Si aucun rôle n'est requis, on autorise l'accès à la ressource
-    if (!requiredRoles) {
+
+    if (!requiredRoles?.length) {
       return true;
     }
-    // Récupération de l'utilisateur
+
     const { user } = context.switchToHttp().getRequest();
-    // Si l'utilisateur n'existe pas, on renvoie une erreur
-    if (!user)
-      throw new CustomHttpException(
-        "user can't be empty if @Roles is applied",
-        HttpStatus.BAD_REQUEST,
-        'RG-001',
-      );
-    // Si l'utilisateur n'a pas de rôle, on renvoie une erreur
-    if (!user.role) {
-      throw new CustomHttpException(
-        "User don't have role",
+
+    if (!user) {
+      throw new AppException(
+        ErrorCode.UNAUTHORIZED,
+        'Authentication required',
         HttpStatus.UNAUTHORIZED,
-        'RG-002',
       );
     }
-    // Vérification si l'utilisateur a le rôle requis
-    return requiredRoles.includes(user.role);
+
+    if (!user.role) {
+      throw new AppException(
+        ErrorCode.FORBIDDEN,
+        'User role is missing',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    if (!requiredRoles.includes(user.role)) {
+      throw new AppException(
+        ErrorCode.FORBIDDEN,
+        'Insufficient permissions',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    return true;
   }
 }
