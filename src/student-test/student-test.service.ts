@@ -327,6 +327,173 @@ export class StudentTestService {
     });
   }
 
+  generateGridPdf(
+    studentTests: Array<{
+      student: { lastName: string; firstName: string };
+      mark: { toString(): string };
+      comment: string | null;
+      test: { scale: number };
+      isAbsent: boolean;
+      isUnmarked: boolean;
+    }>,
+  ): Promise<Buffer> {
+    const filteredStudentTests = studentTests.filter(
+      ({ isAbsent, isUnmarked }) => !isAbsent && !isUnmarked,
+    );
+
+    if (filteredStudentTests.length === 0) {
+      throw new AppException(
+        ErrorCode.EMPTY_PDF,
+        'No student tests to generate PDF',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const document = new PDFDocument({
+      size: 'A4',
+      margin: 18,
+    });
+
+    const chunks: Buffer[] = [];
+
+    return new Promise((resolve, reject) => {
+      document.on('data', (chunk: Buffer) => chunks.push(chunk));
+      document.on('end', () => resolve(Buffer.concat(chunks)));
+      document.on('error', reject);
+
+      const margin = 18;
+      const horizontalPadding = 5;
+      const verticalPadding = 3;
+      const minCellHeight = 20;
+      const columnGap = 8;
+      const lineGap = 1;
+      const fontSize = 10;
+
+      const pageWidth = document.page.width;
+      const pageHeight = document.page.height;
+
+      const columnWidth = (pageWidth - margin * 2 - columnGap) / 2;
+
+      const contentWidth = columnWidth - horizontalPadding * 2;
+      const bottom = pageHeight - margin;
+      const maxCellHeight = pageHeight - margin * 2;
+
+      type GridItem = {
+        heading: string;
+        comment: string;
+        textHeight: number;
+        cellHeight: number;
+        originalIndex: number;
+      };
+
+      document.fontSize(fontSize).fillColor('#222222');
+
+      // Prepare and measure each cell before printing.
+      const items: GridItem[] = filteredStudentTests.map(
+        ({ student, mark, comment, test }, originalIndex) => {
+          const heading =
+            `${student.lastName} ${student.firstName} ` +
+            `(${mark.toString()} / ${test.scale})`;
+
+          const commentText = comment?.trim() ?? '';
+          const rowText = commentText ? `${heading} - ${commentText}` : heading;
+
+          document.font('Helvetica-Bold');
+
+          const textHeight = document.heightOfString(rowText, {
+            width: contentWidth,
+            lineGap,
+          });
+
+          const cellHeight = Math.max(
+            minCellHeight,
+            textHeight + verticalPadding * 2,
+          );
+
+          return {
+            heading,
+            comment: commentText,
+            textHeight,
+            cellHeight,
+            originalIndex,
+          };
+        },
+      );
+
+      // Pair cells of similar heights to reduce wasted space.
+      // Stable tie-breaker preserves the original order for equal heights.
+      items.sort(
+        (a, b) =>
+          a.cellHeight - b.cellHeight || a.originalIndex - b.originalIndex,
+      );
+
+      const rows: GridItem[][] = [];
+
+      for (let i = 0; i < items.length; i += 2) {
+        rows.push(items.slice(i, i + 2));
+      }
+
+      let y = margin;
+
+      for (const row of rows) {
+        const rowHeight = Math.max(...row.map((item) => item.cellHeight));
+
+        // A single row taller than the printable page cannot fit
+        // without splitting or changing the layout.
+        if (rowHeight > maxCellHeight) {
+          reject(
+            new Error('An appreciation is too long to fit on a single page.'),
+          );
+          return;
+        }
+
+        // Move the complete row to the next page if necessary.
+        if (y + rowHeight > bottom) {
+          document.addPage();
+          y = margin;
+        }
+
+        row.forEach((item, columnIndex) => {
+          const x = margin + columnIndex * (columnWidth + columnGap);
+
+          // Cell border
+          document
+            .lineWidth(0.5)
+            .strokeColor('#b8b8b8')
+            .rect(x, y, columnWidth, rowHeight)
+            .stroke();
+
+          // Vertically center each cell's own text.
+          const textY = y + (rowHeight - item.textHeight) / 2 - 1;
+
+          const textOptions = {
+            width: contentWidth,
+            lineGap,
+          };
+
+          if (item.comment) {
+            document
+              .font('Helvetica-Bold')
+              .text(item.heading, x + horizontalPadding, textY, {
+                ...textOptions,
+                continued: true,
+              })
+              .font('Helvetica')
+              .text(` - ${item.comment}`, textOptions);
+          } else {
+            document
+              .font('Helvetica-Bold')
+              .text(item.heading, x + horizontalPadding, textY, textOptions);
+          }
+        });
+
+        y += rowHeight;
+      }
+
+      document.end();
+    });
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} studentTest`;
   }

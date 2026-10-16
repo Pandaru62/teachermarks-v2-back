@@ -86,6 +86,26 @@ export class StudentTestController {
     return res.send(pdf);
   }
 
+  @Get('grid-pdf/test/:id/export')
+  async exportGridPdfByTestId(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: IRequestWithUser,
+    @Res() res: Response,
+  ) {
+    const studentsTests = await this.studentTestService.findAllByTestId(
+      id,
+      req.user.sub,
+    );
+    const pdf = await this.studentTestService.generateGridPdf(studentsTests);
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename="evaluation-${id}.pdf"`,
+    });
+
+    return res.send(pdf);
+  }
+
   @Get('test/:id')
   async findAllByTestId(
     @Param('id', ParseIntPipe) id: number,
