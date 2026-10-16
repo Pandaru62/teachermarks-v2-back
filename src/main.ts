@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
@@ -43,6 +44,7 @@ async function bootstrap() {
     console.log(`✅ CORS enabled for origins: ${frontendUrls.join(', ')}`);
   }
 
+  app.use(cookieParser());
   await app.listen(3000, '0.0.0.0');
 }
 bootstrap();

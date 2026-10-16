@@ -140,7 +140,7 @@ export class AuthController {
     @Req() req: IRequestWithRefreshToken,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const refresh_token = req.cookies['refresh_token'];
+    const refresh_token = req.cookies?.['refresh_token'];
     if (!refresh_token) {
       throw new UnauthorizedException('Missing refresh token');
     }
