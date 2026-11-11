@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { CreateSchoolclassDto } from './dto/create-schoolclass.dto';
 import { UpdateSchoolclassDto } from './dto/update-schoolclass.dto';
 import { PrismaService } from 'prisma/prisma.service';
-import { schoolclass, SchoolYearEnum } from 'prisma/generated/browser';
+import {
+  schoolclass,
+  SchoolYearEnum,
+  TrimesterEnum,
+} from 'prisma/generated/browser';
 
 @Injectable()
 export class SchoolclassService {
@@ -95,6 +99,104 @@ export class SchoolclassService {
     return {
       ...schoolClass,
       pupils,
+    };
+  }
+
+  async findOneWithPupilsAndAverage(id: number, userId: number): Promise<any> {
+    const schoolClass = await this.prismaService.schoolclass.findUnique({
+      where: {
+        id,
+        teachers: {
+          some: { teacherId: userId },
+        },
+      },
+      select: {
+        id: true,
+        color: true,
+        name: true,
+      },
+    });
+
+    const pupils = await this.prismaService.student.findMany({
+      where: {
+        schoolClasses: {
+          some: {
+            schoolClassId: schoolClass.id,
+          },
+        },
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        studenttest: {
+          select: {
+            mark: true,
+            isAbsent: true,
+            isUnmarked: true,
+            test: {
+              select: {
+                coefficient: true,
+                scale: true,
+                trimester: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: [{ lastName: 'asc' }, { firstName: 'asc' }],
+    });
+
+    const pupilsWithAverage = pupils.map((pupil) => {
+      const getTrimesterAverage = (trimester: TrimesterEnum) => {
+        const validTests = pupil.studenttest.filter(
+          (st) =>
+            st.test.trimester === trimester && !st.isAbsent && !st.isUnmarked,
+        );
+
+        const totalScale = validTests.reduce(
+          (acc, st) => acc + Number(st.test.coefficient) * st.test.scale,
+          0,
+        );
+
+        if (totalScale <= 0) return null;
+
+        const weightedMarks = validTests.reduce(
+          (acc, st) => acc + Number(st.mark) * Number(st.test.coefficient),
+          0,
+        );
+
+        return (weightedMarks / totalScale) * 20;
+      };
+
+      const trimesterAverages = {
+        TR1: getTrimesterAverage(TrimesterEnum.TR1),
+        TR2: getTrimesterAverage(TrimesterEnum.TR2),
+        TR3: getTrimesterAverage(TrimesterEnum.TR3),
+      };
+      const availableAverages = Object.values(trimesterAverages).filter(
+        (average): average is number => average !== null,
+      );
+      const annual =
+        availableAverages.length > 0
+          ? availableAverages.reduce((sum, average) => sum + average, 0) /
+            availableAverages.length
+          : null;
+
+      return {
+        id: pupil.id,
+        firstName: pupil.firstName,
+        lastName: pupil.lastName,
+        results: {
+          ...trimesterAverages,
+          annual,
+        },
+      };
+    });
+
+    return {
+      ...schoolClass,
+      pupils: pupilsWithAverage,
     };
   }
 

@@ -56,6 +56,17 @@ export class SchoolclassController {
     return this.schoolclassService.findOneWithPupils(id, req.user.sub);
   }
 
+  @Get(':id/pupils/averages')
+  async findOneWithPupilsAndAverage(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: IRequestWithUser,
+  ): Promise<schoolclass> {
+    return this.schoolclassService.findOneWithPupilsAndAverage(
+      id,
+      req.user.sub,
+    );
+  }
+
   /* UPDATE A CLASS BY THEIR ID */
   @Put(':id')
   async update(
