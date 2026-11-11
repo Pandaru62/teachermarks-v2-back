@@ -31,10 +31,26 @@ export class SchoolclassService {
     return newClass;
   }
 
-  async findAll(userId: number): Promise<schoolclass[]> {
+  async findAll(userId: number) {
     return this.prismaService.schoolclass.findMany({
       where: {
-        teachers: { some: { teacherId: userId } },
+        teachers: {
+          some: {
+            teacherId: userId,
+          },
+        },
+        isArchived: false,
+      },
+      select: {
+        id: true,
+        color: true,
+        name: true,
+        _count: {
+          select: {
+            students: true,
+            test: true,
+          },
+        },
       },
     });
   }

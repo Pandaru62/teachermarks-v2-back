@@ -34,7 +34,7 @@ export class SchoolclassController {
 
   /* FIND ALL ASSIGNED CLASSES BY TEACHER ID */
   @Get()
-  async findAll(@Req() req: IRequestWithUser): Promise<schoolclass[]> {
+  async findAll(@Req() req: IRequestWithUser) {
     return this.schoolclassService.findAll(req.user.sub);
   }
 
