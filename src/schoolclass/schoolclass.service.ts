@@ -49,6 +49,7 @@ export class SchoolclassService {
         id: true,
         color: true,
         name: true,
+        isArchived: true,
         _count: {
           select: {
             students: true,
