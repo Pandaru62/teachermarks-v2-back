@@ -1,5 +1,6 @@
 import { TrimesterEnum } from 'prisma/generated/browser';
 import {
+  ArrayMinSize,
   IsArray,
   IsEnum,
   IsInt,
@@ -32,9 +33,10 @@ export class CreateTestDto {
   @IsString()
   description: string;
 
-  @IsNotEmpty()
-  @IsNumber()
-  schoolClassId: number;
+  @IsArray()
+  @ArrayMinSize(1)
+  @IsInt({ each: true })
+  schoolClassIds: number[];
 
   @IsNotEmpty()
   date: Date;
@@ -58,5 +60,5 @@ export class CreateTestDto {
 
   @IsOptional()
   @IsNumber()
-  testTagId: number;
+  testTagId: number | null;
 }

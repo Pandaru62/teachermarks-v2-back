@@ -182,62 +182,44 @@ export class TestService {
 
   async create(
     data: CreateTestDto,
-  ): Promise<test & { skills: { id: number; name: string }[] }> {
-    const [newTest] = await this.prismaService.$transaction([
-      // 1. Create the test
-      this.prismaService.test.create({
-        data: {
-          name: data.name,
-          description: data.description,
-          coefficient: data.coefficient,
-          date: new Date(data.date),
-          scale: data.scale,
-          trimester: data.trimester,
-          schoolclass: {
-            connect: {
-              id: data.schoolClassId,
+  ): Promise<(test & { skills: { id: number; name: string }[] })[]> {
+    return this.prismaService.$transaction(async (transaction) => {
+      const createdTests = await Promise.all(
+        data.schoolClassIds.map((schoolClassId) =>
+          transaction.test.create({
+            data: {
+              name: data.name,
+              description: data.description,
+              coefficient: data.coefficient,
+              date: new Date(data.date),
+              scale: data.scale,
+              trimester: data.trimester,
+              schoolClassId,
+              testTagId: data.testTagId,
             },
-          },
-          testTag: data.testTagId
-            ? {
-                connect: { id: data.testTagId },
-              }
-            : undefined,
-        },
-      }),
-    ]);
+          }),
+        ),
+      );
 
-    // 2. Connect skills (correctly, since we now know the test ID)
-    for (const skill of data.skills) {
-      await this.prismaService.testhasskill.createMany({
-        data: {
-          testId: newTest.id,
-          skillId: skill.id,
-        },
-      });
-    }
+      if (data.skills.length > 0) {
+        await Promise.all(
+          createdTests.map((createdTest) =>
+            transaction.testhasskill.createMany({
+              data: data.skills.map((skill) => ({
+                testId: createdTest.id,
+                skillId: skill.id,
+              })),
+            }),
+          ),
+        );
+      }
 
-    // 3. Retrieve skills (id + name)
-    const testSkills = await this.prismaService.testhasskill.findMany({
-      where: { testId: newTest.id },
-      select: {
-        skill: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
+      const skills = data.skills.map(({ id, name }) => ({ id, name }));
+      return createdTests.map((createdTest) => ({
+        ...createdTest,
+        skills,
+      }));
     });
-
-    // 4. Return full result
-    return {
-      ...newTest,
-      skills: testSkills.map((ts) => ({
-        id: ts.skill.id,
-        name: ts.skill.name,
-      })),
-    };
   }
 
   async update(
@@ -305,6 +287,57 @@ export class TestService {
 
     // Return the updated test with skill
     return this.getById(id);
+  }
+
+  async duplicate(testId: number, classIds: number[]): Promise<test[]> {
+    const originalTest = await this.prismaService.test.findUnique({
+      where: { id: testId },
+      include: {
+        skills: true,
+      },
+    });
+
+    if (!originalTest) {
+      throw new Error(`Test with ID ${testId} not found`);
+    }
+
+    const createdTests: test[] = [];
+
+    for (const classId of classIds) {
+      const classExists = await this.prismaService.schoolclass.findUnique({
+        where: { id: classId },
+      });
+
+      if (!classExists) {
+        throw new Error(`Class with ID ${classId} not found`);
+      }
+
+      const duplicatedTest = await this.prismaService.test.create({
+        data: {
+          name: originalTest.name,
+          description: originalTest.description,
+          coefficient: originalTest.coefficient,
+          date: originalTest.date,
+          scale: originalTest.scale,
+          trimester: originalTest.trimester,
+          schoolClassId: classId,
+          testTagId: originalTest.testTagId,
+        },
+      });
+
+      const skillConnections = originalTest.skills.map((skill) => ({
+        testId: duplicatedTest.id,
+        skillId: skill.skillId,
+      }));
+
+      await this.prismaService.testhasskill.createMany({
+        data: skillConnections,
+      });
+
+      createdTests.push(duplicatedTest);
+    }
+
+    return createdTests;
   }
 
   async remove(id: number): Promise<test> {

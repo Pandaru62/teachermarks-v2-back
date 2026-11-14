@@ -1,4 +1,50 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateTestDto } from './create-test.dto';
+import { TrimesterEnum } from 'prisma/generated/browser';
+import {
+  IsArray,
+  IsEnum,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { Decimal } from 'prisma/generated/internal/prismaNamespace';
+import { Type } from 'class-transformer';
+import { CreateTestSkillDto } from './create-test.dto';
 
-export class UpdateTestDto extends PartialType(CreateTestDto) {}
+export class UpdateTestDto {
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @IsString()
+  description: string;
+
+  @IsInt()
+  schoolClassId: number;
+
+  @IsNotEmpty()
+  date: Date;
+
+  @IsNotEmpty()
+  @IsEnum(TrimesterEnum)
+  trimester: TrimesterEnum;
+
+  @IsNotEmpty()
+  @IsNumber()
+  scale: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  coefficient: Decimal;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateTestSkillDto)
+  skills: CreateTestSkillDto[];
+
+  @IsOptional()
+  @IsNumber()
+  testTagId: number | null;
+}

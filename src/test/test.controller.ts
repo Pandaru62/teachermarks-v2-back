@@ -27,7 +27,7 @@ export class TestController {
   }
 
   @Post()
-  async create(@Body() body: CreateTestDto): Promise<test> {
+  async create(@Body() body: CreateTestDto): Promise<test[]> {
     // check userId and classId ??
     return this.testService.create(body);
   }
@@ -50,6 +50,14 @@ export class TestController {
     @Param('id', ParseIntPipe) id: number,
   ): Promise<TestWithClassAndSkills> {
     return this.validatetest(id);
+  }
+
+  @Post('duplicate/:testId')
+  async duplicate(
+    @Param('testId', ParseIntPipe) testId: number,
+    @Body() body: { classIds: number[] },
+  ): Promise<test[]> {
+    return this.testService.duplicate(testId, body.classIds);
   }
 
   @Put(':id')
