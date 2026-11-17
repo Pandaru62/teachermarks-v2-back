@@ -161,10 +161,10 @@ export class StudentService {
   ): Promise<student[]> {
     if (data.length === 0) return [];
 
-    // Check if the user is a teacher of all the classes
-    const classes = await this.prismaService.schoolclass.findMany({
+    // Check if the user is a teacher of the class
+    const hasSchoolClass = await this.prismaService.schoolclass.findFirst({
       where: {
-        id: { in: data.map((student) => student.schoolClassId) },
+        id: data[0].schoolClassId,
         teachers: {
           some: {
             teacher: {
@@ -175,7 +175,7 @@ export class StudentService {
       },
     });
 
-    if (classes.length !== data.length) {
+    if (!hasSchoolClass) {
       throw new AppException(
         ErrorCode.FORBIDDEN,
         'You are not a teacher of all the classes',
